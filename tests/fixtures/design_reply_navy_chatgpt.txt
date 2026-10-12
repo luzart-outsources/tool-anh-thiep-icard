@@ -1,0 +1,891 @@
+{
+  "title": "Navy Gold Korean Minimal Wedding Suite",
+  "style": "Korean minimalist wedding ornament set, soft translucent watercolor navy washes, elegant metallic gold linework, airy negative space, delicate botanical details, clean luxury, no text inside ornaments",
+  "background": {
+    "color": "#F8F5EF",
+    "draw": "warm ivory cotton paper texture with very subtle watercolor grain, soft handmade fibers, minimal and refined"
+  },
+  "colors": {
+    "text": "#14213D",
+    "accent": "#C9A24A",
+    "metallic": true,
+    "metal": ["#8A6A1F", "#D6B45A", "#FFF2B8"]
+  },
+  "fonts": {
+    "ten": {
+      "font": "imperial",
+      "weight": 400,
+      "uppercase": false,
+      "letter_spacing": 0,
+      "color": "metal"
+    },
+    "tieu_de": {
+      "font": "cormorant",
+      "weight": 600,
+      "uppercase": true,
+      "letter_spacing": 0.16,
+      "color": "text"
+    },
+    "chu": {
+      "font": "cormorant",
+      "weight": 400,
+      "uppercase": false,
+      "letter_spacing": 0.02,
+      "color": "text"
+    },
+    "nho": {
+      "font": "cormorant",
+      "weight": 500,
+      "uppercase": true,
+      "letter_spacing": 0.12,
+      "color": "accent"
+    },
+    "script_nhe": {
+      "font": "pinyon",
+      "weight": 400,
+      "uppercase": false,
+      "letter_spacing": 0,
+      "color": "metal"
+    }
+  },
+  "items": [
+    {
+      "id": "watercolor_navy_corner",
+      "name": "Mảng màu nước navy góc",
+      "shape": "big",
+      "hollow": false,
+      "draw": "an abstract soft navy blue watercolor wash for the TOP-LEFT corner, fading toward the center, irregular edge, very light transparency"
+    },
+    {
+      "id": "gold_flower_corner",
+      "name": "Cụm hoa vàng góc",
+      "shape": "big",
+      "hollow": false,
+      "draw": "minimal metallic gold botanical corner cluster for the TOP-LEFT corner, thin line peonies and small leaves, growing diagonally toward the center, asymmetric"
+    },
+    {
+      "id": "gold_leaf_sprig",
+      "name": "Nhành lá vàng mảnh",
+      "shape": "small",
+      "hollow": false,
+      "draw": "one slender metallic gold leaf sprig, horizontal, pointing right, minimal Korean wedding style"
+    },
+    {
+      "id": "navy_gold_arch",
+      "name": "Khung vòm navy vàng",
+      "shape": "big",
+      "hollow": true,
+      "draw": "a thin double arch frame with navy outer watercolor stroke and metallic gold inner line, hollow center, elegant and minimal"
+    },
+    {
+      "id": "heart_gold_outline",
+      "name": "Khung trái tim vàng",
+      "shape": "big",
+      "hollow": true,
+      "draw": "a delicate hollow heart frame in metallic gold, thin double-line outline, slightly hand-drawn watercolor elegance"
+    },
+    {
+      "id": "gold_dot_stars",
+      "name": "Chấm sao vàng",
+      "shape": "small",
+      "hollow": false,
+      "draw": "tiny scattered metallic gold dots and four-point star specks, airy and sparse, no letters"
+    },
+    {
+      "id": "navy_ribbon_wash",
+      "name": "Dải màu nước navy",
+      "shape": "wide",
+      "hollow": false,
+      "draw": "a horizontal translucent navy watercolor ribbon wash, soft feathered edges, refined and minimal"
+    },
+    {
+      "id": "minimal_gold_divider",
+      "name": "Đường chia vàng",
+      "shape": "wide",
+      "hollow": false,
+      "draw": "a very thin metallic gold ornamental divider line with a tiny leaf at center, horizontal, minimal"
+    }
+  ],
+  "cards": [
+    {
+      "id": "thiep_moi",
+      "name": "Thiệp mời",
+      "size": "15x21cm",
+      "shape": "bo_goc",
+      "variants": [
+        {
+          "name": "Vòm tối giản trung tâm",
+          "border": [
+            {
+              "inset": 30,
+              "width": 2,
+              "color": "metal"
+            }
+          ],
+          "items": [
+            {
+              "item": "watercolor_navy_corner",
+              "x": 145,
+              "y": 150,
+              "w": 360,
+              "h": 360,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 0.42
+            },
+            {
+              "item": "gold_flower_corner",
+              "x": 165,
+              "y": 165,
+              "w": 330,
+              "h": 330,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "xy",
+              "opacity": 1
+            },
+            {
+              "item": "navy_gold_arch",
+              "x": 500,
+              "y": 705,
+              "w": 700,
+              "h": 980,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 1
+            },
+            {
+              "item": "minimal_gold_divider",
+              "x": 500,
+              "y": 765,
+              "w": 360,
+              "h": 34,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 1
+            }
+          ],
+          "texts": [
+            {
+              "id": "loi_moi",
+              "label": "Lời mời",
+              "style": "tieu_de",
+              "text": "Trân trọng kính mời",
+              "x": 500,
+              "y": 330,
+              "w": 650,
+              "size": 34,
+              "align": "center"
+            },
+            {
+              "id": "ten_chu_re",
+              "label": "Tên chú rể",
+              "style": "ten",
+              "text": "Gia Minh",
+              "x": 500,
+              "y": 510,
+              "w": 760,
+              "size": 118,
+              "align": "center"
+            },
+            {
+              "id": "ampersand",
+              "label": "Dấu và",
+              "style": "script_nhe",
+              "text": "&",
+              "x": 500,
+              "y": 650,
+              "w": 160,
+              "size": 78,
+              "align": "center"
+            },
+            {
+              "id": "ten_co_dau",
+              "label": "Tên cô dâu",
+              "style": "ten",
+              "text": "Ái Ngọc",
+              "x": 500,
+              "y": 800,
+              "w": 760,
+              "size": 118,
+              "align": "center"
+            },
+            {
+              "id": "hai_gia_dinh",
+              "label": "Hai gia đình",
+              "style": "chu",
+              "text": "Gia đình ông bà Nguyễn Văn An\nvà gia đình ông bà Trần Minh Hòa",
+              "x": 500,
+              "y": 955,
+              "w": 720,
+              "size": 31,
+              "align": "center"
+            },
+            {
+              "id": "ngay_cuoi",
+              "label": "Ngày cưới",
+              "style": "tieu_de",
+              "text": "Chủ nhật, 15 . 12 . 2026",
+              "x": 500,
+              "y": 1110,
+              "w": 700,
+              "size": 36,
+              "align": "center"
+            },
+            {
+              "id": "gio_dia_diem",
+              "label": "Giờ và địa điểm",
+              "style": "chu",
+              "text": "Vào lúc 11:00\nTrung tâm tiệc cưới The Seoul Garden\n25 Lý Thường Kiệt, Hà Nội",
+              "x": 500,
+              "y": 1235,
+              "w": 760,
+              "size": 30,
+              "align": "center"
+            }
+          ],
+          "photos": []
+        },
+        {
+          "name": "Navy band hiện đại",
+          "border": [],
+          "items": [
+            {
+              "item": "navy_ribbon_wash",
+              "x": 500,
+              "y": 365,
+              "w": 920,
+              "h": 250,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 0.86
+            },
+            {
+              "item": "gold_leaf_sprig",
+              "x": 165,
+              "y": 265,
+              "w": 210,
+              "h": 90,
+              "rotate": -25,
+              "flip": "",
+              "mirror": "x",
+              "opacity": 1
+            },
+            {
+              "item": "gold_dot_stars",
+              "x": 500,
+              "y": 720,
+              "w": 780,
+              "h": 900,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 0.62
+            },
+            {
+              "item": "minimal_gold_divider",
+              "x": 500,
+              "y": 900,
+              "w": 520,
+              "h": 36,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 1
+            }
+          ],
+          "texts": [
+            {
+              "id": "loi_moi",
+              "label": "Lời mời",
+              "style": "nho",
+              "text": "Wedding Invitation",
+              "x": 500,
+              "y": 185,
+              "w": 650,
+              "size": 30,
+              "align": "center"
+            },
+            {
+              "id": "ten_chu_re",
+              "label": "Tên chú rể",
+              "style": "ten",
+              "text": "Gia Minh",
+              "x": 500,
+              "y": 330,
+              "w": 760,
+              "size": 116,
+              "align": "center"
+            },
+            {
+              "id": "ten_co_dau",
+              "label": "Tên cô dâu",
+              "style": "ten",
+              "text": "Ái Ngọc",
+              "x": 500,
+              "y": 505,
+              "w": 760,
+              "size": 116,
+              "align": "center"
+            },
+            {
+              "id": "hai_gia_dinh",
+              "label": "Hai gia đình",
+              "style": "chu",
+              "text": "Hai gia đình trân trọng báo tin vui\nvà kính mời quý khách tới dự lễ thành hôn",
+              "x": 500,
+              "y": 705,
+              "w": 760,
+              "size": 32,
+              "align": "center"
+            },
+            {
+              "id": "ngay_cuoi",
+              "label": "Ngày cưới",
+              "style": "tieu_de",
+              "text": "15 . 12 . 2026",
+              "x": 500,
+              "y": 1000,
+              "w": 620,
+              "size": 48,
+              "align": "center"
+            },
+            {
+              "id": "gio_dia_diem",
+              "label": "Giờ và địa điểm",
+              "style": "chu",
+              "text": "11:00 | Chủ nhật\nThe Seoul Garden\n25 Lý Thường Kiệt, Hà Nội",
+              "x": 500,
+              "y": 1165,
+              "w": 760,
+              "size": 32,
+              "align": "center"
+            },
+            {
+              "id": "ten_bo_me",
+              "label": "Tên bố mẹ hai bên",
+              "style": "chu",
+              "text": "Nhà trai: Ông bà Nguyễn Văn An\nNhà gái: Ông bà Trần Minh Hòa",
+              "x": 500,
+              "y": 1310,
+              "w": 820,
+              "size": 28,
+              "align": "center"
+            }
+          ],
+          "photos": []
+        },
+        {
+          "name": "Trái tim sang trọng",
+          "border": [
+            {
+              "inset": 36,
+              "width": 2,
+              "color": "metal"
+            },
+            {
+              "inset": 58,
+              "width": 1,
+              "color": "accent"
+            }
+          ],
+          "items": [
+            {
+              "item": "heart_gold_outline",
+              "x": 500,
+              "y": 500,
+              "w": 620,
+              "h": 560,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 1
+            },
+            {
+              "item": "watercolor_navy_corner",
+              "x": 500,
+              "y": 1040,
+              "w": 760,
+              "h": 410,
+              "rotate": 180,
+              "flip": "",
+              "mirror": "",
+              "opacity": 0.35
+            },
+            {
+              "item": "gold_flower_corner",
+              "x": 500,
+              "y": 1135,
+              "w": 390,
+              "h": 310,
+              "rotate": 225,
+              "flip": "",
+              "mirror": "",
+              "opacity": 1
+            },
+            {
+              "item": "gold_dot_stars",
+              "x": 500,
+              "y": 610,
+              "w": 850,
+              "h": 760,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 0.48
+            }
+          ],
+          "texts": [
+            {
+              "id": "loi_moi",
+              "label": "Lời mời",
+              "style": "tieu_de",
+              "text": "Lễ thành hôn",
+              "x": 500,
+              "y": 210,
+              "w": 650,
+              "size": 42,
+              "align": "center"
+            },
+            {
+              "id": "ten_chu_re",
+              "label": "Tên chú rể",
+              "style": "ten",
+              "text": "Gia Minh",
+              "x": 500,
+              "y": 405,
+              "w": 650,
+              "size": 108,
+              "align": "center"
+            },
+            {
+              "id": "ampersand",
+              "label": "Dấu và",
+              "style": "script_nhe",
+              "text": "&",
+              "x": 500,
+              "y": 540,
+              "w": 130,
+              "size": 68,
+              "align": "center"
+            },
+            {
+              "id": "ten_co_dau",
+              "label": "Tên cô dâu",
+              "style": "ten",
+              "text": "Ái Ngọc",
+              "x": 500,
+              "y": 675,
+              "w": 650,
+              "size": 108,
+              "align": "center"
+            },
+            {
+              "id": "hai_gia_dinh",
+              "label": "Hai gia đình",
+              "style": "chu",
+              "text": "Trân trọng kính mời quý khách\nđến chung vui cùng hai gia đình",
+              "x": 500,
+              "y": 875,
+              "w": 760,
+              "size": 31,
+              "align": "center"
+            },
+            {
+              "id": "ngay_cuoi",
+              "label": "Ngày cưới",
+              "style": "tieu_de",
+              "text": "15 . 12 . 2026",
+              "x": 500,
+              "y": 1045,
+              "w": 620,
+              "size": 42,
+              "align": "center"
+            },
+            {
+              "id": "gio_dia_diem",
+              "label": "Giờ và địa điểm",
+              "style": "chu",
+              "text": "11:00 | The Seoul Garden\n25 Lý Thường Kiệt, Hà Nội",
+              "x": 500,
+              "y": 1190,
+              "w": 760,
+              "size": 30,
+              "align": "center"
+            }
+          ],
+          "photos": []
+        }
+      ]
+    },
+    {
+      "id": "thiep_online",
+      "name": "Thiệp online điện thoại",
+      "size": "1080x1920px",
+      "shape": "bo_goc",
+      "variants": [
+        {
+          "name": "Story 9:16 có ảnh",
+          "border": [
+            {
+              "inset": 34,
+              "width": 2,
+              "color": "metal"
+            }
+          ],
+          "items": [
+            {
+              "item": "watercolor_navy_corner",
+              "x": 500,
+              "y": 260,
+              "w": 900,
+              "h": 500,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 0.38
+            },
+            {
+              "item": "heart_gold_outline",
+              "x": 500,
+              "y": 640,
+              "w": 560,
+              "h": 500,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 1
+            },
+            {
+              "item": "gold_flower_corner",
+              "x": 178,
+              "y": 210,
+              "w": 300,
+              "h": 300,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "x",
+              "opacity": 1
+            },
+            {
+              "item": "minimal_gold_divider",
+              "x": 500,
+              "y": 1125,
+              "w": 440,
+              "h": 36,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 1
+            }
+          ],
+          "texts": [
+            {
+              "id": "loi_moi",
+              "label": "Lời mời",
+              "style": "nho",
+              "text": "Wedding Invitation",
+              "x": 500,
+              "y": 145,
+              "w": 700,
+              "size": 34,
+              "align": "center"
+            },
+            {
+              "id": "ten_chu_re",
+              "label": "Tên chú rể",
+              "style": "ten",
+              "text": "Gia Minh",
+              "x": 500,
+              "y": 940,
+              "w": 760,
+              "size": 104,
+              "align": "center"
+            },
+            {
+              "id": "ten_co_dau",
+              "label": "Tên cô dâu",
+              "style": "ten",
+              "text": "Ái Ngọc",
+              "x": 500,
+              "y": 1070,
+              "w": 760,
+              "size": 104,
+              "align": "center"
+            },
+            {
+              "id": "ngay_cuoi",
+              "label": "Ngày cưới",
+              "style": "tieu_de",
+              "text": "15 . 12 . 2026",
+              "x": 500,
+              "y": 1230,
+              "w": 650,
+              "size": 46,
+              "align": "center"
+            },
+            {
+              "id": "gio_dia_diem",
+              "label": "Giờ và địa điểm",
+              "style": "chu",
+              "text": "11:00 | The Seoul Garden\n25 Lý Thường Kiệt, Hà Nội",
+              "x": 500,
+              "y": 1390,
+              "w": 760,
+              "size": 34,
+              "align": "center"
+            },
+            {
+              "id": "hai_gia_dinh",
+              "label": "Hai gia đình",
+              "style": "chu",
+              "text": "Nhà trai: Nguyễn Văn An\nNhà gái: Trần Minh Hòa",
+              "x": 500,
+              "y": 1600,
+              "w": 760,
+              "size": 30,
+              "align": "center"
+            }
+          ],
+          "photos": [
+            {
+              "id": "anh_cap_doi",
+              "label": "Ảnh cô dâu chú rể",
+              "x": 500,
+              "y": 600,
+              "w": 430,
+              "h": 430,
+              "shape": "oval"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thiep_cam_on",
+      "name": "Thiệp cảm ơn",
+      "size": "10x15cm",
+      "shape": "bo_goc",
+      "variants": [
+        {
+          "name": "Cảm ơn tối giản",
+          "border": [
+            {
+              "inset": 32,
+              "width": 2,
+              "color": "metal"
+            }
+          ],
+          "items": [
+            {
+              "item": "navy_ribbon_wash",
+              "x": 500,
+              "y": 390,
+              "w": 820,
+              "h": 220,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 0.64
+            },
+            {
+              "item": "gold_leaf_sprig",
+              "x": 500,
+              "y": 775,
+              "w": 230,
+              "h": 82,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 1
+            },
+            {
+              "item": "gold_dot_stars",
+              "x": 500,
+              "y": 750,
+              "w": 760,
+              "h": 780,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 0.42
+            }
+          ],
+          "texts": [
+            {
+              "id": "cam_on",
+              "label": "Lời cảm ơn",
+              "style": "ten",
+              "text": "Thank You",
+              "x": 500,
+              "y": 435,
+              "w": 740,
+              "size": 122,
+              "align": "center"
+            },
+            {
+              "id": "loi_cam_on",
+              "label": "Nội dung cảm ơn",
+              "style": "chu",
+              "text": "Cảm ơn quý khách đã hiện diện\nvà gửi lời chúc phúc đến gia đình chúng tôi.",
+              "x": 500,
+              "y": 650,
+              "w": 760,
+              "size": 34,
+              "align": "center"
+            },
+            {
+              "id": "ten_chu_re",
+              "label": "Tên chú rể",
+              "style": "script_nhe",
+              "text": "Gia Minh",
+              "x": 395,
+              "y": 900,
+              "w": 330,
+              "size": 62,
+              "align": "center"
+            },
+            {
+              "id": "ampersand",
+              "label": "Dấu và",
+              "style": "script_nhe",
+              "text": "&",
+              "x": 500,
+              "y": 900,
+              "w": 80,
+              "size": 54,
+              "align": "center"
+            },
+            {
+              "id": "ten_co_dau",
+              "label": "Tên cô dâu",
+              "style": "script_nhe",
+              "text": "Ái Ngọc",
+              "x": 605,
+              "y": 900,
+              "w": 330,
+              "size": 62,
+              "align": "center"
+            }
+          ],
+          "photos": []
+        }
+      ]
+    },
+    {
+      "id": "thiep_trai_tim",
+      "name": "Thiệp trái tim",
+      "size": "15x15cm",
+      "shape": "trai_tim",
+      "variants": [
+        {
+          "name": "Heart card navy gold",
+          "border": [
+            {
+              "inset": 28,
+              "width": 2,
+              "color": "metal"
+            }
+          ],
+          "items": [
+            {
+              "item": "heart_gold_outline",
+              "x": 500,
+              "y": 500,
+              "w": 780,
+              "h": 720,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 1
+            },
+            {
+              "item": "watercolor_navy_corner",
+              "x": 500,
+              "y": 545,
+              "w": 800,
+              "h": 560,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "",
+              "opacity": 0.28
+            },
+            {
+              "item": "gold_flower_corner",
+              "x": 230,
+              "y": 250,
+              "w": 260,
+              "h": 260,
+              "rotate": 0,
+              "flip": "",
+              "mirror": "x",
+              "opacity": 1
+            }
+          ],
+          "texts": [
+            {
+              "id": "loi_moi",
+              "label": "Lời mời",
+              "style": "nho",
+              "text": "Save The Date",
+              "x": 500,
+              "y": 280,
+              "w": 560,
+              "size": 32,
+              "align": "center"
+            },
+            {
+              "id": "ten_chu_re",
+              "label": "Tên chú rể",
+              "style": "ten",
+              "text": "Gia Minh",
+              "x": 500,
+              "y": 430,
+              "w": 620,
+              "size": 92,
+              "align": "center"
+            },
+            {
+              "id": "ten_co_dau",
+              "label": "Tên cô dâu",
+              "style": "ten",
+              "text": "Ái Ngọc",
+              "x": 500,
+              "y": 560,
+              "w": 620,
+              "size": 92,
+              "align": "center"
+            },
+            {
+              "id": "ngay_cuoi",
+              "label": "Ngày cưới",
+              "style": "tieu_de",
+              "text": "15 . 12 . 2026",
+              "x": 500,
+              "y": 710,
+              "w": 560,
+              "size": 38,
+              "align": "center"
+            },
+            {
+              "id": "hai_gia_dinh",
+              "label": "Hai gia đình",
+              "style": "chu",
+              "text": "Hai gia đình trân trọng kính mời",
+              "x": 500,
+              "y": 800,
+              "w": 620,
+              "size": 28,
+              "align": "center"
+            }
+          ],
+          "photos": []
+        }
+      ]
+    }
+  ]
+}

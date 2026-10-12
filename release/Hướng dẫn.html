@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hướng dẫn mở tool</title>
+<style>
+  :root { --bg:#f6f4ef; --card:#fff; --line:#e3ded3; --text:#24211c; --muted:#6f6a60; --accent:#8c6a2e; --warn:#fdf5e7; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 -apple-system, "Segoe UI", system-ui, sans-serif; }
+  main { max-width:760px; margin:0 auto; padding:28px 16px 60px; }
+  h1 { font-size:26px; margin:0 0 4px; } h1 span { color:var(--accent); }
+  h2 { font-size:19px; margin:28px 0 10px; }
+  .lead { color:var(--muted); margin:0 0 20px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 20px; margin:12px 0; }
+  .card.warn { background:var(--warn); border-color:#ecd3a8; }
+  .tabs { display:flex; gap:8px; margin:8px 0 0; flex-wrap:wrap; }
+  .tabs button { font:inherit; padding:8px 16px; border-radius:999px; border:1px solid var(--line); background:#fff; cursor:pointer; }
+  .tabs button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .os { display:none; } .os.on { display:block; }
+  ol { padding-left:22px; margin:6px 0; } li { margin:6px 0; }
+  b.k { background:#f1ece2; border:1px solid var(--line); border-radius:6px; padding:1px 7px; font-weight:600; white-space:nowrap; }
+  code { background:#f1ece2; border-radius:4px; padding:1px 6px; font-size:14px; }
+  .muted { color:var(--muted); font-size:14.5px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Bàn làm việc <span>thiệp</span></h1>
+  <p class="lead">Tool chạy ngay trên máy của bạn, mở bằng trình duyệt. Làm theo 3 bước dưới đây – chỉ lần đầu hơi lâu, từ lần sau mở trong vài giây.</p>
+
+  <div class="tabs"><button id="tMac" class="on">Máy Mac</button><button id="tWin">Máy Windows</button></div>
+
+  <section class="os on" id="mac">
+    <h2>1. Giải nén</h2>
+    <div class="card"><ol>
+      <li>Bấm đúp file <b class="k">.zip</b> vừa tải → hiện thư mục <b class="k">ThiepTool</b>.</li>
+      <li>Kéo thư mục đó vào <b class="k">Tài liệu</b> (Documents) hoặc Màn hình nền cho dễ tìm.</li>
+    </ol></div>
+
+    <h2>2. Mở tool</h2>
+    <div class="card"><ol>
+      <li>Mở thư mục <b class="k">ThiepTool</b>, bấm đúp <b class="k">Mở Tool (Mac)</b>.</li>
+      <li><b>Lần đầu</b> máy Mac sẽ chặn vì tool chưa đăng ký với Apple. Bạn chỉ cần cho phép <b>một lần</b>:
+        <ul>
+          <li><b>macOS 15 (Sequoia) trở lên:</b> bấm <b class="k">Xong</b> ở thông báo → mở <b class="k">Cài đặt hệ thống</b>
+            → <b class="k">Quyền riêng tư &amp; Bảo mật</b> → kéo xuống dưới cùng → bấm <b class="k">Vẫn mở</b>
+            (Open Anyway) cạnh dòng "Mở Tool (Mac)" → nhập mật khẩu máy → bấm <b class="k">Mở</b>.</li>
+          <li><b>macOS 14 trở về trước:</b> bấm <b>chuột phải</b> (hoặc giữ Control rồi bấm) vào <b class="k">Mở Tool (Mac)</b>
+            → chọn <b class="k">Mở</b> → bấm <b class="k">Mở</b> lần nữa.</li>
+        </ul></li>
+      <li>Cửa sổ <b>Terminal</b> (nền đen/trắng có chữ) hiện ra – đó là tool đang chạy.</li>
+    </ol></div>
+  </section>
+
+  <section class="os" id="win">
+    <h2>1. Giải nén</h2>
+    <div class="card"><ol>
+      <li>Bấm chuột phải vào file <b class="k">.zip</b> → <b class="k">Extract All…</b> (Giải nén tất cả) → <b class="k">Extract</b>.</li>
+      <li>Không mở tool khi còn ở trong file zip – phải giải nén trước.</li>
+    </ol></div>
+
+    <h2>2. Mở tool</h2>
+    <div class="card"><ol>
+      <li>Mở thư mục <b class="k">ThiepTool</b>, bấm đúp <b class="k">Mở Tool (Windows)</b>.</li>
+      <li>Nếu hiện <i>"Windows protected your PC"</i>: bấm <b class="k">More info</b> → <b class="k">Run anyway</b>.</li>
+      <li>Cửa sổ đen có chữ hiện ra – đó là tool đang chạy.</li>
+    </ol></div>
+  </section>
+
+  <h2>3. Lần đầu: chờ tool tự cài (3–5 phút)</h2>
+  <div class="card"><ol>
+    <li>Lần đầu cần <b>có mạng</b>: tool tự tải và cài những gì cần (khoảng 150–300 MB), không cần bạn làm gì.</li>
+    <li>Xong, trình duyệt tự mở trang <b>Bàn làm việc thiệp</b>. Bắt đầu bằng nút <b class="k">✦ Thiết kế mới</b>.</li>
+    <li>Từ lần sau: bấm đúp <b>Mở Tool</b> là vào ngay.</li>
+  </ol></div>
+
+  <div class="card warn">
+    <b>Quan trọng:</b> <b>đừng đóng cửa sổ Terminal / cửa sổ đen</b> trong lúc đang dùng tool – đóng nó là tool tắt.
+    Dùng xong: đóng trình duyệt rồi đóng cửa sổ đó. Lỡ đóng trình duyệt thì mở lại địa chỉ <code>http://127.0.0.1:8800</code>.
+  </div>
+
+  <h2>Dữ liệu của bạn ở đâu?</h2>
+  <div class="card">
+    <p style="margin:0 0 6px">Mọi mẫu thiệp, font tự thêm và <b>thiệp đã xuất</b> nằm ở thư mục
+      <b class="k">Tài liệu (Documents) › ThiepTool</b> – thiệp xuất ra ở <code>ThiepTool/output</code>.</p>
+    <p class="muted" style="margin:0">Nhận bản tool mới: xoá thư mục tool cũ, giải nén bản mới, mở lại – dữ liệu trong Documents/ThiepTool vẫn còn nguyên.</p>
+  </div>
+
+  <h2>Cần có</h2>
+  <div class="card"><ul style="margin:0;padding-left:20px">
+    <li>Máy Mac (chip Apple hoặc Intel) hoặc Windows 10/11, còn trống khoảng 1 GB.</li>
+    <li>Mạng internet ở lần mở đầu tiên.</li>
+    <li>Tài khoản ChatGPT có vẽ ảnh – để AI thiết kế và vẽ hoa văn (tool dẫn từng bước).</li>
+  </ul></div>
+
+  <h2>Gỡ tool</h2>
+  <div class="card muted">
+    Xoá thư mục tool, rồi xoá bộ chạy:
+    Mac – <code>~/Library/Application Support/ThiepTool</code> (Finder › Đi › Đi tới thư mục…);
+    Windows – <code>%LOCALAPPDATA%\ThiepTool</code>. Dữ liệu của bạn (Documents/ThiepTool) xoá hay giữ tuỳ bạn.
+  </div>
+</main>
+<script>
+  const pick = os => { for (const x of ['mac', 'win']) document.getElementById(x).classList.toggle('on', x === os);
+    document.getElementById('tMac').classList.toggle('on', os === 'mac'); document.getElementById('tWin').classList.toggle('on', os === 'win'); };
+  document.getElementById('tMac').onclick = () => pick('mac');
+  document.getElementById('tWin').onclick = () => pick('win');
+  if (/Windows/i.test(navigator.userAgent)) pick('win');
+</script>
+</body>
+</html>

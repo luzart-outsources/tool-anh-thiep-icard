@@ -1,0 +1,360 @@
+{
+  "title": "Thông tin hai gia đình",
+  "canvas": {
+    "w": 1748,
+    "h": 2480
+  },
+  "_nguon": "sinh tự động từ 2.jpg – chỉnh tay thoải mái",
+  "ornaments": [
+    {
+      "id": "vien",
+      "type": "border",
+      "fill": "gold_line",
+      "lines": [
+        {
+          "inset": 32.3,
+          "width": 5
+        },
+        {
+          "inset": 55.6,
+          "width": 4
+        },
+        {
+          "inset": 82.1,
+          "width": 3
+        }
+      ]
+    },
+    {
+      "id": "truc_1",
+      "type": "rule",
+      "orient": "v",
+      "fill": "gold_line",
+      "x": 874.8,
+      "y": 962.7,
+      "length": 184.1,
+      "thickness": 3,
+      "fade": 0.04,
+      "anchor": "c"
+    },
+    {
+      "id": "truc_2",
+      "type": "rule",
+      "orient": "v",
+      "fill": "gold_line",
+      "x": 874.8,
+      "y": 1637.7,
+      "length": 107.8,
+      "thickness": 3,
+      "fade": 0.04,
+      "anchor": "c"
+    },
+    {
+      "id": "goc",
+      "asset": "goc",
+      "x": 63.0,
+      "y": 69.7,
+      "w": 313.4,
+      "anchor": "tl",
+      "mirror": "xy",
+      "h": 500.8
+    },
+    {
+      "id": "nhanh",
+      "asset": "nhanh",
+      "x": 81.2,
+      "y": 1767.9,
+      "w": 89.6,
+      "anchor": "cl",
+      "mirror": "x",
+      "h": 406.5
+    },
+    {
+      "id": "vuong_mien",
+      "asset": "vuong_mien",
+      "x": 873.2,
+      "y": 262.0,
+      "w": 774.5,
+      "anchor": "c",
+      "h": 348.3
+    },
+    {
+      "id": "div_tieude",
+      "asset": "div_tieude",
+      "x": 874.0,
+      "y": 493.4,
+      "w": 888.9,
+      "anchor": "c",
+      "h": 77.9
+    },
+    {
+      "id": "div_hoa",
+      "asset": "div_hoa",
+      "x": 462.7,
+      "y": 860.7,
+      "w": 424.6,
+      "anchor": "c",
+      "h": 129.4
+    },
+    {
+      "id": "div_mini",
+      "asset": "div_mini",
+      "x": 462.7,
+      "y": 1370.7,
+      "w": 417.9,
+      "anchor": "c",
+      "h": 71.3
+    },
+    {
+      "id": "khung_va",
+      "asset": "khung_va",
+      "x": 873.2,
+      "y": 1320.1,
+      "w": 290.2,
+      "anchor": "c",
+      "h": 550.6
+    },
+    {
+      "id": "mat_day",
+      "asset": "mat_day",
+      "x": 874.8,
+      "y": 827.6,
+      "w": 41.5,
+      "anchor": "c",
+      "h": 109.6
+    },
+    {
+      "id": "hoa_giua",
+      "asset": "hoa_giua",
+      "x": 915.5,
+      "y": 1916.3,
+      "w": 79.6,
+      "anchor": "c",
+      "h": 111.1
+    },
+    {
+      "id": "div_cuoi",
+      "asset": "div_cuoi",
+      "x": 873.2,
+      "y": 2114.5,
+      "w": 754.6,
+      "anchor": "c",
+      "h": 126.0
+    },
+    {
+      "id": "div_tieude_duoi",
+      "asset": "div_tieude",
+      "x": 874.0,
+      "y": 711.8,
+      "w": 888.9,
+      "anchor": "c",
+      "flip": "v",
+      "h": 77.9
+    },
+    {
+      "id": "div_hoa_gai",
+      "asset": "div_hoa",
+      "x": 1283.6,
+      "y": 859.9,
+      "w": 424.6,
+      "anchor": "c",
+      "h": 129.4
+    },
+    {
+      "id": "div_mini_gai",
+      "asset": "div_mini",
+      "x": 1284.5,
+      "y": 1370.7,
+      "w": 416.3,
+      "anchor": "c",
+      "h": 71.0
+    },
+    {
+      "id": "mat_day_duoi",
+      "asset": "mat_day",
+      "x": 874.0,
+      "y": 1732.2,
+      "w": 36.5,
+      "anchor": "c",
+      "flip": "v",
+      "h": 96.4
+    }
+  ],
+  "texts": [
+    {
+      "id": "tieu_de_gd",
+      "style": "caps",
+      "text": "LỄ THÀNH HÔN",
+      "cx": 874,
+      "cy": 602.0,
+      "w": 1200,
+      "size": 130.0,
+      "label": "Tiêu đề thiệp gia đình"
+    },
+    {
+      "id": "nha_trai",
+      "style": "caps",
+      "text": "NHÀ TRAI",
+      "cx": 466.0,
+      "cy": 985.1,
+      "w": 480,
+      "size": 76.9,
+      "group": "nha",
+      "label": "Nhãn 'Nhà trai'"
+    },
+    {
+      "id": "nha_gai",
+      "style": "caps",
+      "text": "NHÀ GÁI",
+      "cx": 1285.3,
+      "cy": 985.1,
+      "w": 480,
+      "size": 76.9,
+      "group": "nha",
+      "label": "Nhãn 'Nhà gái'"
+    },
+    {
+      "id": "ong_trai",
+      "style": "body",
+      "text": "Ông: Lê Văn Hùng",
+      "cx": 466.0,
+      "cy": 1143.2,
+      "w": 520,
+      "size": 60,
+      "weight": 600,
+      "group": "than",
+      "label": "Bố chú rể"
+    },
+    {
+      "id": "ba_trai",
+      "style": "body",
+      "text": "Bà: Trần Thị Mai",
+      "cx": 466.0,
+      "cy": 1236.0,
+      "w": 520,
+      "size": 60,
+      "weight": 600,
+      "group": "than",
+      "label": "Mẹ chú rể"
+    },
+    {
+      "id": "ong_gai",
+      "style": "body",
+      "text": "Ông: Nguyễn Văn Long",
+      "cx": 1285.3,
+      "cy": 1143.2,
+      "w": 520,
+      "size": 60,
+      "weight": 600,
+      "group": "than",
+      "label": "Bố cô dâu"
+    },
+    {
+      "id": "ba_gai",
+      "style": "body",
+      "text": "Bà: Phạm Thị Hương",
+      "cx": 1285.3,
+      "cy": 1236.0,
+      "w": 520,
+      "size": 60,
+      "weight": 600,
+      "group": "than",
+      "label": "Mẹ cô dâu"
+    },
+    {
+      "id": "nhan_dc_trai",
+      "style": "body",
+      "text": "Địa chỉ:",
+      "cx": 466.0,
+      "cy": 1474.9,
+      "w": 520,
+      "size": 60,
+      "weight": 600,
+      "group": "than",
+      "label": "Nhãn 'Địa chỉ' (trai)"
+    },
+    {
+      "id": "dc_trai",
+      "style": "body",
+      "text": "18 Hoàng Hoa Thám,\nBa Đình, Hà Nội",
+      "cx": 466.0,
+      "cy": 1596.7,
+      "w": 520,
+      "size": 60,
+      "weight": 600,
+      "group": "than",
+      "label": "Địa chỉ nhà trai"
+    },
+    {
+      "id": "nhan_dc_gai",
+      "style": "body",
+      "text": "Địa chỉ:",
+      "cx": 1285.3,
+      "cy": 1474.9,
+      "w": 520,
+      "size": 60,
+      "weight": 600,
+      "group": "than",
+      "label": "Nhãn 'Địa chỉ' (gái)"
+    },
+    {
+      "id": "dc_gai",
+      "style": "body",
+      "text": "52 Lê Lợi,\nHải Châu, Đà Nẵng",
+      "cx": 1285.3,
+      "cy": 1596.7,
+      "w": 520,
+      "size": 60,
+      "weight": 600,
+      "group": "than",
+      "label": "Địa chỉ nhà gái"
+    },
+    {
+      "id": "va",
+      "style": "script",
+      "text": "và",
+      "cx": 874,
+      "cy": 1301.7,
+      "w": 150,
+      "size": 137.8,
+      "label": "Chữ nối ('và')"
+    },
+    {
+      "id": "ten_1",
+      "style": "script",
+      "text": "Gia Minh",
+      "cx": 535.8,
+      "cy": 1918.9,
+      "w": 640,
+      "size": 173.2,
+      "align": "right",
+      "group": "ten",
+      "label": "Tên chú rể"
+    },
+    {
+      "id": "ten_2",
+      "style": "script",
+      "text": "Ái Ngọc",
+      "cx": 1293.5,
+      "cy": 1909.4,
+      "w": 640,
+      "size": 173.2,
+      "align": "left",
+      "group": "ten",
+      "label": "Tên cô dâu"
+    }
+  ],
+  "mo_ta": "Bố mẹ, địa chỉ hai bên nhà trai – nhà gái (theo thiệp mẫu 2)",
+  "shapes": [
+    "chu_nhat",
+    "bo_goc",
+    "goc_lom",
+    "cat_goc",
+    "rang_cua"
+  ],
+  "shape_default": "chu_nhat",
+  "key_items": [
+    "vuong_mien",
+    "khung_va"
+  ]
+}

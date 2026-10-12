@@ -1,0 +1,9 @@
+numpy>=1.24
+opencv-python>=4.8
+pillow>=10.0
+fonttools>=4.40
+playwright>=1.40
+requests>=2.28
+pytest>=7.0
+# Tuỳ chọn – chỉ cần khi ảnh AI có nền phức tạp (không phải nền màu đặc):
+# rembg[cpu]

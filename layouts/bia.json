@@ -1,0 +1,199 @@
+{
+  "title": "Khung chữ lồng",
+  "canvas": {
+    "w": 1748,
+    "h": 2480
+  },
+  "_nguon": "sinh tự động từ 1.jpg – chỉnh tay thoải mái",
+  "ornaments": [
+    {
+      "id": "vien",
+      "type": "border",
+      "fill": "gold_line",
+      "lines": [
+        {
+          "inset": 32.3,
+          "width": 5
+        },
+        {
+          "inset": 55.6,
+          "width": 4
+        },
+        {
+          "inset": 82.1,
+          "width": 3
+        }
+      ]
+    },
+    {
+      "id": "goc",
+      "asset": "goc",
+      "x": 63.0,
+      "y": 69.7,
+      "w": 313.4,
+      "anchor": "tl",
+      "mirror": "xy",
+      "h": 500.8
+    },
+    {
+      "id": "khung",
+      "asset": "khung",
+      "x": 874.0,
+      "y": 581.3,
+      "w": 1187.4,
+      "anchor": "c",
+      "h": 923.7
+    },
+    {
+      "id": "nhanh",
+      "asset": "nhanh",
+      "x": 81.2,
+      "y": 1412.2,
+      "w": 89.6,
+      "anchor": "cl",
+      "mirror": "x",
+      "h": 406.5
+    },
+    {
+      "id": "div_tren",
+      "asset": "div_tren",
+      "x": 874.8,
+      "y": 1079.6,
+      "w": 409.6,
+      "anchor": "c",
+      "h": 46.4
+    },
+    {
+      "id": "div_duoi",
+      "asset": "div_duoi",
+      "x": 879.0,
+      "y": 1233.9,
+      "w": 520.8,
+      "anchor": "c",
+      "h": 63.0
+    },
+    {
+      "id": "la_va",
+      "asset": "la_va",
+      "x": 762.9,
+      "y": 1585.5,
+      "w": 89.6,
+      "anchor": "c",
+      "mirror": "x",
+      "h": 43.1
+    },
+    {
+      "id": "div_dai",
+      "asset": "div_dai",
+      "x": 875.7,
+      "y": 1907.2,
+      "w": 563.9,
+      "anchor": "c",
+      "h": 69.7
+    },
+    {
+      "id": "hoa_cuoi",
+      "asset": "hoa_cuoi",
+      "x": 873.2,
+      "y": 2280.4,
+      "w": 257.1,
+      "anchor": "c",
+      "h": 96.2
+    },
+    {
+      "id": "div_ngay",
+      "asset": "div_tren",
+      "x": 874.8,
+      "y": 2086.3,
+      "w": 409.6,
+      "anchor": "c",
+      "h": 46.4
+    }
+  ],
+  "texts": [
+    {
+      "id": "chu_long",
+      "style": "monogram",
+      "text": "G|N",
+      "cx": 864.0,
+      "cy": 655.9,
+      "w": 365.9,
+      "size": 177.0,
+      "label": "Chữ lồng (vd. G|N)"
+    },
+    {
+      "id": "tieu_de",
+      "style": "caps",
+      "text": "THIỆP THÀNH HÔN",
+      "cx": 883.9,
+      "cy": 1151.0,
+      "w": 882.3,
+      "size": 77.9,
+      "label": "Tiêu đề bìa"
+    },
+    {
+      "id": "ten_1",
+      "style": "script",
+      "text": "Gia Minh",
+      "cx": 831.0,
+      "cy": 1396.8,
+      "w": 1061.4,
+      "size": 270.7,
+      "group": "ten",
+      "label": "Tên chú rể"
+    },
+    {
+      "id": "va",
+      "style": "script",
+      "text": "và",
+      "cx": 868.0,
+      "cy": 1563.2,
+      "w": 199.0,
+      "size": 100.9,
+      "label": "Chữ nối ('và')"
+    },
+    {
+      "id": "ten_2",
+      "style": "script",
+      "text": "Ái Ngọc",
+      "cx": 854.5,
+      "cy": 1732.5,
+      "w": 1061.4,
+      "size": 260.1,
+      "group": "ten",
+      "label": "Tên cô dâu"
+    },
+    {
+      "id": "loi_moi",
+      "style": "caps_wide",
+      "text": "TRÂN TRỌNG BÁO TIN LỄ THÀNH HÔN",
+      "cx": 871.0,
+      "cy": 1996.8,
+      "w": 919.4,
+      "size": 37.4,
+      "label": "Lời báo tin"
+    },
+    {
+      "id": "ngay",
+      "style": "caps_wide",
+      "text": "15 . 12 . 2026",
+      "cx": 871.9,
+      "cy": 2170.1,
+      "w": 479.2,
+      "size": 66.9,
+      "label": "Ngày cưới"
+    }
+  ],
+  "mo_ta": "Khung chữ lồng lớn phía trên, tên ở giữa (theo thiệp mẫu 1)",
+  "shapes": [
+    "chu_nhat",
+    "bo_goc",
+    "goc_lom",
+    "cat_goc",
+    "rang_cua"
+  ],
+  "shape_default": "chu_nhat",
+  "key_items": [
+    "khung"
+  ]
+}

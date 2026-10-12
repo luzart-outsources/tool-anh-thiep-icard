@@ -1,0 +1,136 @@
+{
+  "title": "Tối giản",
+  "mo_ta": "Ít hoa văn, nhiều khoảng trống, chữ là điểm nhấn",
+  "canvas": {
+    "w": 1748,
+    "h": 2480
+  },
+  "shapes": [
+    "chu_nhat",
+    "bo_goc",
+    "goc_lom",
+    "cat_goc",
+    "rang_cua",
+    "vom",
+    "oval"
+  ],
+  "shape_default": "chu_nhat",
+  "key_items": [
+    "hoa_nho"
+  ],
+  "ornaments": [
+    {
+      "id": "vien",
+      "type": "border",
+      "fill": "gold_line",
+      "lines": [
+        {
+          "inset": 70,
+          "width": 3
+        }
+      ]
+    },
+    {
+      "id": "hoa_tren",
+      "asset": "hoa_nho",
+      "x": 874,
+      "y": 430,
+      "w": 230,
+      "h": 230,
+      "anchor": "c"
+    },
+    {
+      "id": "div_tren",
+      "asset": "div_tren",
+      "x": 874,
+      "y": 820,
+      "w": 420,
+      "h": 50,
+      "anchor": "c"
+    },
+    {
+      "id": "div_duoi",
+      "asset": "div_tren",
+      "x": 874,
+      "y": 1720,
+      "w": 420,
+      "h": 50,
+      "anchor": "c",
+      "flip": "v"
+    },
+    {
+      "id": "hoa_duoi",
+      "asset": "hoa_nho",
+      "x": 874,
+      "y": 2140,
+      "w": 170,
+      "h": 170,
+      "anchor": "c",
+      "flip": "v"
+    }
+  ],
+  "texts": [
+    {
+      "id": "tieu_de",
+      "label": "Tiêu đề bìa",
+      "style": "caps_wide",
+      "text": "THIỆP THÀNH HÔN",
+      "cx": 874,
+      "cy": 700,
+      "w": 1000,
+      "size": 56
+    },
+    {
+      "id": "ten_1",
+      "label": "Tên chú rể",
+      "style": "script",
+      "text": "Gia Minh",
+      "cx": 874,
+      "cy": 1090,
+      "w": 1150,
+      "size": 270,
+      "group": "ten"
+    },
+    {
+      "id": "va",
+      "label": "Chữ nối ('và')",
+      "style": "script",
+      "text": "và",
+      "cx": 874,
+      "cy": 1275,
+      "w": 220,
+      "size": 110
+    },
+    {
+      "id": "ten_2",
+      "label": "Tên cô dâu",
+      "style": "script",
+      "text": "Ái Ngọc",
+      "cx": 874,
+      "cy": 1460,
+      "w": 1150,
+      "size": 270,
+      "group": "ten"
+    },
+    {
+      "id": "loi_moi",
+      "label": "Lời báo tin",
+      "style": "caps_wide",
+      "text": "TRÂN TRỌNG BÁO TIN LỄ THÀNH HÔN",
+      "cx": 874,
+      "cy": 1840,
+      "w": 1050,
+      "size": 36
+    },
+    {
+      "id": "ngay",
+      "label": "Ngày cưới",
+      "style": "caps_wide",
+      "text": "15 . 12 . 2026",
+      "cx": 874,
+      "cy": 1975,
+      "w": 700,
+      "size": 62
+    }
+  ]
+}

@@ -1,0 +1,1431 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bàn làm việc thiệp</title>
+<style>
+  :root { --bg:#f6f4ef; --card:#fff; --line:#e3ded3; --text:#24211c; --muted:#7a7468; --accent:#8c6a2e;
+          --accent-2:#f3ead6; --ok:#2f7d4f; --okbg:#eef8f2; --warn:#a96a12; --warnbg:#fdf5e7; --err:#b23a3a; --errbg:#fcf0f0; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.55 system-ui, "Segoe UI", sans-serif; }
+  header { position:sticky; top:0; z-index:5; background:#fffdf8; border-bottom:1px solid var(--line);
+           display:flex; align-items:center; gap:14px; padding:12px 20px; }
+  header h1 { font-size:17px; margin:0; cursor:pointer; } header h1 span { color:var(--accent); }
+  main { max-width:980px; margin:0 auto; padding:22px 20px 60px; }
+  h2 { font-size:20px; margin:0 0 4px; } .lead { color:var(--muted); margin:0 0 18px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin-bottom:14px; }
+  .muted { color:var(--muted); font-size:13.5px; }
+  .btn { display:inline-flex; align-items:center; gap:6px; border:1px solid #d9c9a6; background:#fff; padding:9px 16px;
+         border-radius:8px; cursor:pointer; font:inherit; color:var(--text); text-decoration:none; }
+  .btn:hover { background:var(--accent-2); }
+  .btn.primary { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600; }
+  .btn.primary:hover { filter:brightness(1.08); }
+  .btn.ghost { border-color:transparent; background:none; color:var(--muted); }
+  .btn.small { padding:5px 11px; font-size:13.5px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .spacer { flex:1; }
+  input[type=text], textarea, select { font:inherit; border:1px solid var(--line); border-radius:8px; padding:9px 11px;
+         background:#fff; color:var(--text); width:100%; }
+  textarea { resize:vertical; min-height:96px; }
+  label.f { display:block; font-size:13.5px; color:var(--muted); margin:0 0 4px; }
+  .view { display:none; } .view.on { display:block; }
+  /* trang chính */
+  .big { display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:14px; margin-bottom:22px; }
+  .big button { text-align:left; border:1px solid var(--line); background:#fff; border-radius:14px; padding:22px; cursor:pointer; font:inherit; }
+  .big button:hover { border-color:var(--accent); background:#fffaf0; }
+  .big b { display:block; font-size:18px; margin:8px 0 4px; } .big .ic { font-size:26px; }
+  .kits { display:grid; gap:10px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:16px; align-items:start; }
+  .kc { background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px; display:flex; flex-direction:column; gap:8px; }
+  .kc.pick { cursor:pointer; } .kc.pick:hover { border-color:var(--accent); }
+  .card-pv { aspect-ratio:1 / 1.414; border-radius:6px; overflow:hidden; display:grid; place-items:center; border:1px solid var(--line);
+             color:#fff9; font-size:13px; text-align:center; padding:0; }
+  .card-pv img { width:100%; height:100%; object-fit:cover; display:block; }
+  .kc b { font-size:14.5px; } .kc .acts { display:flex; gap:6px; flex-wrap:wrap; }
+  .shapes { display:flex; gap:8px; flex-wrap:wrap; }
+  .shp { display:flex; flex-direction:column; align-items:center; gap:4px; width:78px; padding:8px 4px; border:1.5px solid var(--line);
+         background:#fff; border-radius:10px; cursor:pointer; font:inherit; font-size:12.5px; color:var(--muted); }
+  .shp svg { width:30px; height:42px; } .shp:hover { border-color:var(--accent); }
+  .shp.on { border-color:var(--accent); background:#fffaf0; color:var(--text); font-weight:600; }
+  .kc.lay { position:relative; } .kc.lay.sel { border:2px solid var(--accent); background:#fffaf0; }
+  .kc.lay.sel::after { content:"✓"; position:absolute; top:14px; right:14px; width:26px; height:26px; border-radius:50%;
+         background:var(--accent); color:#fff; display:grid; place-items:center; font-weight:700; }
+  .kc.lay.sel[data-n]::after { content:attr(data-n); }
+  .ipv { display:flex; gap:14px; flex-wrap:wrap; align-items:flex-start; margin-top:12px; }
+  .ipv figure { margin:0; display:flex; flex-direction:column; gap:4px; } .ipv figcaption { font-size:12.5px; color:var(--muted); }
+  .ipv img { max-height:420px; max-width:100%; border:1px solid var(--line); border-radius:6px; background:#fff; }
+  .itx { display:contents; } .itx .lbl { min-width:0; } .itx .lbl small { display:block; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .itx input[type=color] { width:44px; height:32px; padding:2px; border:1px solid var(--line); border-radius:6px; background:#fff; }
+  .itx input[type=color]:disabled { opacity:.3; }
+  .review { display:grid; grid-template-columns:260px 1fr; gap:16px; align-items:start; }
+  @media (max-width: 640px) { .review { grid-template-columns:1fr; } }
+  .kitrow { display:flex; gap:14px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 14px; }
+  .thumb { width:64px; height:64px; border-radius:8px; flex:none; display:grid; place-items:center; overflow:hidden; border:1px solid var(--line); }
+  .thumb img { max-width:88%; max-height:88%; }
+  /* thanh bước */
+  .steps { display:flex; gap:6px; flex-wrap:wrap; margin:0 0 18px; }
+  .steps span { padding:6px 14px; border-radius:999px; border:1px solid var(--line); color:var(--muted); background:#fff; font-size:14px; }
+  .steps span.done { background:var(--okbg); color:var(--ok); border-color:#b9dcc6; }
+  .steps span.cur { background:var(--accent); color:#fff; border-color:var(--accent); font-weight:600; }
+  .step { display:none; } .step.on { display:block; }
+  .opts { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:10px; }
+  .opts button { text-align:left; border:1.5px solid var(--line); background:#fff; border-radius:10px; padding:12px 14px; cursor:pointer; font:inherit; }
+  .opts button.on { border-color:var(--accent); background:#fffaf0; }
+  .opts small { display:block; color:var(--muted); }
+  .grp { display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:2px 14px; margin-top:10px; }
+  .grp h4 { grid-column:1/-1; font-size:12px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin:10px 0 2px; }
+  .chk { display:flex; gap:8px; align-items:center; padding:3px 0; cursor:pointer; }
+  /* bước vẽ */
+  .howto { background:var(--accent-2); border:1px solid #e6d6b2; border-radius:12px; padding:14px 18px; margin-bottom:14px; }
+  .howto ol { margin:6px 0 0; padding-left:20px; }
+  .msg { background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 18px; margin-bottom:10px; }
+  .msg.cur { border:2px solid var(--accent); }
+  .msg.done { background:#fcfcfa; }
+  .msg h3 { font-size:15.5px; margin:0; }
+  .pill { font-size:12.5px; padding:2px 10px; border-radius:999px; border:1px solid var(--line); color:var(--muted); white-space:nowrap; }
+  .pill.ok { color:var(--ok); background:var(--okbg); border-color:#b9dcc6; }
+  .pill.warn { color:var(--warn); background:var(--warnbg); border-color:#ecd3a8; }
+  .pill.err { color:var(--err); background:var(--errbg); border-color:#e8b9b9; }
+  .pill.busy { color:var(--accent); background:var(--accent-2); border-color:#e2d3b3; }
+  .drop { border:2px dashed #d9cdb3; border-radius:10px; padding:16px; text-align:center; color:var(--muted); cursor:pointer;
+          background:#fcfaf5; margin-top:10px; font-size:14px; }
+  .drop.over { border-color:var(--accent); background:var(--accent-2); }
+  .drop.lg { padding:26px; font-size:15px; }
+  pre.txt { white-space:pre-wrap; background:#faf8f3; border:1px solid var(--line); border-radius:8px; padding:10px 12px;
+            font:12.5px/1.5 ui-monospace, Consolas, monospace; max-height:220px; overflow:auto; margin:8px 0 0; }
+  .pieces { display:flex; gap:10px; flex-wrap:wrap; margin-top:10px; }
+  .piece { width:150px; border:1px solid var(--line); border-radius:8px; padding:6px; background:#fff; }
+  .piece .im { height:90px; display:grid; place-items:center; background:repeating-conic-gradient(#e8e8e8 0 25%, #fff 0 50%) 0 0/14px 14px; border-radius:6px; }
+  .piece img { max-width:100%; max-height:86px; }
+  .piece select { margin-top:6px; padding:4px 6px; font-size:12.5px; }
+  .note { color:var(--warn); font-size:13.5px; margin-top:8px; }
+  .items { display:grid; grid-template-columns:repeat(auto-fill, minmax(170px, 1fr)); gap:10px; }
+  .it { border:1px solid var(--line); border-radius:10px; padding:8px; background:#fff; }
+  .it .im { height:110px; display:grid; place-items:center; border-radius:6px; }
+  .it img { max-width:92%; max-height:100px; }
+  .it b { display:block; font-size:13.5px; margin-top:6px; }
+  .sample { border-radius:10px; padding:22px; text-align:center; font:52px/1.2 Georgia, serif; font-style:italic; }
+  .sample span { -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .fields { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:10px 16px; }
+  .results { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:14px; }
+  .results img { width:100%; border-radius:6px; border:1px solid var(--line); }
+  .warns { color:var(--warn); font-size:13px; padding-left:18px; margin:8px 0 0; }
+  .nav { display:flex; gap:10px; margin-top:16px; align-items:center; }
+  .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#24211c; color:#fff; padding:10px 18px;
+           border-radius:8px; font-size:14px; opacity:0; transition:opacity .2s; pointer-events:none; max-width:90vw; z-index:20; }
+  .toast.show { opacity:1; } .toast.err { background:var(--err); }
+  .spin { display:inline-block; width:14px; height:14px; border:2px solid #fff6; border-top-color:#fff; border-radius:50%; animation:sp .8s linear infinite; }
+  @keyframes sp { to { transform:rotate(360deg); } }
+  /* trình chỉnh bố cục */
+  main.wide { max-width:1300px; }
+  .edbar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+  .edbar b { font-size:16px; }
+  .ed { display:grid; grid-template-columns:auto minmax(320px, 1fr); gap:20px; align-items:start; }
+  @media (max-width: 900px) { .ed { grid-template-columns:1fr; } }
+  .shapes.mini { gap:5px; } .shapes.mini .shp { width:54px; padding:5px 2px; font-size:11px; } .shapes.mini .shp svg { width:22px; height:30px; }
+  .stagewrap { position:relative; user-select:none; -webkit-user-select:none; margin-top:10px; }
+  #stage { position:relative; touch-action:none; cursor:default; }
+  #eClip { position:absolute; inset:0; overflow:hidden; -webkit-mask-size:100% 100%; mask-size:100% 100%;
+           filter:drop-shadow(0 2px 10px #0003); }
+  .ebg { position:absolute; inset:0; }
+  .eimg { position:absolute; pointer-events:none; max-width:none; display:block; }
+  .eln { position:absolute; white-space:pre; line-height:1.5; padding:.5em .7em; pointer-events:none;
+         -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; background-size:100% 100%; }
+  .eln .bl { display:inline-block; width:0; height:0; vertical-align:baseline; }
+  .emiss { position:absolute; border:1.5px dashed rgba(60,50,40,.35); color:rgba(60,50,40,.55); font-size:11px; display:block;
+           text-align:left; pointer-events:none; background:rgba(120,110,100,.06); overflow:hidden; line-height:1.15; padding:2px 4px; }
+  .emiss.bd { border-style:dotted; background:rgba(110,130,170,.07); }
+  .dark .emiss { border-color:#ffffffa0; color:#ffffffd0; background:#ffffff14; }
+  .ephoto { position:absolute; background:#d6d0c7; display:grid; place-items:center; color:#8a8378; overflow:hidden; pointer-events:none; }
+  .mstage { position:relative; } .mclip { position:absolute; inset:0; overflow:hidden; -webkit-mask-size:100% 100%; mask-size:100% 100%;
+           filter:drop-shadow(0 1px 5px #0003); }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; }
+  .chips button, .chip { border:1px solid var(--line); background:#fff; border-radius:999px; padding:4px 12px; font:inherit; font-size:13px;
+           cursor:pointer; color:var(--text); display:inline-flex; gap:6px; align-items:center; }
+  .chips button:hover { border-color:var(--accent); background:#fffaf0; }
+  .chip { cursor:default; } .chip img { width:22px; height:22px; object-fit:contain; } .chip small { color:var(--muted); }
+  h4.sec { margin:0 0 10px; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .cardgrp h3 { font-size:16px; margin:0; }
+  .vgrid { display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start; margin-top:12px; }
+  .vcard { background:#fcfaf6; border:1px solid var(--line); border-radius:12px; padding:10px; display:flex; flex-direction:column; gap:6px; }
+  .vcard b { font-size:14px; }
+  .warnbox { background:var(--warnbg); border-color:#ecd3a8; }
+  .okbox { background:var(--okbg); border-color:#b9dcc6; }
+  .lay-h { grid-column:1/-1; margin:12px 0 0; font-size:15px; }
+  .fontlist { display:grid; gap:12px; }
+  .fcard { background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 18px; display:grid;
+           grid-template-columns:minmax(0, 1fr) 320px; gap:18px; align-items:center; }
+  @media (max-width: 760px) { .fcard { grid-template-columns:1fr; } }
+  .fsample { font-size:40px; line-height:1.35; color:#2e2a24; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .fsmall { font-size:17px; color:#5c564c; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .fmeta { display:flex; flex-direction:column; gap:8px; }
+  .homelinks { display:flex; gap:10px; align-items:center; margin:-8px 0 24px; flex-wrap:wrap; }
+  #eSelBox { position:absolute; inset:0; pointer-events:none; }
+  .esel { position:absolute; outline:1.5px dashed #1a73e8; box-shadow:0 0 0 1px #ffffffa0; }
+  .eghost { position:absolute; outline:1px dotted #1a73e8b0; }
+  .hdl { position:absolute; width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%; background:#1a73e8; border:2px solid #fff;
+         pointer-events:auto; cursor:nwse-resize; box-shadow:0 1px 4px #0005; }
+  .guide { position:absolute; background:#e8467c; }
+  #eTruthImg { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; z-index:3; }
+  .truthtag { position:absolute; top:8px; left:8px; z-index:4; background:#24211ccc; color:#fff; font-size:12.5px; padding:4px 10px; border-radius:6px; }
+  .ed-right { position:sticky; top:66px; max-height:calc(100vh - 80px); overflow:auto; padding-right:2px; }
+  .ed-right h4 { margin:0 0 8px; font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); }
+  .elist div { display:flex; gap:8px; align-items:center; padding:4px 8px; border-radius:6px; cursor:pointer; font-size:14px; }
+  .elist div:hover { background:#f5f1e8; } .elist div.on { background:var(--accent-2); font-weight:600; }
+  .elist div.off span { color:#aaa; text-decoration:line-through; }
+  .elist img { width:26px; height:26px; object-fit:contain; flex:none; } .elist .ic { width:26px; text-align:center; flex:none; color:var(--muted); }
+  .eye { border:none; background:none; cursor:pointer; font-size:13px; padding:0 4px; margin-left:auto; color:var(--muted); }
+  .addgrid { display:grid; grid-template-columns:repeat(auto-fill, minmax(62px, 1fr)); gap:6px; }
+  .addgrid button { height:64px; border:1px solid var(--line); border-radius:8px; cursor:pointer; padding:5px; display:grid; place-items:center; overflow:hidden; }
+  .addgrid button:hover { outline:2px solid var(--accent); }
+  .addgrid img { max-width:100%; max-height:52px; object-fit:contain; }
+  .pgrid { display:grid; grid-template-columns:104px 1fr; gap:9px 10px; align-items:center; font-size:14px; }
+  .pgrid > label { color:var(--muted); font-size:13.5px; }
+  .pgrid input[type=range] { width:100%; accent-color:var(--accent); }
+  .pgrid input[type=text], .pgrid select, .pgrid textarea { padding:6px 9px; }
+  .seg { display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; flex-wrap:wrap; }
+  .seg button { border:none; border-right:1px solid var(--line); background:#fff; padding:6px 11px; cursor:pointer; font:inherit; font-size:13px; }
+  .seg button:last-child { border-right:none; } .seg button.on { background:var(--accent); color:#fff; }
+  .kc.newlay { border:2px dashed #d9cdb3; background:#fcfaf5; justify-content:center; align-items:center; text-align:center; min-height:200px; }
+  .kc.newlay b { font-size:16px; } .kc.newlay:hover { border-color:var(--accent); }
+  dialog { border:1px solid var(--line); border-radius:12px; padding:20px 22px; max-width:440px; width:92vw; }
+  dialog::backdrop { background:#0005; }
+  @media (max-width: 640px) { main { padding:16px 16px 50px; } header { padding:10px 16px; } }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="logo">Bàn làm việc <span>thiệp</span></h1>
+  <span class="spacer"></span>
+  <button class="btn ghost" id="homeBtn">‹ Trang chính</button>
+</header>
+<main>
+  <!-- TRANG CHÍNH -->
+  <section class="view" id="v-home">
+    <h2>Bạn muốn làm gì?</h2>
+    <p class="lead">Chọn một việc, tool dẫn từng bước.</p>
+    <div class="big">
+      <button id="goNew"><span class="ic">✦</span><b>Thiết kế mới</b><span class="muted">Mô tả thiệp bạn muốn · AI lên bản thiết kế (bao nhiêu thiệp, khổ, hình dáng, bố cục) · vẽ hoa văn trong 1 chat ChatGPT</span></button>
+      <button id="goCus"><span class="ic">✉</span><b>Làm thiệp cho khách</b><span class="muted">Chọn mẫu · điền tên, ngày · xuất bộ file · khoảng 1 phút</span></button>
+      <button id="goIcard"><span class="ic">⇪</span><b>Đăng lên Icard</b><span class="muted">Chọn thiệp làm trang · ô chữ khách sửa được · đăng mẫu, font, hoa văn lên kho mẫu Icard</span></button>
+    </div>
+    <div class="homelinks"><button class="btn" id="goFonts"><b style="font-family:Georgia,serif">Aa</b> Font chữ</button>
+      <span class="muted" id="fontCount">Thêm font riêng – AI và trình chỉnh dùng được ngay</span></div>
+    <h3 style="font-size:16px;margin:0 0 10px">Mẫu thiệp của bạn</h3>
+    <div class="cards" id="kitList"></div>
+  </section>
+
+  <!-- THIẾT KẾ MỚI -->
+  <section class="view" id="v-new">
+    <div class="steps" id="newSteps"></div>
+    <div class="step" id="n1">
+      <h2>Bạn muốn bộ thiệp thế nào?</h2>
+      <p class="lead">Viết tự do: phong cách, màu, loài hoa, bao nhiêu thiệp, khổ, hình dáng, mấy phương án, có ô ảnh cưới không… AI lên bản thiết kế đúng theo ý bạn. Không ghi thì AI tự đề xuất.</p>
+      <div class="card">
+        <textarea id="nReq" style="min-height:120px" placeholder="Ví dụ: Bộ thiệp cưới phong cách Hàn Quốc tối giản, hoa cúc trắng, chữ nâu. Gồm thiệp mời 15x21 cm (3 phương án), thiệp hình trái tim 15x15 cm, và banner web ngang có ô ảnh cưới."></textarea>
+        <p class="muted" style="margin:10px 0 6px">Gợi ý nhanh – bấm để thêm vào:</p>
+        <div class="chips" id="nChips"></div>
+        <p class="muted" style="margin:10px 0 0">Muốn dùng font riêng? <a href="#" onclick="go('fonts');return false">Thêm font</a> trước khi chép tin nhắn – AI chọn font trong danh sách font của bạn.</p>
+      </div>
+      <div class="card">
+        <div class="row"><b>① Gửi yêu cầu cho ChatGPT</b><span class="spacer"></span><button class="btn primary" id="nPrompt">Chép tin nhắn</button></div>
+        <p class="muted" style="margin:6px 0 0">Mở <b>một chat mới</b> trên ChatGPT → dán → gửi. Có thiệp mẫu đã ưng thì đính kèm ảnh vào cùng tin nhắn. Cả bộ thiệp (thiết kế + vẽ hoa văn) làm trong chat này.</p>
+        <details style="margin-top:6px"><summary class="muted" style="cursor:pointer">Xem nội dung tin nhắn</summary><pre class="txt" id="nPromptTxt">(bấm "Chép tin nhắn" để tạo)</pre></details>
+      </div>
+      <div class="card">
+        <b>② Dán câu trả lời của ChatGPT</b>
+        <textarea id="nReply" style="min-height:100px;margin-top:8px" placeholder="Chép NGUYÊN câu trả lời của ChatGPT (có khối JSON) rồi dán vào đây"></textarea>
+        <p class="muted" id="nReplyNote" style="margin:6px 0 0"></p>
+      </div>
+      <div class="nav"><span class="spacer"></span><button class="btn primary" id="nImport">Đọc bản thiết kế →</button></div>
+    </div>
+    <div class="step" id="n2">
+      <h2 id="n2Title">Bản thiết kế</h2>
+      <p class="lead" id="n2Lead"></p>
+      <div class="card warnbox" id="n2Pages" style="display:none"></div>
+      <div class="card warnbox" id="n2Fix" style="display:none"></div>
+      <div class="card okbox" id="n2Fixed" style="display:none"></div>
+      <div id="n2Cards"></div>
+      <div class="card"><h4 class="sec">Hoa văn cần vẽ</h4><div class="chips" id="n2Items"></div><div id="n2Notes"></div></div>
+      <div class="card"><h4 class="sec">Muốn sửa hoặc thêm?</h4>
+        <div class="row" style="flex-wrap:nowrap"><input type="text" id="n2Change" placeholder="vd. thêm thiệp cảm ơn 10x15 cm · đổi sang hồng pastel · thiệp mời bỏ viền">
+          <button class="btn" id="n2ChangeBtn" style="white-space:nowrap">Chép tin nhắn</button></div>
+        <p class="muted" style="margin:10px 0 6px">Gửi tin nhắn (sửa lỗi, thêm phương án, sửa theo ý) vào <b>đúng chat ChatGPT đang làm</b>, rồi dán câu trả lời mới vào đây – hoa văn đã vẽ được giữ nguyên:</p>
+        <textarea id="n2Reply" style="min-height:70px" placeholder="Dán câu trả lời mới của ChatGPT"></textarea>
+        <div class="row" style="margin-top:8px"><span class="spacer"></span><button class="btn" id="n2Update">Cập nhật bản thiết kế</button></div>
+      </div>
+      <div class="nav"><button class="btn" onclick="newStep(1)">‹ Yêu cầu</button><span class="spacer"></span>
+        <span class="muted" id="n2Prog"></span><button class="btn primary" onclick="newStep(3)">Tiếp: vẽ hoa văn →</button></div>
+    </div>
+    <div class="step" id="n3">
+      <h2 id="n3Title">Vẽ hoa văn trong ChatGPT</h2>
+      <div class="howto"><b>Cách làm</b><ol id="n3How"></ol></div>
+      <div class="drop lg" id="dropAll">Đã tải hết ảnh? Kéo <b>tất cả</b> vào đây, tool tự xếp theo thứ tự tải về</div>
+      <div id="sheetList" style="margin-top:14px"></div>
+      <div class="nav"><button class="btn ghost" onclick="go('home')">Lưu, làm tiếp sau</button><span class="spacer"></span>
+        <span class="muted" id="n3Prog"></span><button class="btn primary" onclick="newStep(4)">Tiếp: xem kết quả →</button></div>
+    </div>
+    <div class="step" id="n4">
+      <h2>Kết quả</h2>
+      <p class="lead">Thiệp dựng từ hoa văn đã vẽ, với chữ mẫu. Bấm ✎ Chỉnh để sửa tay từng phương án.</p>
+      <div id="n4Grid"></div>
+      <div class="card" style="margin-top:16px"><h4 class="sec">Hoa văn đã tách nền</h4><div class="items" id="n4Items"></div></div>
+      <div class="nav"><button class="btn" onclick="newStep(3)">‹ Quay lại vẽ</button><span class="spacer"></span>
+        <button class="btn primary" id="n4Done">Làm thiệp cho khách →</button></div>
+    </div>
+  </section>
+
+  <!-- FONT CHỮ -->
+  <section class="view" id="v-fonts">
+    <h2>Font chữ</h2>
+    <p class="lead">AI chọn font trong danh sách này khi lên bản thiết kế; trong trình chỉnh, từng ô chữ cũng đổi được sang bất kỳ font nào ở đây.</p>
+    <div class="drop lg" id="fontDrop">Kéo file font vào đây hoặc bấm để chọn – nhận <b>.ttf .otf .woff .woff2</b>, chọn nhiều file một lần được</div>
+    <p class="muted" style="margin:8px 0 18px">⚠ Bộ file giao khách có kèm file font (để web hiển thị chữ sửa được) – chỉ thêm font bạn được phép phân phối, vd. font miễn phí giấy phép OFL trên Google Fonts. Font phải đủ dấu tiếng Việt thì AI mới dùng. Ghi "mô tả cho AI" để AI biết khi nào nên chọn font đó.</p>
+    <div id="fontList" class="fontlist"></div>
+  </section>
+
+  <!-- LÀM THIỆP CHO KHÁCH -->
+  <section class="view" id="v-cus">
+    <div class="steps" id="cusSteps"></div>
+    <div class="step" id="c1">
+      <h2>Chọn mẫu thiệp</h2>
+      <p class="lead">Mẫu = phong cách hoa văn và màu. Bấm vào mẫu muốn dùng.</p>
+      <div class="cards" id="cKits"></div>
+    </div>
+    <div class="step" id="c2">
+      <h2>Chọn hình dáng và bố cục</h2>
+      <p class="lead" id="c2Kit"></p>
+      <div class="card">
+        <label class="f">Hình dáng thiệp</label>
+        <div class="shapes" id="cShapes"></div>
+      </div>
+      <p class="muted" style="margin:4px 0 10px">Bấm để chọn bố cục – chọn nhiều bố cục để làm cả bộ thiệp (bìa, thiệp mời, gia đình…) cùng phong cách.</p>
+      <div class="cards" id="cLayGrid"></div>
+      <div class="nav"><button class="btn" onclick="cusStep(1)">‹ Đổi mẫu</button><span class="spacer"></span>
+        <span class="muted" id="cLayCount"></span><button class="btn primary" id="cToInfo">Tiếp: thông tin khách →</button></div>
+    </div>
+    <div class="step" id="c3">
+      <h2>Thông tin khách</h2>
+      <p class="lead" id="c3Kit"></p>
+      <div class="card">
+        <label class="f">Khổ thiệp</label>
+        <div class="row"><select id="cSize" style="max-width:360px"></select>
+          <span id="cCustom" style="display:none" class="row"><input type="text" id="cW" placeholder="rộng cm" style="width:100px">×
+            <input type="text" id="cH" placeholder="cao cm" style="width:100px"> cm</span>
+          <span class="muted" id="cSizeInfo"></span></div>
+        <div id="cFontRow"><label class="f" style="margin-top:12px">Kiểu chữ tên cô dâu, chú rể</label>
+        <select id="cFont" style="max-width:360px"></select></div>
+      </div>
+      <div class="card">
+        <label class="f">Để trống ô nào thì giữ chữ mẫu ô đó</label>
+        <div class="fields" id="cFields"></div>
+        <div class="fields" style="margin-top:12px"><div><label class="f">Tên thư mục xuất (vd. tên khách)</label><input type="text" id="cKhach" placeholder="minh_ngoc_1512"></div></div>
+      </div>
+      <div class="nav"><button class="btn" onclick="cusStep(2)">‹ Bố cục</button><span class="spacer"></span>
+        <button class="btn primary" id="cRender">Xuất thiệp →</button></div>
+    </div>
+    <div class="step" id="c4">
+      <h2>Bộ file đã xuất</h2>
+      <p class="lead" id="c4Info"></p>
+      <div class="results" id="cResults"></div>
+      <div class="nav"><button class="btn" onclick="cusStep(3)">Làm cho khách khác</button><span class="spacer"></span>
+        <button class="btn" onclick="go('home')">Về trang chính</button></div>
+    </div>
+  </section>
+
+  <!-- ĐĂNG LÊN ICARD -->
+  <section class="view" id="v-icard">
+    <div class="steps" id="icSteps"></div>
+    <div class="step" id="i1">
+      <h2>Chọn mẫu để đăng lên Icard</h2>
+      <p class="lead">Mẫu đã đăng rồi thì đăng lại sẽ <b>cập nhật đúng mẫu cũ</b> trên Icard – ảnh không đổi không up lại.</p>
+      <div class="cards" id="iKits"></div>
+    </div>
+    <div class="step" id="i2">
+      <h2>Trang và ô chữ</h2>
+      <p class="lead" id="i2Kit"></p>
+      <div class="row" style="margin:0 0 10px"><span class="muted">Bấm chọn thiệp làm trang – <b>thứ tự bấm = thứ tự trang</b> (trang 1 là bìa và ảnh đại diện). Khách lật trang như sách. Thiệp cưới trên Icard thường <b>4 trang: Bìa · Gia đình · Thiệp mời · Cảm ơn</b>.</span>
+        <span class="spacer"></span><button class="btn small" id="iStdPages">Chọn bộ 4 trang chuẩn</button></div>
+      <div class="cards" id="iLayGrid"></div>
+      <div class="card" style="margin-top:14px">
+        <h4 class="sec">Hoa văn trên Icard</h4>
+        <div class="opts" id="iOrn"></div>
+        <div class="row" style="margin-top:14px"><label class="f" style="margin:0">Khổ chung của các trang</label>
+          <select id="iSize" style="max-width:320px"></select><span class="muted" id="iSizeNote"></span></div>
+      </div>
+      <div class="card">
+        <h4 class="sec">Ô chữ</h4>
+        <p class="muted" style="margin:0 0 10px"><b>Sửa được</b>: khách Icard đổi nội dung (chữ một màu – chọn màu bên phải). <b>Tên khách</b>: Icard tự điền tên từng khách mời theo link gửi (hiện "[Tên Khách Mời]" trong editor). <b>Khoá</b>: giữ nguyên chữ ánh kim, in vào thiệp, khách không sửa. <b>Bỏ</b>: không đưa lên.</p>
+        <div class="row" style="margin-bottom:8px"><button class="btn small" id="iAllEdit">Đặt lại mặc định</button></div>
+        <div id="iTexts" class="pgrid" style="grid-template-columns:minmax(0,1fr) auto auto"></div>
+      </div>
+      <div class="card">
+        <div class="row"><b>Xem trước đúng như trên Icard</b><span class="spacer"></span><button class="btn" id="iPrevBtn">Dựng xem trước</button></div>
+        <p class="muted" style="margin:6px 0 0">Vẽ lại theo đúng cách Icard vẽ (font đã tách bản tĩnh, chữ một màu, xuống dòng như Icard) – kèm ảnh đại diện của mẫu.</p>
+        <div id="iPrev"></div>
+      </div>
+      <div class="nav"><button class="btn" onclick="icStep(1)">‹ Đổi mẫu</button><span class="spacer"></span>
+        <span class="muted" id="iPageCount"></span><button class="btn primary" id="iToMeta">Tiếp: thông tin mẫu →</button></div>
+    </div>
+    <div class="step" id="i3">
+      <h2>Thông tin mẫu trên Icard</h2>
+      <p class="lead" id="i3Kit"></p>
+      <div class="card" id="iLogin"></div>
+      <div class="card" id="iMeta">
+        <div class="fields">
+          <div style="grid-column:1/-1"><label class="f">Tiêu đề mẫu (không trùng mẫu khác – Icard bỏ dấu khi tạo đường dẫn)</label><input type="text" id="iTitle"></div>
+          <div><label class="f">Danh mục</label><select id="iCat"></select></div>
+          <div><label class="f">Nhóm</label><select id="iGrp"></select></div>
+          <div><label class="f">Loại</label><select id="iType"></select></div>
+          <div><label class="f">Loại thiệp (khối thông tin bên dưới)</label><select id="iInvType"></select></div>
+          <div style="grid-column:1/-1"><label class="f">Mô tả (tuỳ chọn)</label><textarea id="iDesc" style="min-height:70px"></textarea></div>
+        </div>
+        <label class="chk" style="margin-top:10px"><input type="checkbox" id="iActive"> Hiển thị ngay cho khách (bỏ chọn: mẫu mới đăng nháp – duyệt trên admin Icard rồi bật; mẫu đã có giữ nguyên trạng thái trên Icard)</label>
+        <label class="chk"><input type="checkbox" id="iAssets"> Đăng cả từng món hoa văn vào thư viện tài nguyên Icard (cần quyền admin; món đã đăng không đăng lại)</label>
+        <details style="margin-top:8px"><summary class="muted" style="cursor:pointer">Nâng cao</summary>
+          <div class="row" style="margin-top:8px"><label class="f" style="margin:0">Bề rộng khung trang trên Icard (px)</label>
+            <input type="text" id="iLogicalW" style="width:90px"><span class="muted">mặc định 454 (như các mẫu có sẵn trên Icard) · toạ độ, cỡ chữ trong editor Icard tính theo khung này</span></div>
+          <div class="row" style="margin-top:8px"><label class="f" style="margin:0">Màu trang (lộ ra ngoài thiệp không chữ nhật)</label><input type="color" id="iBgColor"></div>
+        </details>
+      </div>
+      <div class="nav"><button class="btn" onclick="icStep(2)">‹ Trang & ô chữ</button><span class="spacer"></span>
+        <button class="btn primary" id="iPush">Đăng lên Icard ⇪</button></div>
+    </div>
+    <div class="step" id="i4">
+      <h2 id="i4Title">Đang đăng…</h2>
+      <pre class="txt" id="iLog" style="max-height:260px"></pre>
+      <div id="iResult"></div>
+      <div class="nav"><button class="btn" onclick="icStep(2)">‹ Sửa & đăng lại</button><span class="spacer"></span>
+        <button class="btn" onclick="go('home')">Về trang chính</button></div>
+    </div>
+  </section>
+
+  <!-- CHỈNH BỐ CỤC (kéo thả) -->
+  <section class="view" id="v-edit">
+    <div class="edbar">
+      <button class="btn" id="eBack">‹ Quay lại</button>
+      <b id="eTitle"></b><span class="pill" id="eDirty" style="display:none">chưa lưu</span>
+      <span class="spacer"></span>
+      <button class="btn small" id="eUndo" title="Ctrl+Z">↶ Hoàn tác</button>
+      <button class="btn small" id="eTruth" title="Dựng bằng đúng bộ máy xuất thiệp">Xem bản thật</button>
+      <button class="btn small" id="eDel" style="display:none">Xoá bố cục</button>
+      <button class="btn primary" id="eSave">Lưu bố cục</button>
+    </div>
+    <div class="ed">
+      <div id="eLeft">
+        <div class="shapes mini" id="eShapes"></div>
+        <div class="stagewrap"><div id="stage"><div id="eClip"></div><div id="eSelBox"></div>
+          <img id="eTruthImg" alt="" hidden><span class="truthtag" id="eTruthTag" hidden>Bản thật – bấm "Quay lại chỉnh" để sửa tiếp</span></div></div>
+        <p class="muted" style="margin:8px 0 0">Bấm chọn · kéo để di chuyển · kéo chấm xanh để đổi cỡ · phím mũi tên để nhích (giữ Shift: nhích xa) · Delete để xoá · Ctrl+Z hoàn tác</p>
+      </div>
+      <div class="ed-right">
+        <div class="card" id="eProps"></div>
+        <div class="card"><h4>Thêm vào thiệp</h4>
+          <div class="addgrid" id="eAdd"></div>
+          <div class="row" style="margin-top:10px"><button class="btn small" id="eAddText">+ Ô chữ</button>
+            <button class="btn small" id="eAddBorder">+ Viền</button><button class="btn small" id="eAddPhoto">+ Ô ảnh</button></div></div>
+        <div class="card"><h4>Các thành phần</h4><div class="elist" id="eList"></div></div>
+      </div>
+    </div>
+    <dialog id="eSaveDlg">
+      <h2 style="margin-bottom:10px">Lưu bố cục</h2>
+      <div id="eSaveNameRow"><label class="f">Tên bố cục (hiện trong thư viện bố cục)</label>
+      <input type="text" id="eSaveName"></div>
+      <p class="muted" id="eSaveHint" style="margin:8px 0 0"></p>
+      <div class="nav"><button class="btn" id="eSaveCancel">Huỷ</button><span class="spacer"></span>
+        <button class="btn" id="eSaveOver" style="display:none">Lưu đè</button>
+        <button class="btn primary" id="eSaveNew">Lưu thành bố cục mới</button></div>
+    </dialog>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const el = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) { if (k === 'class') e.className = v; else if (k.startsWith('on')) e.addEventListener(k.slice(2), v); else e.setAttribute(k, v); }
+  for (const k of kids) if (k != null) e.append(k); return e; };
+const store = { get(k, d) { try { return localStorage.getItem(k) ?? d; } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+let S = null, KIT = null, D = null, picked = new Set(), preset = 'tieu_chuan';
+
+function toast(m, err = false) { const t = $('#toast'); t.textContent = m; t.className = 'toast show' + (err ? ' err' : ''); clearTimeout(t._h); t._h = setTimeout(() => t.className = 'toast', err ? 6000 : 2200); }
+async function api(path, opts = {}) { const r = await fetch(path, { ...opts, headers: { 'X-Cardkit': '1', ...(opts.headers || {}) } }); const j = await r.json().catch(() => ({ error: 'Phản hồi không hợp lệ' }));
+  if (!r.ok || j.error) throw new Error(j.error || r.statusText); return j; }
+const post = (path, body) => api(path, { method: 'POST', body: JSON.stringify(body) });
+async function copy(text, what = 'Đã chép – dán vào ChatGPT') {
+  try { await navigator.clipboard.writeText(text); } catch { const ta = el('textarea'); ta.value = text; document.body.append(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+  toast(what); }
+function stepper(box, names, cur) { box.innerHTML = ''; names.forEach((n, i) => box.append(el('span', { class: i + 1 < cur ? 'done' : i + 1 === cur ? 'cur' : '' }, `${i + 1 < cur ? '✓' : i + 1} ${n}`))); }
+function kitCard(k, opts = {}) {
+  const bg = k.bg || '#dddddd', lum = parseInt(bg.slice(1, 3), 16) * .299 + parseInt(bg.slice(3, 5), 16) * .587 + parseInt(bg.slice(5, 7), 16) * .114;
+  const pv = el('div', { class: 'card-pv', style: `background:${bg};color:${lum > 140 ? '#6b6457' : '#ffffffb0'};padding:10px` });
+  if (k.thumb) pv.append(el('img', { src: k.thumb, alt: k.title, style: 'object-fit:contain' })); else pv.append(k.done ? 'Đang dựng thiệp xem trước…' : 'Chưa xong – chưa có xem trước');
+  const st = (k.design ? `${k.variants} phương án · ` : '') + (k.done ? 'Sẵn sàng' : k.sheets ? `Đang vẽ: ${k.sheets_done}/${k.sheets} ảnh` : `${k.ready}/${k.total} món có ảnh`);
+  const card = el('div', { class: 'kc' + (opts.onpick ? ' pick' : '') }, pv, el('b', {}, k.title), el('span', { class: 'muted' }, st));
+  if (opts.onpick) card.onclick = opts.onpick;
+  if (opts.actions) card.append(el('div', { class: 'acts' }, ...opts.actions));
+  if (k.done && !k.has_preview) post(`/api/kit/${encodeURIComponent(k.name)}/preview`, {})
+    .then(j => { if (j.thumb) { pv.innerHTML = ''; pv.append(el('img', { src: j.thumb, alt: k.title })); } }).catch(() => {});
+  return card; }
+function thumb(k) { const t = el('div', { class: 'thumb', style: 'background:' + (k.bg || '#eee') }); if (k.thumb) t.append(el('img', { src: k.thumb, alt: '' })); return t; }
+function dropZone(zone, onFiles, multiple = false, accept = 'image/png,image/jpeg,image/webp') {
+  const input = el('input', { type: 'file', accept, style: 'display:none' }); if (multiple) input.multiple = true;
+  zone.append(input); zone.onclick = e => { if (e.target === zone || zone.contains(e.target) && e.target.tagName !== 'BUTTON') input.click(); };
+  input.onchange = () => input.files.length && onFiles([...input.files]);
+  zone.ondragover = e => { e.preventDefault(); zone.classList.add('over'); }; zone.ondragleave = () => zone.classList.remove('over');
+  zone.ondrop = e => { e.preventDefault(); zone.classList.remove('over'); const fs = [...e.dataTransfer.files]; fs.length && onFiles(fs); }; }
+
+// ---------- điều hướng
+function go(view, step) {
+  if (view !== 'edit' && $('#v-edit').classList.contains('on') && ED && ED.dirty && !confirm('Bố cục đang chỉnh chưa lưu. Bỏ các thay đổi?')) return;
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('on', v.id === 'v-' + view));
+  $('#homeBtn').style.visibility = view === 'home' ? 'hidden' : 'visible';
+  $('main').classList.toggle('wide', view === 'edit');
+  if (view !== 'edit') store.set('view', view);
+  window.scrollTo(0, 0);
+  if (view === 'edit') return edStart();
+  if (view === 'home') { CUR = { view: 'home', step: 1 }; return renderHome(); }
+  if (view === 'fonts') { CUR = { view: 'fonts', step: 1 }; return renderFonts(); }
+  if (view === 'new') return newStep(step || 1);
+  if (view === 'cus') return cusStep(step || 1);
+  if (view === 'icard') return icStep(step || 1); }
+$('#homeBtn').onclick = $('#logo').onclick = () => go('home');
+$('#goNew').onclick = () => { KIT = null; D = null; $('#nReply').value = ''; go('new', 1); };
+$('#goCus').onclick = () => go('cus', 1);
+$('#goIcard').onclick = () => go('icard', 1);
+$('#goFonts').onclick = () => go('fonts');
+async function refresh() { S = await api('/api/state'); }
+async function loadKit(name) { KIT = name; store.set('kit', name); D = await api('/api/kit/' + encodeURIComponent(name)); return D; }
+
+// ---------- trang chính
+async function renderHome() {
+  await refresh(); const box = $('#kitList'); box.innerHTML = '';
+  $('#fontCount').textContent = `${S.font_count} font · thêm font riêng – AI và trình chỉnh dùng được ngay`;
+  if (!S.kits.length) box.append(el('p', { class: 'muted' }, 'Chưa có mẫu nào. Bấm "Thiết kế mới" để bắt đầu.'));
+  for (const k of S.kits) box.append(kitCard(k, { actions: [
+      k.design ? el('button', { class: 'btn small', onclick: async () => { await loadKit(k.name); go('new', 2); } }, 'Bản thiết kế') : null,
+      k.done ? null : el('button', { class: 'btn small', onclick: async () => { await loadKit(k.name); go('new', 3); } }, 'Vẽ tiếp'),
+      el('button', { class: 'btn small' + (k.done ? ' primary' : ''), onclick: async () => { await loadKit(k.name); go('cus', 2); } }, 'Làm thiệp'),
+      k.done ? el('button', { class: 'btn small', onclick: async () => { await loadKit(k.name); IC.kit = null; go('icard', 2); } }, '⇪ Icard') : null] })); }
+
+// ---------- THIẾT KẾ MỚI ① yêu cầu → tin nhắn cho ChatGPT → dán câu trả lời
+const IDEAS = ['Bộ 4 trang cho thiệp online (Icard): bìa, gia đình, thiệp mời, cảm ơn – cùng khổ 15x21 cm', 'Phong cách Hàn Quốc tối giản', 'Vàng ánh kim sang trọng', 'Xanh navy và vàng', 'Hồng pastel, hoa mẫu đơn',
+  'Màu nước nhẹ nhàng', 'Cổ điển kiểu Âu', 'Thiệp mời 15x21 cm, 3 phương án', 'Thiệp hình trái tim', 'Thiệp vuông 15x15 cm',
+  'Banner web ngang có ô ảnh cưới', 'Thiệp cảm ơn 10x15 cm', 'Thiệp điện thoại 9:16 cho thiệp online', 'Thêm thông tin hai gia đình'];
+let DV = null;   // bản thiết kế của mẫu đang làm
+function renderReq() {
+  const box = $('#nChips');
+  if (!box.children.length) IDEAS.forEach(t => box.append(el('button', { onclick: () => { const r = $('#nReq');
+    r.value = (r.value.trim() ? r.value.trim().replace(/[.;,]?$/, '. ') : '') + t + '.'; store.set('req', r.value); r.focus(); } }, '+ ' + t)));
+  if (!$('#nReq').value) $('#nReq').value = store.get('req', '');
+  $('#nReplyNote').textContent = KIT && D && D.design ? `Đang làm mẫu "${D.title}". Dán câu trả lời ở đây sẽ tạo MẪU MỚI – muốn sửa mẫu đang làm, dùng ô "Muốn sửa hoặc thêm?" ở bước Bản thiết kế.` : ''; }
+$('#nReq').oninput = () => store.set('req', $('#nReq').value);
+$('#nPrompt').onclick = async () => {
+  try { const j = await post('/api/design/prompt', { request: $('#nReq').value }); $('#nPromptTxt').textContent = j.prompt;
+    await copy(j.prompt, 'Đã chép – dán vào một chat MỚI trên ChatGPT'); } catch (e) { toast(e.message, true); } };
+$('#nImport').onclick = async () => {
+  const b = $('#nImport'); b.disabled = true; b.textContent = 'Đang đọc…';
+  try { const dv = await post('/api/design/import', { text: $('#nReply').value, request: $('#nReq').value });
+    KIT = dv.name; store.set('kit', KIT); await loadKit(KIT); $('#nReply').value = '';
+    const reused = (dv.import_notes || []).some(n => n.includes('không tạo mẫu trùng'));
+    toast(reused ? `Câu trả lời này đã nhập trước đó – mở lại mẫu "${dv.title}"` : `Đã tạo mẫu "${dv.title}": ${dv.cards.length} thiệp, ${dv.cards.reduce((n, c) => n + c.variants.length, 0)} phương án`);
+    DV = dv; newStep(2);
+  } catch (e) { toast(e.message, true); } finally { b.disabled = false; b.textContent = 'Đọc bản thiết kế →'; } };
+
+// ---------- ② bản thiết kế: bản phác mọi thiệp × phương án (vẽ ngay, chưa cần ảnh), lỗi bố cục, sửa qua ChatGPT
+const KIND_VI = { big: 'món lớn', wide: 'dải ngang', tall: 'dải dọc', small: 'nhỏ' };
+const shapeName = s => s && typeof s === 'object' ? (s.label || 'Hình riêng') : ((S.shapes.find(x => x.id === s) || {}).label || s || 'Chữ nhật');
+const stageWidth = L => { const r = (L.canvas?.h || 1414) / (L.canvas?.w || 1000); return r > 1.1 ? 200 : r > 0.9 ? 240 : 340; };
+async function renderDesign(dv) {
+  DV = dv || await api(`/api/kit/${encodeURIComponent(KIT)}/design`);
+  $('#n2Fixed').style.display = 'none';
+  await kitAssets(true);
+  const nv = DV.cards.reduce((n, c) => n + c.variants.length, 0);
+  $('#n2Title').textContent = `Bản thiết kế: ${DV.title}`;
+  $('#n2Lead').textContent = `${DV.cards.length} thiệp · ${nv} phương án · ${DV.items.length} món hoa văn cần vẽ. Phong cách: ${DV.style}`;
+  const pg = $('#n2Pages'); pg.innerHTML = ''; pg.style.display = DV.missing_pages.length ? '' : 'none';
+  if (DV.missing_pages.length) pg.append(el('div', { class: 'row' },
+      el('b', {}, `⚠ Bộ thiệp mới có ${4 - DV.missing_pages.length}/4 trang – còn thiếu: ${DV.missing_pages.join(', ')}`), el('span', { class: 'spacer' }),
+      el('button', { class: 'btn primary', onclick: () => copy(DV.pages_message, 'Đã chép – gửi vào chat ChatGPT đang làm') }, 'Chép tin nhắn thêm trang')),
+    el('p', { class: 'muted', style: 'margin:6px 0 0' }, 'Thiệp online cần ít nhất 4 trang cùng khổ: Bìa · Thông tin hai gia đình · Thiệp mời · Cảm ơn. Gửi tin nhắn vào đúng chat ChatGPT đang làm, rồi dán câu trả lời vào ô "Muốn sửa hoặc thêm?" bên dưới → Cập nhật bản thiết kế. Hoa văn dùng lại – không phải vẽ thêm (trừ khi AI thêm món mới).'));
+  const fx = $('#n2Fix'); fx.innerHTML = ''; fx.style.display = DV.n_problems ? '' : 'none';
+  if (DV.n_problems) {
+    const ul = el('ul', { class: 'warns' });
+    DV.cards.forEach(c => c.variants.forEach(v => v.problems.forEach(p => ul.append(el('li', {}, `${v.title}: ${p}`)))));
+    fx.append(el('div', { class: 'row' }, el('b', {}, `⚠ ${DV.n_problems} chỗ AI đặt chưa khéo trong bản thiết kế`), el('span', { class: 'spacer' }),
+      el('button', { class: 'btn primary', id: 'n2Auto', onclick: autoFix }, 'Tool tự sửa ngay'),
+      el('button', { class: 'btn', onclick: () => copy(DV.fix_message, 'Đã chép – gửi vào chat ChatGPT đang làm') }, 'Nhờ ChatGPT sửa')), ul,
+      el('p', { class: 'muted', style: 'margin:6px 0 0' }, '"Tool tự sửa ngay": chỉnh bề rộng ô chữ, vị trí, độ mờ hoa văn cho hết lỗi – không cần quay lại ChatGPT. "Nhờ ChatGPT sửa": chép tin nhắn, gửi vào chat đang làm, dán câu trả lời ở ô "Muốn sửa hoặc thêm?". Hoặc bấm ✎ Chỉnh để sửa tay.')); }
+  const box = $('#n2Cards'); box.innerHTML = '';
+  for (const c of DV.cards) {
+    const L0 = c.variants[0].data, g = el('div', { class: 'vgrid' });
+    box.append(el('div', { class: 'card cardgrp' },
+      el('div', { class: 'row' }, c.page_no ? el('span', { class: 'pill ok' }, `Trang ${c.page_no} · ${c.role_label}`) : el('span', { class: 'pill' }, 'Thiệp thêm'), el('h3', {}, c.name), el('span', { class: 'muted' }, `${c.size_label} · ${shapeName(L0.shape)} · ${c.variants.length} phương án`),
+        el('span', { class: 'spacer' }), el('button', { class: 'btn small', onclick: () => post(`/api/kit/${encodeURIComponent(KIT)}/message`, { kind: 'more', card: c.name, n: 3 })
+          .then(j => copy(j.message, 'Đã chép – gửi vào chat ChatGPT đang làm')).catch(e => toast(e.message, true)) }, '+ Thêm 3 phương án')), g));
+    for (const v of c.variants) {
+      const sbox = el('div');
+      g.append(el('div', { class: 'vcard' }, sbox, el('b', {}, v.mo_ta || v.title),
+        el('div', { class: 'row', style: 'gap:6px' }, v.problems.length ? el('span', { class: 'pill warn', title: v.problems.join('\n') }, `⚠ ${v.problems.length} lỗi`)
+          : el('span', { class: 'pill ok' }, '✓ ổn'), v.edited ? el('span', { class: 'pill' }, 'đã chỉnh tay') : null,
+          v.autofix && v.autofix.length ? el('span', { class: 'pill', title: v.autofix.join('\n') }, 'tool đã sửa') : null, el('span', { class: 'spacer' }),
+          el('button', { class: 'btn small', onclick: () => openEditor(v.name, 'own') }, '✎ Chỉnh'))));
+      miniStage(sbox, v.data, stageWidth(v.data)).catch(e => sbox.append(el('span', { class: 'muted' }, e.message))); } }
+  const ib = $('#n2Items'); ib.innerHTML = '';
+  for (const it of DV.items) ib.append(el('span', { class: 'chip', title: it.draw }, it.drawn ? el('img', { src: it.url, alt: '' }) : el('span', { style: 'color:var(--muted)' }, '○'),
+    it.name, el('small', {}, KIND_VI[it.shape] + (it.hollow ? ', rỗng giữa' : '') + (it.backdrop ? ', nền mờ' : ''))));
+  if (DV.background && DV.background.draw) ib.append(el('span', { class: 'chip', title: DV.background.draw }, DV.bg_drawn ? '✓' : '○', 'Nền giấy'));
+  const nb = $('#n2Notes'); nb.innerHTML = ''; const notes = DV.import_notes || DV.notes || [];
+  if (notes.length) { const ul = el('ul', { class: 'warns' }); notes.forEach(n => ul.append(el('li', {}, n)));
+    nb.append(el('details', { style: 'margin-top:10px' }, el('summary', { class: 'muted', style: 'cursor:pointer' }, `Tool đã tự xử lý ${notes.length} chỗ trong bản thiết kế`), ul)); }
+  $('#n2Prog').textContent = DV.sheets ? `Đã vẽ ${DV.sheets_done}/${DV.sheets} ảnh` : ''; }
+async function autoFix() {
+  const b = $('#n2Auto'); if (b) { b.disabled = true; b.textContent = 'Đang sửa…'; }
+  try { const dv = await post(`/api/kit/${encodeURIComponent(KIT)}/autofix`, {});
+    const acts = dv.fixed.flatMap(f => f.actions.map(a => `${f.title}: ${a}`)), left = dv.fixed.reduce((n, f) => n + f.left.length, 0);
+    await renderDesign(dv);
+    const ok = $('#n2Fixed'); ok.innerHTML = ''; ok.style.display = '';
+    const ul = el('ul', { style: 'margin:6px 0 0;padding-left:18px;font-size:13.5px' }); acts.forEach(a => ul.append(el('li', {}, a)));
+    ok.append(el('b', {}, `✓ Tool đã tự sửa ${acts.length} chỗ` + (left ? ` – còn ${left} chỗ cần sửa tay (✎ Chỉnh)` : '')), ul,
+      el('p', { class: 'muted', style: 'margin:6px 0 0' }, 'Xem lại bản phác bên dưới; chưa ưng thì bấm ✎ Chỉnh ở phương án đó.'));
+    toast(left ? `Đã sửa ${acts.length} chỗ, còn ${left} chỗ` : 'Đã sửa xong – hết lỗi bố cục');
+  } catch (e) { toast(e.message, true); if (b) { b.disabled = false; b.textContent = 'Tool tự sửa ngay'; } } }
+$('#n2ChangeBtn').onclick = () => post(`/api/kit/${encodeURIComponent(KIT)}/message`, { kind: 'change', text: $('#n2Change').value })
+  .then(j => copy(j.message, 'Đã chép – gửi vào chat ChatGPT đang làm')).catch(e => toast(e.message, true));
+$('#n2Update').onclick = async () => {
+  const b = $('#n2Update'); b.disabled = true; b.textContent = 'Đang cập nhật…';
+  try { const dv = await post('/api/design/import', { text: $('#n2Reply').value, kit: KIT }); $('#n2Reply').value = ''; await loadKit(KIT);
+    toast('Đã cập nhật bản thiết kế'); renderDesign(dv); window.scrollTo(0, 0);
+  } catch (e) { toast(e.message, true); } finally { b.disabled = false; b.textContent = 'Cập nhật bản thiết kế'; } };
+async function miniStage(box, data, w) {      // bản phác: vẽ bố cục bằng đúng bộ vẽ của trình chỉnh, không tương tác
+  const a = await kitAssets(), W = data.canvas?.w || 1748, H = data.canvas?.h || 2480;
+  const st = el('div', { class: 'mstage', style: `width:${w}px;height:${w * H / W}px` }), clip = el('div', { class: 'mclip' });
+  st.append(clip); box.innerHTML = ''; box.append(st);
+  const C = { clip, W, H, k: w / W, data, a, frame: null, tbox: [] };
+  const b = (data.ornaments || []).find(o => o.type === 'border' && !o.hidden) || null;
+  C.frame = await post(`/api/kit/${encodeURIComponent(KIT)}/frame`, { shape: data.shape || 'chu_nhat', border: b, w: W, h: H, pw: Math.round(w * (window.devicePixelRatio || 1)) });
+  clip.style.webkitMaskImage = clip.style.maskImage = `url(${C.frame.mask})`;
+  drawAll(C); return C; }
+
+// ---------- ③ vẽ hoa văn theo tờ
+function sheetCard(s, isCur) {
+  const pill = s.status === 'ok' ? el('span', { class: 'pill ok' }, s.kind === 'bg' ? '✓ Đã nhận nền' : `✓ Đã cắt ${s.pieces.length} món`)
+    : s.status === 'empty' ? el('span', { class: 'pill' }, 'Chưa có ảnh')
+    : s.status === 'loi' ? el('span', { class: 'pill err' }, '✗ Không tách được') : el('span', { class: 'pill warn' }, '⚠ Cần xem lại');
+  const card = el('div', { class: 'msg' + (isCur ? ' cur' : '') + (s.done ? ' done' : '') },
+    el('div', { class: 'row' }, el('h3', {}, `Tin nhắn ${s.n}/${D.sheets.length}`), el('span', { class: 'muted' }, '· ' + s.title), el('span', { class: 'spacer' }), pill));
+  const btns = el('div', { class: 'row', style: 'margin-top:10px' },
+    el('button', { class: 'btn' + (isCur ? ' primary' : ' small'), onclick: () => copy(s.message) }, `Chép tin nhắn ${s.n}`));
+  if (s.done && s.status !== 'ok') btns.append(el('button', { class: 'btn small', onclick: () => copy(s.redo) }, 'Chép tin nhắn vẽ lại'));
+  card.append(btns);
+  if (isCur) card.append(el('details', {}, el('summary', { class: 'muted', style: 'cursor:pointer;margin-top:8px' }, 'Xem nội dung tin nhắn'), el('pre', { class: 'txt' }, s.message)));
+  if (s.note) card.append(el('div', { class: 'note' }, '⚠ ' + s.note));
+  if (s.pieces.length) {
+    const row = el('div', { class: 'pieces' });
+    s.pieces.forEach(p => { const sel = el('select', {}); sel.append(el('option', { value: '' }, '— bỏ —'));
+      s.items.forEach((it, k) => sel.append(el('option', { value: it }, s.labels[k]))); sel.value = p.item || '';
+      sel.onchange = () => assign(s, row); row.append(el('div', { class: 'piece' }, el('div', { class: 'im' }, el('img', { src: p.url, alt: '' })), s.kind === 'bg' ? el('div', { class: 'muted' }, 'Nền') : sel)); });
+    card.append(row); }
+  const zone = el('div', { class: 'drop' }, s.done ? 'Kéo ảnh mới vào đây để thay' : 'Kéo ảnh ChatGPT vẽ cho tin nhắn này vào đây');
+  dropZone(zone, fs => uploadSheet(s, fs[0], pill)); card.append(zone); return card; }
+async function uploadSheet(s, file, pill) {
+  if (pill) { pill.className = 'pill busy'; pill.textContent = 'Đang tách nền, cắt món…'; }
+  try { D = await api(`/api/kit/${encodeURIComponent(KIT)}/sheet/${s.id}`, { method: 'POST', headers: { 'X-Filename': encodeURIComponent(file.name) }, body: file });
+    renderSheets(); } catch (e) { toast(e.message, true); renderSheets(); } }
+async function assign(s, row) { const items = [...row.querySelectorAll('select')].map(x => x.value || null);
+  try { D = await post(`/api/kit/${encodeURIComponent(KIT)}/sheet/${s.id}/assign`, { items }); renderSheets(); toast('Đã gán lại'); } catch (e) { toast(e.message, true); } }
+function renderSheets() {
+  $('#n3Title').textContent = `Vẽ hoa văn trong ChatGPT – mẫu "${D.title}"`;
+  $('#n3How').innerHTML = D.design
+    ? '<li>Gửi lần lượt các tin nhắn dưới đây vào <b>đúng chat ChatGPT</b> đã làm bản thiết kế (bắt đầu từ ô đang sáng viền).</li>'
+      + '<li>ChatGPT vẽ xong thì tải ảnh về, <b>kéo vào ô đó</b>. Tool tự tách nền, cắt và gán tên từng món.</li>'
+      + '<li>Hoặc tải hết ảnh rồi kéo tất cả vào ô lớn bên dưới – tool tự xếp theo thứ tự tải về.</li>'
+    : '<li>Mở <b>một chat mới</b> trên ChatGPT. Cả mẫu làm trong chat này.</li><li>Bấm <b>Chép tin nhắn</b> ở ô đang sáng viền, dán vào ChatGPT, gửi.</li>'
+      + '<li>ChatGPT vẽ xong thì tải ảnh về, <b>kéo vào ô đó</b>. Tool tự cắt và gán tên từng món.</li><li>Lặp lại với tin nhắn tiếp theo. Có thiệp mẫu đã ưng thì đính kèm vào tin nhắn 1.</li>';
+  const box = $('#sheetList'); box.innerHTML = ''; const cur = D.sheets.find(s => !s.done);
+  D.sheets.forEach(s => box.append(sheetCard(s, cur && s.id === cur.id)));
+  const done = D.sheets.filter(s => s.done).length; $('#n3Prog').textContent = `${done}/${D.sheets.length} ảnh`;
+  $('#dropAll').style.display = done === D.sheets.length ? 'none' : ''; }
+dropZone($('#dropAll'), async files => {
+  files.sort((a, b) => a.lastModified - b.lastModified);
+  const todo = files.length >= D.sheets.length ? D.sheets : D.sheets.filter(s => !s.done);
+  for (let i = 0; i < Math.min(files.length, todo.length); i++) { toast(`Đang xử lý ảnh ${i + 1}/${Math.min(files.length, todo.length)}…`); await uploadSheet(todo[i], files[i]); }
+  if (files.length > todo.length) toast(`Thừa ${files.length - todo.length} ảnh – đã bỏ qua`, true); }, true);
+
+// ---------- ④ kết quả: thiệp thật dựng từ hoa văn đã vẽ
+let N4 = [];
+function renderReview() {
+  const box = $('#n4Items'); box.innerHTML = '';
+  for (const it of D.items) { const pill = it.ready ? el('span', { class: 'pill ' + (it.status === 'warn' ? 'warn' : 'ok') }, it.status === 'warn' ? '⚠' : '✓') : el('span', { class: 'pill err' }, 'Chưa có');
+    const im = el('div', { class: 'im', style: 'background:' + D.bg }); if (it.asset_url) im.append(el('img', { src: it.asset_url, alt: '' }));
+    const card = el('div', { class: 'it' }, im, el('div', { class: 'row', style: 'margin-top:6px' }, el('b', { style: 'margin:0' }, it.label), el('span', { class: 'spacer' }), pill));
+    it.notes.forEach(n => card.append(el('div', { class: 'note', style: 'font-size:12px' }, n)));
+    box.append(card); } }
+function queuePreview(pv, L, shp) {
+  const kit = KIT;
+  pvQueue = pvQueue.then(() => post(`/api/kit/${encodeURIComponent(kit)}/layout_preview`, { layout: L.name, shape: shp })
+    .then(j => { if (kit !== KIT) return; const im = el('img', { src: j.url, alt: L.title, style: 'object-fit:contain' });
+      im.onload = () => { pv.style.aspectRatio = `${im.naturalWidth} / ${im.naturalHeight}`; };     // thiệp ngang/vuông: khung theo đúng tỉ lệ
+      pv.innerHTML = ''; pv.style.padding = '0'; pv.style.background = 'transparent'; pv.style.border = 'none'; pv.append(im); })
+    .catch(e => { pv.textContent = e.message; })); }
+async function renderResults() {
+  renderReview();
+  const grid = $('#n4Grid'); grid.innerHTML = '';
+  N4 = (await api(`/api/kit/${encodeURIComponent(KIT)}/layouts`)).layouts.filter(L => L.local || !D.design);
+  let last = null, g = null;
+  for (const L of N4) {
+    if (!g || (L.local && L.card_name !== last)) { last = L.card_name; grid.append(el('h3', { class: 'lay-h' }, L.local ? `${L.card_name} · ${L.size_label}` : 'Bố cục mẫu'));
+      g = el('div', { class: 'cards' }); grid.append(g); }
+    const pv = el('div', { class: 'card-pv', style: `background:${D.bg};color:#ffffffb0;padding:10px` }, 'Đang dựng…');
+    g.append(el('div', { class: 'kc' }, pv, el('b', {}, L.local ? L.mo_ta : L.title),
+      L.missing.length ? el('span', { class: 'pill warn', style: 'white-space:normal' }, L.missing.join(', ')) : null,
+      el('div', { class: 'acts' }, el('button', { class: 'btn small', onclick: () => openEditor(L.name, L.local ? 'own' : L.shape_default) }, '✎ Chỉnh'))));
+    queuePreview(pv, L, L.local ? 'own' : L.shape_default); }
+  post(`/api/kit/${encodeURIComponent(KIT)}/preview`, { force: true }).catch(() => {}); }
+$('#n4Done').onclick = () => {
+  if (D.design) { const first = {}; N4.forEach(L => { if (L.local && !(L.card in first)) first[L.card] = L.name; });
+    chosen = new Set(Object.values(first)); store.set('lays', JSON.stringify([...chosen])); }
+  go('cus', 2); };
+async function newStep(n) {
+  stepper($('#newSteps'), ['Yêu cầu', 'Bản thiết kế', 'Vẽ hoa văn', 'Kết quả'], n);
+  document.querySelectorAll('#v-new .step').forEach(s => s.classList.toggle('on', s.id === 'n' + n));
+  store.set('step', n); CUR = { view: 'new', step: n }; window.scrollTo(0, 0);
+  try {
+    if (!S) await refresh();
+    if (n === 1) return renderReq();
+    if (!KIT) return newStep(1);
+    if (!D || D.name !== KIT) await loadKit(KIT);
+    if (n === 2) return D.design ? renderDesign() : newStep(3);
+    if (n === 3) return renderSheets();
+    if (n === 4) { await loadKit(KIT); return renderResults(); }
+  } catch (e) { toast('Không tải được: ' + e.message, true); } }
+
+// ---------- LÀM THIỆP CHO KHÁCH
+const SHAPE_SVG = {
+  own: '<path d="M20 50C9 42 5 34 5 25C5 14 13 9 20 16C27 9 35 14 35 25C35 34 31 42 20 50Z" stroke-dasharray="3 2"/>',
+  chu_nhat: '<rect x="5" y="4" width="30" height="48"/>',
+  bo_goc: '<rect x="5" y="4" width="30" height="48" rx="6"/>',
+  vom: '<path d="M5 52V20A15 15 0 0 1 35 20V52Z"/>',
+  goc_lom: '<path d="M10 4H30A5 5 0 0 0 35 9V47A5 5 0 0 0 30 52H10A5 5 0 0 0 5 47V9A5 5 0 0 0 10 4Z"/>',
+  oval: '<ellipse cx="20" cy="28" rx="15" ry="24"/>',
+  rang_cua: '<rect x="7" y="6" width="26" height="44" stroke-dasharray="3 2.2" stroke-width="3"/>',
+  cat_goc: '<path d="M10 4H30L35 9V47L30 52H10L5 47V9Z"/>' };
+let KL = [], chosen = new Set(JSON.parse(store.get('lays', '["bia"]'))), SHAPE = store.get('shape2', ''), pvQueue = Promise.resolve();
+// SHAPE "" = theo thiết kế: thiệp do bản thiết kế tạo dùng hình riêng của nó, bố cục mẫu dùng hình mặc định
+const effShape = L => SHAPE === '' ? (L.local ? 'own' : L.shape_default) : (L.local || L.shapes.includes(SHAPE) ? SHAPE : L.shape_default);
+async function cusStep(n) {
+  stepper($('#cusSteps'), ['Chọn mẫu', 'Hình dáng & bố cục', 'Thông tin khách', 'Xuất & xem'], n);
+  document.querySelectorAll('#v-cus .step').forEach(s => s.classList.toggle('on', s.id === 'c' + n));
+  store.set('step', n); CUR = { view: 'cus', step: n }; window.scrollTo(0, 0);
+  if (n === 1) { await refresh(); const box = $('#cKits'); box.innerHTML = '';
+    if (!S.kits.length) box.append(el('p', { class: 'muted' }, 'Chưa có mẫu nào – hãy tạo mẫu trước.'));
+    for (const k of S.kits) box.append(kitCard(k, { onpick: async () => { await loadKit(k.name); cusStep(2); } })); return; }
+  if (!S) await refresh(); if (!KIT) return cusStep(1); if (!D || D.name !== KIT) await loadKit(KIT);
+  try {
+    if (n === 2) { KL = (await api(`/api/kit/${encodeURIComponent(KIT)}/layouts`)).layouts;
+      if (D.design) KL = KL.filter(L => L.local);      // bố cục mẫu dùng kiểu chữ/món của mẫu cũ – không hợp mẫu thiết kế
+      if (!KL.some(L => chosen.has(L.name)) && KL.length) { const first = {}; KL.forEach(L => { const c = L.card || L.name; if (!(c in first)) first[c] = L.name; });
+        chosen = new Set(D.design ? Object.values(first) : [KL[0].name]); store.set('lays', JSON.stringify([...chosen])); }
+      renderShapes(); renderLayGrid(); }
+    if (n === 3) renderCusForm();
+  } catch (e) { toast('Không tải được: ' + e.message, true); } }
+function renderShapes() {
+  $('#c2Kit').textContent = `Mẫu: ${D.title}`;
+  const box = $('#cShapes'); box.innerHTML = '';
+  for (const sh of [{ id: '', label: 'Theo thiết kế' }, ...S.shapes]) {
+    const b = el('button', { class: 'shp' + (sh.id === SHAPE ? ' on' : ''), title: sh.label, onclick: () => { SHAPE = sh.id; store.set('shape2', SHAPE); renderShapes(); renderLayGrid(); } });
+    b.innerHTML = `<svg viewBox="0 0 40 56" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2">${SHAPE_SVG[sh.id || 'own'] || ''}</g></svg>`;
+    b.append(el('span', {}, sh.label)); box.append(b); } }
+function renderLayGrid() {
+  const grid = $('#cLayGrid'); grid.innerHTML = ''; let last = null;
+  for (const L of KL) {
+    if (L.local && L.card_name !== last) { last = L.card_name; grid.append(el('h3', { class: 'lay-h' }, `${L.card_name} · ${L.size_label}`)); }
+    const pv = el('div', { class: 'card-pv', style: `background:${D.bg};color:#ffffffb0;padding:10px` }, 'Đang dựng xem trước…');
+    const card = el('div', { class: 'kc pick lay' + (chosen.has(L.name) ? ' sel' : '') }, pv, el('b', {}, L.local ? L.mo_ta : L.title),
+      el('span', { class: 'muted' }, L.local ? `Hình: ${L.own_shape}` + (L.edited ? ' · đã chỉnh tay' : '') : L.mo_ta));
+    if (L.missing.length) card.append(el('span', { class: 'pill warn', style: 'white-space:normal' }, L.local ? L.missing.join(', ') : `Mẫu chưa có: ${L.missing.join(', ')}`));
+    if (SHAPE && !L.local && !L.shapes.includes(SHAPE)) card.append(el('span', { class: 'pill', style: 'white-space:normal' }, `Không hợp hình này → dùng ${S.shapes.find(x => x.id === L.shape_default).label}`));
+    card.append(el('div', { class: 'acts' }, el('button', { class: 'btn small', onclick: ev => { ev.stopPropagation(); openEditor(L.name, effShape(L)); } }, '✎ Chỉnh bố cục'),
+      L.custom ? el('span', { class: 'pill ok' }, 'Bố cục riêng') : null));
+    card.onclick = () => { chosen.has(L.name) ? chosen.delete(L.name) : chosen.add(L.name); store.set('lays', JSON.stringify([...chosen])); card.classList.toggle('sel'); layCount(); };
+    grid.append(card);
+    queuePreview(pv, L, effShape(L)); }
+  grid.append(el('div', { class: 'kc pick newlay', onclick: () => openEditor(null, SHAPE || 'chu_nhat') },
+    el('span', { style: 'font-size:30px;color:var(--accent)' }, '＋'), el('b', {}, 'Tự làm bố cục mới'),
+    el('span', { class: 'muted' }, 'Bắt đầu từ thiệp trống, kéo thả hoa văn và ô chữ')));
+  layCount(); }
+function layCount() { const n = KL.filter(L => chosen.has(L.name)).length; $('#cLayCount').textContent = n ? `Đã chọn ${n} thiệp` : 'Chưa chọn thiệp nào'; }
+$('#cToInfo').onclick = () => { if (!KL.some(L => chosen.has(L.name))) return toast('Chọn ít nhất một thiệp', true); cusStep(3); };
+function chosenLayouts() { return KL.filter(L => chosen.has(L.name)).map(L => L.name); }
+function sizeSpec() { const v = $('#cSize').value; return v === 'custom' ? `${$('#cW').value}x${$('#cH').value}` : v; }
+async function sizeInfo() { const v = $('#cSize').value; store.set('size2', v); $('#cCustom').style.display = v === 'custom' ? '' : 'none';
+  if (v === '') { const ls = [...new Set(KL.filter(L => chosen.has(L.name)).map(L => L.size_label || 'A5 – 14,8 × 21 cm'))];
+    $('#cSizeInfo').textContent = 'Mỗi thiệp đúng khổ đã thiết kế: ' + ls.join(' · '); return; }
+  if (v === 'custom' && !($('#cW').value && $('#cH').value)) { $('#cSizeInfo').textContent = 'Nhập rộng × cao (cm) – dọc, ngang hay vuông đều được'; return; }
+  try { const z = await post('/api/size', { size: sizeSpec() }); $('#cSizeInfo').textContent = `${z.px[0]} × ${z.px[1]} px` + (/px$|phone|web/.test(sizeSpec()) ? '' : ' · in 300 DPI'); }
+  catch (e) { $('#cSizeInfo').textContent = e.message; } }
+function renderCusForm() {
+  const names = KL.filter(L => chosen.has(L.name)).map(L => L.title);
+  $('#c3Kit').textContent = `Mẫu: ${D.title} · Hình: ${SHAPE ? S.shapes.find(x => x.id === SHAPE).label : 'theo thiết kế'} · ${names.join(', ')}`;
+  const zs = $('#cSize'); if (!zs.children.length) { zs.append(el('option', { value: '' }, 'Theo thiết kế (mỗi thiệp đúng khổ riêng)'));
+    for (const z of S.sizes) zs.append(el('option', { value: z.id }, z.label));
+    zs.append(el('option', { value: 'custom' }, 'Tuỳ chỉnh (cm)…')); zs.value = store.get('size2', '');
+    zs.onchange = sizeInfo; $('#cW').oninput = $('#cH').oninput = sizeInfo; }
+  sizeInfo();
+  $('#cFontRow').style.display = D.design ? 'none' : '';
+  const fs = $('#cFont'); fs.innerHTML = ''; for (const f of S.fonts) fs.append(el('option', { value: f.id }, `${f.label} – ${f.hint}`)); fs.value = D.script;
+  fs.onchange = () => post(`/api/kit/${encodeURIComponent(KIT)}/font`, { script: fs.value }).then(() => toast('Đã đổi kiểu chữ')).catch(e => toast(e.message, true));
+  renderFields(); }
+function renderFields() {
+  const keep = {}; document.querySelectorAll('#cFields [data-id]').forEach(i => keep[i.dataset.id] = i.value);
+  const box = $('#cFields'); box.innerHTML = ''; const seen = new Set();
+  for (const L of KL.filter(L => chosen.has(L.name))) for (const t of L.texts) { if (seen.has(t.id)) continue; seen.add(t.id);
+    const inp = t.multiline ? el('textarea', { 'data-id': t.id, rows: 2, style: 'min-height:60px' }) : el('input', { type: 'text', 'data-id': t.id });
+    inp.placeholder = t.text.replace(/\n/g, ' ⏎ '); inp.value = keep[t.id] || ''; box.append(el('div', {}, el('label', { class: 'f' }, t.label), inp)); } }
+$('#cRender').onclick = async () => {
+  if (!chosenLayouts().length) return toast('Chọn ít nhất một thiệp', true);
+  const texts = {}; document.querySelectorAll('#cFields [data-id]').forEach(i => { if (i.value.trim()) texts[i.dataset.id] = i.value; });
+  const b = $('#cRender'); b.disabled = true; b.innerHTML = '<span class="spin"></span> Đang xuất… (10–20 giây mỗi thiệp)';
+  try { const j = await post('/api/render', { kit: KIT, layouts: chosenLayouts(), texts, khach: $('#cKhach').value, size: sizeSpec(), shape: SHAPE });
+    const box = $('#cResults'); box.innerHTML = '';
+    for (const r of j.results) { const w = el('ul', { class: 'warns' });
+      const ws = r.warnings.filter(x => !x.includes('thay') && !x.includes('bỏ qua')), up = ws.filter(x => x.includes('phóng to'));
+      ws.filter(x => !x.includes('phóng to')).forEach(x => w.append(el('li', {}, x)));
+      if (up.length) { const d = el('details', {}, el('summary', { style: 'cursor:pointer' }, `${up.length} hoa văn có ảnh gốc nhỏ, bị phóng to – có thể hơi mềm khi in`));
+        const ul = el('ul', { class: 'warns' }); up.forEach(x => ul.append(el('li', {}, x))); d.append(ul); w.append(el('li', {}, d)); }
+      box.append(el('div', { class: 'card' }, el('b', {}, r.title), el('span', { class: 'muted' }, ` · ${r.size} · ${r.seconds}s`),
+        el('a', { href: r.preview_url, target: '_blank' }, el('img', { src: r.ghep_url, alt: r.title, style: 'margin-top:8px;background:repeating-conic-gradient(#e8e8e8 0 25%, #fff 0 50%) 0 0/16px 16px' })),
+        el('div', { class: 'row', style: 'margin-top:10px' }, el('a', { class: 'btn small', href: r.preview_url, target: '_blank' }, 'Xem layer & hiệu ứng'),
+          el('button', { class: 'btn small', onclick: () => post('/api/open', { path: r.out }).catch(e => toast(e.message, true)) }, 'Mở thư mục')), w)); }
+    $('#c4Info').textContent = `Mẫu "${D.title}" – mỗi thiệp gồm 3 layer PNG, các mảnh rời, ô ảnh (nếu có), manifest và trang xem trước.`; cusStep(4);
+  } catch (e) { toast(e.message, true); } finally { b.disabled = false; b.textContent = 'Xuất thiệp →'; } };
+
+// ---------- BỘ VẼ DÙNG CHUNG (bản phác + trình chỉnh). Toạ độ trong dữ liệu = đơn vị thiết kế; trên màn hình nhân C.k
+// C = { clip, W, H, k, data, a (ảnh/font/màu của mẫu), frame (mặt nạ hình + viền do server dựng), tbox }
+const ANCH = { tl: [0, 0], tc: [.5, 0], tr: [1, 0], cl: [0, .5], c: [.5, .5], cr: [1, .5], bl: [0, 1], bc: [.5, 1], br: [1, 1] };
+const STYLE_VI = { script: 'Chữ viết tay', caps: 'Chữ in hoa', caps_wide: 'In hoa giãn', body: 'Chữ thường', monogram: 'Chữ lồng' };
+const ARR = { o: 'ornaments', t: 'texts', p: 'photos' };
+let ED = null, EA = null, CUR = { view: 'home', step: 1 };
+const r1 = v => Math.round(v * 10) / 10;
+const clone = o => JSON.parse(JSON.stringify(o));
+const lumHex = h => { const m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if (!m) return 255; const n = parseInt(m[1], 16); return ((n >> 16) & 255) * .299 + ((n >> 8) & 255) * .587 + (n & 255) * .114; };
+const loadedFonts = new Set();
+async function kitAssets(force) {
+  if (EA && EA._kit === KIT && !force) return EA;
+  const a = await api(`/api/kit/${encodeURIComponent(KIT)}/editor`); a._kit = KIT;
+  await Promise.all(Object.values(a.fonts).map(f => { f.fam = 'edf_' + f.url.split('?')[0].split('/').pop().replace(/\W/g, '_');
+    if (loadedFonts.has(f.fam)) return null; loadedFonts.add(f.fam);
+    const ff = new FontFace(f.fam, `url(${f.url})`, { weight: '100 900' }); document.fonts.add(ff); return ff.load().catch(() => null); }));
+  Object.values(a.items).forEach(it => alphaMap(it.url));
+  EA = a; return a; }
+// Hình học một món – giống layout.expand() phía Python (ô w×h vừa khít giữ tỉ lệ, neo, lật, xoay, đối xứng)
+function geom(o, C = ED) {
+  const t = o.type || 'asset'; let sw, sh;
+  if (t === 'rule') { const L = +o.length, th = +(o.thickness || 2); [sw, sh] = (o.orient || 'h') === 'h' ? [L, th] : [th, L]; }
+  else { const it = C.a.items[o.asset], nw = it ? it.w : (+o.w || +o.h || 100), nh = it ? it.h : (+o.h || +o.w || 100);
+    if ('w' in o && 'h' in o) { if (o.fit === 'stretch') { sw = +o.w; sh = +o.h; } else { const s = Math.min(o.w / nw, o.h / nh); sw = nw * s; sh = nh * s; } }
+    else if ('w' in o) { sw = +o.w; sh = o.w * nh / nw; } else { sh = +o.h; sw = o.h * nw / nh; } }
+  const [ax, ay] = ANCH[o.anchor || 'c'] || ANCH.c, f = o.flip || '';
+  let copies = [{ l: o.x - ax * sw, t: o.y - ay * sh, fh: f.includes('h'), fv: f.includes('v'), sx: 1, sy: 1, r: +o.rotate || 0 }];
+  const m = o.mirror || '';
+  if (m.includes('x')) copies = copies.concat(copies.map(c => ({ ...c, l: C.W - c.l - sw, fh: !c.fh, sx: -c.sx, r: -c.r })));
+  if (m.includes('y')) copies = copies.concat(copies.map(c => ({ ...c, t: C.H - c.t - sh, fv: !c.fv, sy: -c.sy, r: -c.r })));
+  return { sw, sh, copies }; }
+function toLocal(c, g, X, Y) {        // điểm trên thiệp → toạ độ trong ô CHƯA xoay của bản sao c
+  if (!c.r) return [X, Y];
+  const cx = c.l + g.sw / 2, cy = c.t + g.sh / 2, a = -c.r * Math.PI / 180, dx = X - cx, dy = Y - cy;
+  return [cx + dx * Math.cos(a) - dy * Math.sin(a), cy + dx * Math.sin(a) + dy * Math.cos(a)]; }
+const ALPHA = {};
+function alphaMap(url) {     // kênh alpha thu nhỏ của ảnh món – bấm vào chỗ trong suốt thì chọn món bên dưới
+  if (ALPHA[url]) return ALPHA[url]; const rec = { ready: false }; ALPHA[url] = rec; const im = new Image();
+  im.onload = () => { const s = Math.min(1, 200 / Math.max(im.width, im.height)), c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(im.width * s)); c.height = Math.max(1, Math.round(im.height * s));
+    const x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(im, 0, 0, c.width, c.height);
+    Object.assign(rec, { w: c.width, h: c.height, d: x.getImageData(0, 0, c.width, c.height).data, ready: true }); };
+  im.src = url; return rec; }
+function hitAsset(o, c, g, X, Y, C = ED) {
+  [X, Y] = toLocal(c, g, X, Y);
+  if (X < c.l || Y < c.t || X > c.l + g.sw || Y > c.t + g.sh) return false;
+  const it = C.a.items[o.asset]; if (!it) return true; const m = alphaMap(it.url); if (!m.ready) return true;
+  let u = (X - c.l) / g.sw, v = (Y - c.t) / g.sh; if (c.fh) u = 1 - u; if (c.fv) v = 1 - v;
+  const px = Math.floor(u * m.w), py = Math.floor(v * m.h);
+  for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) { const qx = px + dx, qy = py + dy;
+    if (qx >= 0 && qy >= 0 && qx < m.w && qy < m.h && m.d[(qy * m.w + qx) * 4 + 3] > 24) return true; }
+  return false; }
+const tstyle = (t, C = ED) => { const b = C.a.styles[t.style] || Object.values(C.a.styles)[0] || {};
+  const st = { ...b }; for (const k of ['size', 'weight', 'fill', 'letter_spacing', 'uppercase', 'line_height', 'italic', 'font']) if (k in t) st[k] = t[k];
+  const f = C.a.fonts[st.font] || {}; st.cap = f.cap || 0.68; st.fam = f.fam || 'serif'; return st; };
+const lsEm = v => { const n = parseFloat(String(v ?? 0).replace('em', '')); return isNaN(n) ? 0 : n; };
+
+function drawAll(C = ED) {
+  const clip = C.clip; clip.innerHTML = ''; clip.classList.toggle('dark', lumHex(C.a.bg) < 110);
+  const bgc = (C.data.background && C.data.background.color) || C.a.bg;
+  clip.append(el('div', { class: 'ebg', style: `background:${C.a.bg_url ? `url("${C.a.bg_url}") center/cover no-repeat, ` : ''}${bgc}` }));
+  (C.data.photos || []).forEach((p, i) => { if (p.hidden) return; const g = el('div', { 'data-p': i }); clip.append(g); drawPhoto(p, g, C); });
+  (C.data.ornaments || []).forEach((o, i) => { if (o.hidden) return; const g = el('div', { 'data-o': i }); clip.append(g); drawOrn(o, g, C); });
+  C.tbox = []; (C.data.texts || []).forEach((t, i) => { if (t.hidden) return; const g = el('div', { 'data-t': i }); clip.append(g); C.tbox[i] = drawText(t, g, C); });
+  if (C === ED) drawSel(); }
+function drawOrn(o, g, C = ED) {
+  const k = C.k, t = o.type || 'asset';
+  if (t === 'border') { if (C.frame && C.frame.border) g.append(el('img', { class: 'eimg', src: C.frame.border, style: 'left:0;top:0;width:100%;height:100%' })); return; }
+  const G = geom(o, C), op = o.opacity ?? 1;
+  for (const c of G.copies) {
+    const box = `left:${c.l * k}px;top:${c.t * k}px;width:${G.sw * k}px;height:${G.sh * k}px;opacity:${op};`;
+    if (t === 'rule') { const fd = Math.min(50, (o.fade ?? 0.25) * 100), dir = (o.orient || 'h') === 'h' ? 'to right' : 'to bottom';
+      const mk = `linear-gradient(${dir}, transparent, #000 ${fd}%, #000 ${100 - fd}%, transparent)`;
+      g.append(el('div', { class: 'eimg', style: box + `background:${C.a.fills[o.fill || 'gold'] || '#c9a24b'};-webkit-mask-image:${mk};mask-image:${mk}` })); continue; }
+    const it = C.a.items[o.asset];
+    if (!it) { g.append(el('div', { class: 'emiss' + ((C.a.backdrop || {})[o.asset] ? ' bd' : ''), title: 'Chưa vẽ',
+      style: box + `transform:rotate(${c.r}deg);font-size:${Math.max(7, Math.min(11, G.sh * k / 4))}px` }, C.a.labels[o.asset] || o.asset)); continue; }
+    g.append(el('img', { class: 'eimg', src: it.url, alt: '', draggable: 'false', style: box + `transform:rotate(${c.r}deg) scale(${c.fh ? -1 : 1},${c.fv ? -1 : 1})` })); } }
+function photoCss(p, w) {
+  const s = p.shape || 'chu_nhat';
+  if (s && typeof s === 'object' && s.path) {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${p.w} ${p.h}" preserveAspectRatio="none"><path d="${String(s.path).replace(/[^MmLlHhVvCcSsQqTtAaZz0-9.,\s+eE-]/g, '')}"/></svg>`;
+    const u = `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+    return `-webkit-mask-image:${u};mask-image:${u};-webkit-mask-size:100% 100%;mask-size:100% 100%;`; }
+  if (s === 'oval') return 'border-radius:50%;';
+  if (s === 'vom') return `border-radius:${w / 2}px ${w / 2}px 0 0 / ${w / 2}px ${w / 2}px 0 0;`;
+  if (s === 'bo_goc') return `border-radius:${w * 0.06}px;`;
+  return ''; }
+function drawPhoto(p, g, C = ED) {
+  const k = C.k, w = p.w * k, h = p.h * k;
+  g.append(el('div', { class: 'ephoto', style: `left:${(p.x - p.w / 2) * k}px;top:${(p.y - p.h / 2) * k}px;width:${w}px;height:${h}px;font-size:${Math.max(9, Math.min(14, w / 9))}px;` + photoCss(p, w) },
+    p.label || 'Ảnh')); }
+// Chữ – cùng thuật toán với textlayer (thu nhỏ cho vừa bề rộng ô, căn tâm chữ hoa vào cy)
+function drawText(t, g, C = ED) {
+  const k = C.k, st = tstyle(t, C), ls = lsEm(st.letter_spacing), lines = String(t.text ?? '').split('\n');
+  const fill = C.a.fills[st.fill || 'gold'] || 'linear-gradient(#c9a24b,#c9a24b)';
+  const css = `font-family:"${st.fam}";font-weight:${st.weight || 400};letter-spacing:${ls}em;background-image:${fill};`
+    + (st.uppercase ? 'text-transform:uppercase;' : '') + (st.italic ? 'font-style:italic;' : '') + (st.shadow ? `filter:${st.shadow};` : '');
+  const spans = lines.map(line => { const s = el('span', { class: 'eln', style: css }); s.append(el('i', { class: 'bl' }), el('span', { class: 'tx' }, line.replace(/\|/g, ' | ') || ' ')); g.append(s); return s; });
+  let size = (+st.size || 60) * k; const wpx = (+t.w || 600) * k;
+  const apply = () => spans.forEach(s => s.style.fontSize = size + 'px');
+  const measure = () => spans.map(s => { const r = document.createRange(); r.selectNodeContents(s.querySelector('.tx')); return r.getBoundingClientRect().width - ls * size; });
+  apply(); let ws = measure(), mx = Math.max(...ws);
+  for (let i = 0; i < 4 && mx > wpx + 0.5; i++) { size = size * wpx / mx; apply(); ws = measure(); mx = Math.max(...ws); }
+  const cap = st.cap * size, lh = (+st.line_height || 1.25) * size, n = lines.length, cx = t.cx * k;
+  const b0 = (+t.cy + (+t.dy || 0)) * k + cap / 2 - (n - 1) * lh / 2;
+  spans.forEach((s, i) => { const box = s.getBoundingClientRect(), mark = s.querySelector('.bl').getBoundingClientRect(), padL = parseFloat(getComputedStyle(s).paddingLeft);
+    const x = t.align === 'left' ? cx - wpx / 2 : t.align === 'right' ? cx + wpx / 2 - ws[i] : cx - ws[i] / 2;
+    s.style.left = (x - padL) + 'px'; s.style.top = (b0 + i * lh - (mark.top - box.top)) + 'px'; });
+  const il = t.align === 'left' ? cx - wpx / 2 : t.align === 'right' ? cx + wpx / 2 - mx : cx - mx / 2;
+  return { l: t.cx - t.w / 2, r: t.cx + t.w / 2, t: (b0 - cap * 1.45) / k, b: (b0 + (n - 1) * lh + size * 0.32) / k, il: il / k, ir: (il + mx) / k }; }
+
+// ---------- TRÌNH CHỈNH (kéo thả) trên một bố cục: phương án của mẫu (lưu vào mẫu) hoặc bố cục mẫu dùng chung
+function blankLayout() {
+  const names = Object.keys(EA.styles), isScript = n => ((EA.fonts[EA.styles[n].font] || {}).kind === 'script');
+  const sc = EA.styles.script ? 'script' : names.find(isScript) || names[0], se = EA.styles.caps ? 'caps' : names.find(n => !isScript(n)) || names[0];
+  const ids = EA.design ? ['loi_moi', 'ten_chu_re', 'va', 'ten_co_dau', 'ngay_cuoi'] : ['tieu_de', 'ten_1', 'va', 'ten_2', 'ngay'];
+  const fill = EA.design ? (EA.fills.accent ? 'accent' : Object.keys(EA.fills)[0]) : (EA.fills.gold_line ? 'gold_line' : Object.keys(EA.fills)[0]);
+  return { title: 'Bố cục mới', mo_ta: 'Bố cục tự làm', canvas: { w: 1000, h: 1414 },
+    ...(EA.design ? { size: 'a5', shape: 'chu_nhat', card: 'tu_lam', card_name: 'Tự làm' } : {}),
+    ornaments: [{ id: 'vien', type: 'border', fill, lines: [{ inset: 23, width: 2.3 }, { inset: 35, width: 1.2 }] }], photos: [],
+    texts: [{ id: ids[0], label: EA.design ? 'Lời mời' : 'Tiêu đề bìa', style: se, text: EA.design ? 'Trân trọng kính mời' : 'THIỆP THÀNH HÔN', cx: 500, cy: 435, w: 570, size: 40 },
+      { id: ids[1], label: 'Tên chú rể', style: sc, text: 'Gia Minh', cx: 500, cy: 618, w: 630, size: 137, group: 'ten' },
+      { id: ids[2], label: "Chữ nối ('và')", style: sc, text: 'và', cx: 500, cy: 715, w: 126, size: 63 },
+      { id: ids[3], label: 'Tên cô dâu', style: sc, text: 'Ái Ngọc', cx: 500, cy: 812, w: 630, size: 137, group: 'ten' },
+      { id: ids[4], label: 'Ngày cưới', style: se, text: '15 . 12 . 2026', cx: 500, cy: 1030, w: 400, size: 35 }] }; }
+async function openEditor(name, shape) {
+  try {
+    await kitAssets(true);
+    const data = name ? await api(`/api/kit/${encodeURIComponent(KIT)}/layout/${encodeURIComponent(name)}`) : blankLayout();
+    const local = !!data._local || (!name && EA.design); delete data._local;
+    data.ornaments = data.ornaments || []; data.texts = data.texts || []; data.photos = data.photos || [];
+    const L = KL.find(x => x.name === name);
+    ED = { name, local, custom: !!(L && L.custom), data, shape: shape || (data.shape ? 'own' : 'chu_nhat'), a: EA, hist: [], sel: null, dirty: !name,
+      title: data.title || name || 'Bố cục mới', frame: null, frameKey: '', tbox: [], guide: null, truth: false, back: { ...CUR } };
+    if (ED.shape === 'own' && !data.shape && !local) ED.shape = 'chu_nhat';
+    go('edit');
+  } catch (e) { toast('Không mở được trình chỉnh: ' + e.message, true); } }
+async function edStart() {
+  if (!ED) return go('cus', 2);
+  ED.clip = $('#eClip');
+  $('#eTitle').textContent = (ED.name ? 'Chỉnh: ' : '') + ED.title;
+  $('#eDel').style.display = ED.custom || (ED.local && ED.name) ? '' : 'none';
+  $('#eDel').textContent = ED.local ? 'Xoá phương án' : 'Xoá bố cục';
+  edDirty(); edShapes(); edAddGrid(); edSize(); await edFrame(true); drawAll(); props(); list(); }
+function edSize() {
+  const W = ED.data.canvas?.w || 1748, H = ED.data.canvas?.h || 2480, narrow = window.innerWidth < 900;
+  const top = $('#stage').getBoundingClientRect().top + window.scrollY;
+  let h = Math.max(380, Math.min(window.innerHeight - top - 46, 1000)), w = h * W / H;
+  const maxW = narrow ? window.innerWidth - 40 : Math.max(360, Math.min(window.innerWidth - 560, 900));
+  if (w > maxW) { w = maxW; h = w * H / W; }
+  ED.W = W; ED.H = H; ED.k = w / W;
+  const st = $('#stage'); st.style.width = w + 'px'; st.style.height = h + 'px'; $('#eLeft').style.width = Math.max(w, 300) + 'px'; }
+function edDirty() { $('#eDirty').style.display = ED.dirty ? '' : 'none'; }
+function histPush() { ED.hist.push(JSON.stringify(ED.data)); if (ED.hist.length > 80) ED.hist.shift(); ED.dirty = true; edDirty(); }
+function undo() { if (!ED.hist.length) return toast('Không còn gì để hoàn tác');
+  ED.data = JSON.parse(ED.hist.pop()); if (ED.sel && !selEl()) ED.sel = null; edFrame().then(() => { drawAll(); props(); list(); }); }
+const arrOf = k => (ED.data[ARR[k]] = ED.data[ARR[k]] || []);
+const selEl = () => ED.sel ? arrOf(ED.sel.k)[ED.sel.i] : null;
+function select(k, i) { ED.sel = k ? { k, i } : null; drawSel(); props(); list(); }
+const shapeSpec = () => ED.shape === 'own' ? (ED.data.shape || 'chu_nhat') : ED.shape;
+function edShapes() {
+  const box = $('#eShapes'); box.innerHTML = '';
+  const opts = (ED.local || ED.data.shape ? [{ id: 'own', label: 'Theo thiết kế', title: shapeName(ED.data.shape) }] : []).concat(S.shapes);
+  for (const sh of opts) { const b = el('button', { class: 'shp' + (sh.id === ED.shape ? ' on' : ''), title: sh.title || sh.label,
+      onclick: async () => { ED.shape = sh.id; ED.dirty = true; edDirty(); edShapes(); await edFrame(); drawAll(); } });
+    b.innerHTML = `<svg viewBox="0 0 40 56" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2">${SHAPE_SVG[sh.id] || ''}</g></svg>`;
+    b.append(el('span', {}, sh.label)); box.append(b); } }
+// Khung: mặt nạ hình dáng + đường viền – server dựng bằng đúng code xuất thiệp, nên khớp bản thật
+async function edFrame(force) {
+  const b = ED.data.ornaments.find(o => o.type === 'border' && !o.hidden) || null;
+  const pw = Math.round(ED.W * ED.k * (window.devicePixelRatio || 1)), spec = shapeSpec();
+  const key = JSON.stringify([spec, b && b.lines, b && b.fill, pw]);
+  if (!force && key === ED.frameKey) return;
+  ED.frameKey = key;
+  try { const f = await post(`/api/kit/${encodeURIComponent(KIT)}/frame`, { shape: spec, border: b, w: ED.W, h: ED.H, pw });
+    if (key !== ED.frameKey) return; ED.frame = f;
+    const c = $('#eClip'); c.style.webkitMaskImage = c.style.maskImage = `url(${f.mask})`;
+  } catch (e) { toast(e.message, true); } }
+let frameTimer = null;
+function edFrameSoon() { clearTimeout(frameTimer); frameTimer = setTimeout(() => edFrame().then(() => drawAll()), 160); }
+function redrawSel() {
+  const s = ED.sel; if (!s) return; const g = $(`#eClip [data-${s.k}="${s.i}"]`); if (!g) return drawAll(); g.innerHTML = '';
+  const o = selEl(); if (s.k === 'o') drawOrn(o, g); else if (s.k === 'p') drawPhoto(o, g); else ED.tbox[s.i] = drawText(o, g); drawSel(); }
+function drawSel() {
+  const box = $('#eSelBox'); box.innerHTML = ''; const k = ED.k;
+  const rect = (l, t, w, h, cls, r) => el('div', { class: cls, style: `left:${l * k}px;top:${t * k}px;width:${w * k}px;height:${h * k}px;${r ? `transform:rotate(${r}deg)` : ''}` });
+  if (ED.guide) { if (ED.guide.includes('x')) box.append(el('div', { class: 'guide', style: `left:${ED.W / 2 * k}px;top:0;width:1px;height:100%` }));
+    if (ED.guide.includes('y')) box.append(el('div', { class: 'guide', style: `top:${ED.H / 2 * k}px;left:0;height:1px;width:100%` })); }
+  const o = selEl(); if (!o || o.hidden) return;
+  if (ED.sel.k === 'o') { if (o.type === 'border') return; const G = geom(o);
+    G.copies.forEach((c, j) => box.append(rect(c.l, c.t, G.sw, G.sh, j ? 'eghost' : 'esel', c.r)));
+    if ((o.type || 'asset') === 'asset') { const [ax, ay] = ANCH[o.anchor || 'c'] || ANCH.c, c = G.copies[0], a = c.r * Math.PI / 180;
+      const hx = (ax <= .5 ? 1 : 0) * G.sw - G.sw / 2, hy = (ay <= .5 ? 1 : 0) * G.sh - G.sh / 2;
+      const px = c.l + G.sw / 2 + hx * Math.cos(a) - hy * Math.sin(a), py = c.t + G.sh / 2 + hx * Math.sin(a) + hy * Math.cos(a);
+      box.append(el('div', { class: 'hdl', 'data-h': 'scale', title: 'Kéo để đổi cỡ', style: `left:${px * k}px;top:${py * k}px` })); }
+  } else if (ED.sel.k === 'p') { box.append(rect(o.x - o.w / 2, o.y - o.h / 2, o.w, o.h, 'esel'));
+    box.append(el('div', { class: 'hdl', 'data-h': 'pscale', title: 'Kéo để đổi cỡ', style: `left:${(o.x + o.w / 2) * k}px;top:${(o.y + o.h / 2) * k}px` }));
+  } else { const b = ED.tbox[ED.sel.i]; if (!b) return; box.append(rect(b.l, b.t, b.r - b.l, b.b - b.t, 'esel'));
+    box.append(el('div', { class: 'hdl', 'data-h': 'tw', title: 'Kéo để đổi bề rộng ô chữ', style: `left:${b.r * k}px;top:${(b.t + b.b) / 2 * k}px;cursor:ew-resize;border-radius:4px` }));
+    box.append(el('div', { class: 'hdl', 'data-h': 'ts', title: 'Kéo để đổi cỡ chữ', style: `left:${b.r * k}px;top:${b.b * k}px` })); } }
+function hitTest(X, Y) {
+  const o = selEl(), pad = 6 / ED.k;
+  if (o && !o.hidden) {         // đang chọn: bấm trong khung của nó thì kéo luôn nó
+    if (ED.sel.k === 't') { const b = ED.tbox[ED.sel.i]; if (b && X >= b.l && X <= b.r && Y >= b.t && Y <= b.b) return { ...ED.sel }; }
+    else if (ED.sel.k === 'p') { if (Math.abs(X - o.x) <= o.w / 2 && Math.abs(Y - o.y) <= o.h / 2) return { ...ED.sel }; }
+    else if (o.type !== 'border') { const G = geom(o); for (const c of G.copies) { const [lx, ly] = toLocal(c, G, X, Y);
+      if (lx >= c.l - pad && lx <= c.l + G.sw + pad && ly >= c.t - pad && ly <= c.t + G.sh + pad) return { ...ED.sel, copy: c }; } } }
+  const T = ED.data.texts;
+  for (let i = T.length - 1; i >= 0; i--) { const b = ED.tbox[i]; if (b && !T[i].hidden && X >= b.il - pad && X <= b.ir + pad && Y >= b.t && Y <= b.b) return { k: 't', i }; }
+  const O = ED.data.ornaments;
+  for (let i = O.length - 1; i >= 0; i--) { const q = O[i]; if (q.hidden || q.type === 'border') continue; const G = geom(q);
+    for (const c of G.copies) { const hit = q.type === 'rule' ? (X >= c.l && X <= c.l + G.sw && Y >= c.t - 3 * pad && Y <= c.t + G.sh + 3 * pad) : hitAsset(q, c, G, X, Y);
+      if (hit) return { k: 'o', i, copy: c }; } }
+  const P = ED.data.photos;
+  for (let i = P.length - 1; i >= 0; i--) { const p = P[i]; if (!p.hidden && Math.abs(X - p.x) <= p.w / 2 && Math.abs(Y - p.y) <= p.h / 2) return { k: 'p', i }; }
+  return null; }
+function snapX(center, apply) { const W2 = ED.W / 2; if (Math.abs(center - W2) < 9 / ED.k) { apply(W2 - center); return true; } return false; }
+function dragTo(d, X, Y) {
+  const o = selEl(), dx = X - d.X, dy = Y - d.Y; ED.guide = null;
+  if (d.h === 'scale' || d.h === 'pscale') { const f = Math.max(0.03, Math.hypot(X - d.o.x, Y - d.o.y) / Math.max(1, Math.hypot(d.X - d.o.x, d.Y - d.o.y)));
+    if ('w' in d.o) o.w = r1(Math.max(8, d.o.w * f)); if ('h' in d.o) o.h = r1(Math.max(8, d.o.h * f)); return; }
+  if (d.h === 'tw') { o.w = r1(Math.max(40, d.o.align === 'left' ? X - (d.o.cx - d.o.w / 2) : 2 * Math.abs(X - d.o.cx)));
+    if (d.o.align === 'left') o.cx = r1(d.o.cx - d.o.w / 2 + o.w / 2); return; }
+  if (d.h === 'ts') { const f = Math.max(0.1, Math.hypot(X - d.o.cx, Y - d.o.cy) / Math.max(1, Math.hypot(d.X - d.o.cx, d.Y - d.o.cy)));
+    o.size = r1(Math.max(6, tstyle(d.o).size * f)); o.w = r1(Math.max(40, d.o.w * f)); return; }
+  if (ED.sel.k === 't') { o.cx = r1(d.o.cx + dx); o.cy = r1(d.o.cy + dy); if (snapX(o.cx, v => o.cx = r1(o.cx + v))) ED.guide = 'x'; return; }
+  if (ED.sel.k === 'p') { o.x = r1(d.o.x + dx); o.y = r1(d.o.y + dy); if (snapX(o.x, v => o.x = r1(o.x + v))) ED.guide = 'x'; return; }
+  o.x = r1(d.o.x + dx * d.copy.sx); o.y = r1(d.o.y + dy * d.copy.sy);
+  const G = geom(o), c = G.copies.find(q => q.sx === d.copy.sx && q.sy === d.copy.sy) || G.copies[0];
+  if (snapX(c.l + G.sw / 2, v => o.x = r1(o.x + v * c.sx))) ED.guide = 'x';
+  const cy = c.t + G.sh / 2; if (Math.abs(cy - ED.H / 2) < 9 / ED.k) { o.y = r1(o.y + (ED.H / 2 - cy) * c.sy); ED.guide = (ED.guide || '') + 'y'; } }
+$('#stage').addEventListener('pointerdown', e => {
+  if (!ED || ED.truth || e.button !== 0) return;
+  const st = $('#stage'), r = st.getBoundingClientRect(), pos = ev => [(ev.clientX - r.left) / ED.k, (ev.clientY - r.top) / ED.k];
+  const [X, Y] = pos(e), h = e.target.dataset && e.target.dataset.h;
+  const hit = h ? { ...ED.sel, h } : hitTest(X, Y);
+  if (!hit) return select(null);
+  if (!ED.sel || ED.sel.k !== hit.k || ED.sel.i !== hit.i) select(hit.k, hit.i);
+  const o = selEl(); if (!o) return;
+  const d = { X, Y, o: clone(o), copy: hit.copy || { sx: 1, sy: 1 }, h: hit.h }, before = JSON.stringify(ED.data); let moved = false;
+  st.setPointerCapture(e.pointerId); e.preventDefault();
+  const mv = ev => { const [X2, Y2] = pos(ev); if (!moved && Math.hypot(X2 - X, Y2 - Y) * ED.k < 3) return;
+    if (!moved) { moved = true; ED.hist.push(before); if (ED.hist.length > 80) ED.hist.shift(); ED.dirty = true; edDirty(); }
+    dragTo(d, X2, Y2); redrawSel(); };
+  const up = () => { st.removeEventListener('pointermove', mv); st.removeEventListener('pointerup', up); st.removeEventListener('pointercancel', up);
+    ED.guide = null; drawSel(); if (moved) props(); };
+  st.addEventListener('pointermove', mv); st.addEventListener('pointerup', up); st.addEventListener('pointercancel', up); });
+let nudgeAt = 0;
+document.addEventListener('keydown', e => {
+  if (!ED || !$('#v-edit').classList.contains('on') || $('#eSaveDlg').open) return;
+  const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName || '');
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z' && !typing) { e.preventDefault(); return undo(); }
+  if (typing || !ED.sel) return;
+  const o = selEl(); if (!o) return;
+  const step = Math.max(1, ED.W / 437) * (e.shiftKey ? 10 : 1), mv = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[e.key];
+  if (mv) { e.preventDefault(); if (Date.now() - nudgeAt > 700) histPush(); nudgeAt = Date.now();
+    if (ED.sel.k === 't') { o.cx = r1(o.cx + mv[0]); o.cy = r1(o.cy + mv[1]); } else if (o.type !== 'border') { o.x = r1(o.x + mv[0]); o.y = r1(o.y + mv[1]); }
+    redrawSel(); return; }
+  if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); removeSel(); } });
+window.addEventListener('resize', () => { if (ED && $('#v-edit').classList.contains('on')) { clearTimeout(window._rz); window._rz = setTimeout(async () => { edSize(); await edFrame(); drawAll(); }, 200); } });
+
+// ---- bảng thuộc tính
+function mkInput(type, val, onchange, attrs = {}) {
+  const i = el(type === 'textarea' ? 'textarea' : 'input', type === 'textarea' ? { rows: 2, style: 'min-height:54px' } : { type, ...attrs }); i.value = val;
+  let pushed = false; i.addEventListener('focus', () => pushed = false); i.addEventListener('pointerdown', () => pushed = false);
+  i.addEventListener('input', () => { if (!pushed) { histPush(); pushed = true; } onchange(type === 'range' || type === 'number' ? +i.value : i.value); });
+  return i; }
+function mkSelect(opts, val, onchange) { const s = el('select'); for (const [v, lb] of opts) s.append(el('option', { value: v }, lb)); s.value = val;
+  s.onchange = () => { histPush(); onchange(s.value); }; return s; }
+function mkSeg(opts, isOn, onclick) { const box = el('span', { class: 'seg' });
+  for (const [v, lb] of opts) box.append(el('button', { class: isOn(v) ? 'on' : '', onclick: () => { histPush(); onclick(v); props(); } }, lb)); return box; }
+const ornName = o => o.type === 'border' ? 'Viền' : o.type === 'rule' ? 'Đường kẻ' : (ED.a.labels[o.asset] || o.asset);
+function props() {
+  const box = $('#eProps'); box.innerHTML = ''; const o = selEl();
+  if (!o) { box.append(el('h4', {}, 'Thuộc tính'), el('p', { class: 'muted', style: 'margin:0' }, 'Bấm vào một hoa văn, dòng chữ hoặc ô ảnh trên thiệp để chỉnh. Viền: chọn "Viền" ở danh sách bên dưới.')); return; }
+  const g = el('div', { class: 'pgrid' }), row = (lb, ...x) => g.append(el('label', {}, lb), el('div', { class: 'row', style: 'gap:6px' }, ...x));
+  const acts = el('div', { class: 'row', style: 'margin-top:12px;gap:6px' });
+  if (ED.sel.k === 't') {
+    box.append(el('h4', {}, 'Ô chữ: ' + (o.label || o.id)));
+    row('Tên ô', mkInput('text', o.label || '', v => { o.label = v; list(); }));
+    row('Chữ mẫu', mkInput('textarea', o.text ?? '', v => { o.text = v; redrawSel(); }));
+    const sLabel = k => { const f = ED.a.fonts[ED.a.styles[k].font] || {}; return `${STYLE_VI[k] || k}${f.label ? ' – ' + f.label : ''}`; };
+    row('Kiểu chữ', mkSelect(Object.keys(ED.a.styles).map(k => [k, sLabel(k)]), o.style, v => { o.style = v; delete o.size; redrawSel(); props(); }));
+    const fl = Object.entries(ED.a.fonts).filter(([, f]) => f.registry);
+    row('Font', mkSelect([['', 'Theo kiểu chữ']].concat(fl.map(([k, f]) => [k, `${f.label} · ${FKIND[f.kind] || f.kind}` + (f.vi_missing ? ' (thiếu dấu)' : '')])),
+      o.font || '', v => { if (v) o.font = v; else delete o.font; redrawSel(); }));
+    row('Cỡ chữ', mkInput('range', tstyle(o).size, v => { o.size = v; redrawSel(); }, { min: Math.round(ED.W * 0.009), max: Math.round(ED.W * 0.24), step: 1 }));
+    row('Rộng ô', mkInput('range', o.w, v => { o.w = v; redrawSel(); }, { min: Math.round(ED.W * 0.05), max: ED.W, step: 1 }));
+    row('Căn lề', mkSeg([['left', 'Trái'], ['center', 'Giữa'], ['right', 'Phải']], v => (o.align || 'center') === v, v => { if (v === 'center') delete o.align; else o.align = v; redrawSel(); }));
+    row('Nghiêng', mkSeg([[false, 'Thẳng'], [true, 'Nghiêng']], v => !!tstyle(o).italic === v, v => { o.italic = v; redrawSel(); }));
+    box.append(g, el('p', { class: 'muted', style: 'margin:8px 0 0' }, 'Khách sẽ thấy "Tên ô" ở bước điền thông tin; chữ mẫu được giữ nếu khách để trống.'));
+  } else if (ED.sel.k === 'p') {
+    box.append(el('h4', {}, 'Ô ảnh: ' + (o.label || o.id)));
+    row('Tên ô', mkInput('text', o.label || '', v => { o.label = v; redrawSel(); list(); }));
+    const opts = [['chu_nhat', 'Chữ nhật'], ['bo_goc', 'Bo góc'], ['oval', 'Oval'], ['vom', 'Vòm']];
+    if (o.shape && typeof o.shape === 'object') opts.unshift(['__own', o.shape.label || 'Hình riêng']);
+    row('Hình', mkSelect(opts, o.shape && typeof o.shape === 'object' ? '__own' : (o.shape || 'chu_nhat'), v => { if (v !== '__own') o.shape = v; redrawSel(); }));
+    row('Rộng', mkInput('range', o.w, v => { o.w = v; redrawSel(); }, { min: 20, max: ED.W, step: 1 }));
+    row('Cao', mkInput('range', o.h, v => { o.h = v; redrawSel(); }, { min: 20, max: ED.H, step: 1 }));
+    box.append(g, el('p', { class: 'muted', style: 'margin:8px 0 0' }, 'Website chèn ảnh cưới vào ô này (giữa lớp nền và lớp hoa văn); bộ file có sẵn mặt nạ của ô.'));
+  } else if (o.type === 'border') {
+    box.append(el('h4', {}, 'Viền'));
+    const L = o.lines || (o.lines = []), base = L.map(l => +l.width || 2), first = L.length ? +L[0].inset : 40, u = ED.W / 1000;
+    row('Màu', mkSelect(Object.keys(ED.a.fills).map(k => [k, k]), o.fill || 'gold', v => { o.fill = v; edFrameSoon(); }));
+    row('Số nét', mkSeg([[1, '1'], [2, '2'], [3, '3']], v => L.length === v, v => { const ins = L.length ? +L[0].inset : 23 * u;
+      o.lines = [[2.3], [2.3, 1.2], [2.8, 2.3, 1.7]][v - 1].map((w, j) => ({ inset: r1(ins + j * 13.7 * u), width: r1(w * u) })); edFrameSoon(); }));
+    row('Cách mép', mkInput('range', first, v => { const d = v - (+o.lines[0]?.inset || 0); o.lines.forEach(l => l.inset = r1(+l.inset + d)); edFrameSoon(); }, { min: 0, max: Math.round(ED.W * 0.13), step: 1 }));
+    row('Độ dày', mkInput('range', 1, v => { o.lines.forEach((l, j) => l.width = r1(Math.max(0.3, base[j] * v))); edFrameSoon(); }, { min: 0.3, max: 3, step: 0.05 }));
+    box.append(g);
+  } else {
+    box.append(el('h4', {}, ornName(o)));
+    if ((o.type || 'asset') === 'asset') {
+      const items = Object.entries(ED.a.items);
+      row('Món', mkSelect(items.map(([id, it]) => [id, it.label + (it.own ? '' : ` (dùng ${(ED.a.items[it.real] || {}).label || it.real})`)])
+        .concat(ED.a.items[o.asset] ? [] : [[o.asset, ornName(o) + ' (chưa vẽ)']]), o.asset, v => { o.asset = v; drawAll(); list(); }));
+      row('Cỡ', mkInput('range', Math.max(+o.w || 0, +o.h || 0) || 300, v => { const cur = Math.max(+o.w || 0, +o.h || 0) || 1, f = v / cur;
+        if ('w' in o) o.w = r1(o.w * f); if ('h' in o) o.h = r1(o.h * f); redrawSel(); }, { min: Math.round(ED.W * 0.012), max: Math.round(ED.H * 1.1), step: 1 }));
+      row('Xoay', mkInput('range', +o.rotate || 0, v => { if (v) o.rotate = v; else delete o.rotate; redrawSel(); }, { min: -180, max: 180, step: 1 }));
+      row('Lật', mkSeg([['h', '↔ Ngang'], ['v', '↕ Dọc']], v => (o.flip || '').includes(v), v => { const f = new Set((o.flip || '').split('')); f.has(v) ? f.delete(v) : f.add(v);
+        const s = ['h', 'v'].filter(x => f.has(x)).join(''); if (s) o.flip = s; else delete o.flip; redrawSel(); }));
+      row('Đối xứng', mkSelect([['', 'Không – chỉ 1 bản'], ['x', 'Trái ↔ phải (2 bản)'], ['y', 'Trên ↕ dưới (2 bản)'], ['xy', '4 góc (4 bản)']], o.mirror || '',
+        v => { if (v) o.mirror = v; else delete o.mirror; redrawSel(); list(); }));
+    } else {
+      row('Dài', mkInput('range', +o.length || 400, v => { o.length = v; redrawSel(); }, { min: 20, max: ED.W, step: 1 }));
+      row('Dày', mkInput('range', +o.thickness || 2, v => { o.thickness = v; redrawSel(); }, { min: 1, max: 20, step: 0.5 }));
+    }
+    row('Độ đậm', mkInput('range', Math.round((o.opacity ?? 1) * 100), v => { if (v >= 100) delete o.opacity; else o.opacity = v / 100; redrawSel(); }, { min: 10, max: 100, step: 1 }));
+    row('Lớp', el('button', { class: 'btn small', onclick: () => moveSel(1) }, 'Đưa lên trên'), el('button', { class: 'btn small', onclick: () => moveSel(-1) }, 'Đưa xuống dưới'));
+    box.append(g);
+  }
+  if (o.type !== 'border') acts.append(el('button', { class: 'btn small', onclick: dupSel }, 'Nhân đôi'));
+  acts.append(el('button', { class: 'btn small', onclick: () => toggleHide(ED.sel.k, ED.sel.i) }, o.hidden ? 'Hiện lại' : 'Ẩn'),
+    el('button', { class: 'btn small', style: 'color:var(--err)', onclick: removeSel }, 'Xoá'));
+  box.append(acts); }
+function uniqId(base, arr) { let n = 2, id = base; const ids = new Set(arr.map(x => x.id)); while (ids.has(id)) id = `${base}_${n++}`; return id; }
+function dupSel() { const o = selEl(); if (!o) return; histPush(); const c = clone(o), arr = arrOf(ED.sel.k), d = ED.W * 0.035;
+  c.id = uniqId(o.id || o.asset || 'mon', arr); delete c.hidden;
+  if (ED.sel.k === 't') { c.cy = r1(c.cy + d * 2); c.label = (o.label || o.id) + ' (2)'; } else { c.x = r1(c.x + d); c.y = r1(c.y + d); }
+  arr.splice(ED.sel.i + 1, 0, c); ED.sel = { k: ED.sel.k, i: ED.sel.i + 1 }; drawAll(); props(); list(); }
+function removeSel() { const o = selEl(); if (!o) return; histPush(); arrOf(ED.sel.k).splice(ED.sel.i, 1);
+  const wasBorder = o.type === 'border'; ED.sel = null; if (wasBorder) edFrame().then(() => drawAll()); drawAll(); props(); list(); toast('Đã xoá – Ctrl+Z để lấy lại'); }
+function toggleHide(k, i) { histPush(); const o = arrOf(k)[i]; if (o.hidden) delete o.hidden; else o.hidden = true;
+  if (o.type === 'border') edFrame().then(() => drawAll()); drawAll(); props(); list(); }
+function moveSel(dir) { const arr = ED.data.ornaments, i = ED.sel.i, j = i + dir; if (j < 0 || j >= arr.length) return; histPush();
+  [arr[i], arr[j]] = [arr[j], arr[i]]; ED.sel.i = j; drawAll(); list(); }
+function list() {
+  const box = $('#eList'); box.innerHTML = ''; const cur = ED.sel;
+  const row = (k, i, o, icon, name) => box.append(el('div', { class: (cur && cur.k === k && cur.i === i ? 'on' : '') + (o.hidden ? ' off' : ''), onclick: () => select(k, i) },
+    icon, el('span', {}, name), el('button', { class: 'eye', title: o.hidden ? 'Hiện lại' : 'Ẩn', onclick: ev => { ev.stopPropagation(); toggleHide(k, i); } }, o.hidden ? 'Hiện' : 'Ẩn')));
+  ED.data.photos.forEach((p, i) => row('p', i, p, el('span', { class: 'ic' }, '▣'), 'Ô ảnh: ' + (p.label || p.id)));
+  ED.data.ornaments.forEach((o, i) => { const it = ED.a.items[o.asset];
+    const icon = (o.type || 'asset') === 'asset' && it ? el('img', { src: it.url, alt: '' }) : el('span', { class: 'ic' }, o.type === 'border' ? '▭' : o.type === 'rule' ? '—' : '○');
+    const n = { x: ' ×2', y: ' ×2', xy: ' ×4' }[o.mirror || ''] || ''; row('o', i, o, icon, ornName(o) + n + ((o.type || 'asset') === 'asset' && !it ? ' (chưa vẽ)' : '')); });
+  ED.data.texts.forEach((t, i) => row('t', i, t, el('span', { class: 'ic', style: 'font-family:Georgia,serif;font-weight:700' }, 'T'), t.label || t.id)); }
+function edAddGrid() {
+  const box = $('#eAdd'); box.innerHTML = '';
+  for (const [id, it] of Object.entries(ED.a.items)) { if (!it.own) continue;   // chỉ món mẫu này có thật
+    box.append(el('button', { title: it.label, style: `background:${ED.a.bg}`, onclick: () => addAsset(id) }, el('img', { src: it.url, alt: it.label }))); }
+  if (!box.children.length) box.append(el('p', { class: 'muted', style: 'margin:0;grid-column:1/-1' }, 'Mẫu chưa có hoa văn nào đã vẽ.')); }
+function addAsset(id) { const it = ED.a.items[id]; histPush(); const s = ED.W * 0.3 / Math.max(it.w, it.h);
+  ED.data.ornaments.push({ id: uniqId(id, ED.data.ornaments), asset: id, x: r1(ED.W / 2), y: r1(ED.H / 2), w: r1(it.w * s), h: r1(it.h * s), anchor: 'c' });
+  select('o', ED.data.ornaments.length - 1); drawAll(); toast('Đã thêm vào giữa thiệp – kéo tới chỗ muốn đặt'); }
+$('#eAddText').onclick = () => { histPush(); const names = Object.keys(ED.a.styles), st = ED.a.styles.body ? 'body' : names[names.length - 1];
+  ED.data.texts.push({ id: uniqId('chu', ED.data.texts), label: 'Ô chữ mới', style: st, text: 'Chữ mẫu', cx: r1(ED.W / 2), cy: r1(ED.H / 2), w: r1(ED.W * 0.57), size: r1(ED.W * 0.037) });
+  select('t', ED.data.texts.length - 1); drawAll(); };
+$('#eAddPhoto').onclick = () => { histPush();
+  ED.data.photos.push({ id: uniqId('anh', ED.data.photos), label: 'Ảnh cưới', x: r1(ED.W / 2), y: r1(ED.H / 2), w: r1(ED.W * 0.42), h: r1(ED.W * 0.52), shape: 'oval' });
+  select('p', ED.data.photos.length - 1); drawAll(); };
+$('#eAddBorder').onclick = async () => { if (ED.data.ornaments.some(o => o.type === 'border' && !o.hidden)) return toast('Thiệp đã có viền – chọn "Viền" ở danh sách để chỉnh');
+  histPush(); const u = ED.W / 1000, fl = ED.a.fills;
+  ED.data.ornaments.unshift({ id: uniqId('vien', ED.data.ornaments), type: 'border', fill: fl.accent ? 'accent' : fl.gold_line ? 'gold_line' : Object.keys(fl)[0],
+    lines: [{ inset: r1(23 * u), width: r1(2.3 * u) }, { inset: r1(35 * u), width: r1(1.2 * u) }] });
+  ED.sel = { k: 'o', i: 0 }; await edFrame(); drawAll(); props(); list(); };
+$('#eUndo').onclick = undo;
+const edBack = () => go(ED.back.view === 'edit' ? 'cus' : ED.back.view, ED.back.step);
+$('#eBack').onclick = edBack;
+$('#eTruth').onclick = async () => {
+  const b = $('#eTruth'), img = $('#eTruthImg');
+  if (ED.truth) { ED.truth = false; img.hidden = $('#eTruthTag').hidden = true; b.textContent = 'Xem bản thật'; return; }
+  b.disabled = true; b.textContent = 'Đang dựng…';
+  const body = ED.local ? { data: { ...ED.data, shape: shapeSpec() }, shape: null }
+    : { data: { ...ED.data, shapes: S.shapes.map(x => x.id) }, shape: ED.shape === 'own' ? null : ED.shape };
+  try { const j = await post(`/api/kit/${encodeURIComponent(KIT)}/preview_data`, body);
+    img.src = j.url + '&r=' + Date.now(); img.hidden = $('#eTruthTag').hidden = false; ED.truth = true; b.textContent = '← Quay lại chỉnh';
+  } catch (e) { toast(e.message, true); b.textContent = 'Xem bản thật'; } finally { b.disabled = false; } };
+$('#eSave').onclick = () => { const d = $('#eSaveDlg');
+  $('#eSaveNameRow').style.display = ED.local ? 'none' : '';
+  $('#eSaveName').value = ED.custom ? ED.title : (ED.name ? ED.title + ' – riêng' : ED.title);
+  $('#eSaveOver').style.display = ED.custom || (ED.local && ED.name) ? '' : 'none';
+  $('#eSaveOver').textContent = ED.local ? 'Lưu' : 'Lưu đè';
+  $('#eSaveNew').textContent = ED.local ? 'Lưu thành phương án mới' : 'Lưu thành bố cục mới';
+  $('#eSaveHint').textContent = ED.local ? '"Lưu": ghi lên phương án này. "Lưu thành phương án mới": giữ bản cũ, thêm một phương án cho thiệp.'
+    : ED.custom ? '"Lưu đè" ghi lên bố cục này; "Lưu thành bố cục mới" giữ nguyên bản cũ.'
+    : ED.name ? 'Bố cục có sẵn được giữ nguyên; bản chỉnh được lưu thành bố cục mới trong thư viện.' : 'Bố cục sẽ xuất hiện trong thư viện cho mọi mẫu thiệp.';
+  d.showModal(); if (!ED.local) $('#eSaveName').select(); };
+$('#eSaveCancel').onclick = () => $('#eSaveDlg').close();
+async function edSave(overwrite) {
+  try {
+    let saved;
+    if (ED.local) {
+      const data = { ...clone(ED.data), shape: shapeSpec() };
+      saved = (await post(`/api/kit/${encodeURIComponent(KIT)}/layout/save`, { name: ED.name || '', data, as_new: !overwrite || !ED.name })).name;
+    } else {
+      const title = $('#eSaveName').value.trim(); if (!title) return toast('Đặt tên cho bố cục', true);
+      const data = { ...clone(ED.data), shapes: S.shapes.map(x => x.id), shape_default: ED.shape === 'own' ? 'chu_nhat' : ED.shape };
+      if (!data.mo_ta || !ED.custom) data.mo_ta = ED.name ? `Chỉnh từ "${ED.title}"` : 'Bố cục tự làm';
+      saved = (await post('/api/layout/save', { name: overwrite ? ED.name : title, title, data, overwrite })).name;
+      SHAPE = ED.shape === 'own' ? '' : ED.shape; store.set('shape2', SHAPE);
+    }
+    $('#eSaveDlg').close(); ED.dirty = false; chosen.add(saved); store.set('lays', JSON.stringify([...chosen]));
+    await refresh(); toast('Đã lưu – đã chọn sẵn'); edBack();
+  } catch (e) { toast(e.message, true); } }
+$('#eSaveNew').onclick = () => edSave(false);
+$('#eSaveOver').onclick = () => edSave(true);
+$('#eDel').onclick = async () => { if (!confirm(`Xoá hẳn "${ED.title}"? Không lấy lại được.`)) return;
+  try { if (ED.local) await post(`/api/kit/${encodeURIComponent(KIT)}/layout/delete`, { name: ED.name });
+    else await post('/api/layout/delete', { name: ED.name });
+    chosen.delete(ED.name); store.set('lays', JSON.stringify([...chosen])); ED.dirty = false; await refresh(); toast('Đã xoá'); edBack();
+  } catch (e) { toast(e.message, true); } };
+
+// ---------- FONT CHỮ: thư viện font (có sẵn + tự thêm)
+const FKIND = { script: 'Viết tay', serif: 'Có chân', sans: 'Không chân', deco: 'Trang trí' };
+async function renderFonts() {
+  const box = $('#fontList'); box.innerHTML = '';
+  let fs = [];
+  try { fs = (await api('/api/fonts')).fonts; } catch (e) { return toast(e.message, true); }
+  for (const f of fs) {
+    const fam = 'fl_' + f.file.split('/').pop().replace(/\W/g, '_');
+    if (!loadedFonts.has(fam)) { loadedFonts.add(fam); const ff = new FontFace(fam, `url(${f.url})`, { weight: '100 900' }); document.fonts.add(ff); ff.load().catch(() => {}); }
+    const kind = el('select', { style: 'max-width:170px' }); Object.entries(FKIND).forEach(([k, v]) => kind.append(el('option', { value: k }, v))); kind.value = f.kind;
+    const desc = el('input', { type: 'text', placeholder: 'Mô tả cho AI, vd. hiện đại, hợp tiêu đề lớn' }); desc.value = f.desc;
+    const save = () => post(`/api/fonts/${encodeURIComponent(f.id)}`, { kind: kind.value, desc: desc.value }).then(() => toast('Đã lưu')).catch(e => toast(e.message, true));
+    kind.onchange = save; desc.onchange = save;
+    const nMiss = [...(f.vi_missing || '')].length;
+    const badges = el('div', { class: 'row', style: 'gap:6px' },
+      f.builtin ? el('span', { class: 'pill' }, 'Có sẵn') : el('span', { class: 'pill ok' }, 'Bạn thêm'),
+      nMiss ? el('span', { class: 'pill err', title: 'Thiếu: ' + f.vi_missing }, `⚠ Thiếu ${nMiss} chữ có dấu – AI không dùng`) : el('span', { class: 'pill ok' }, '✓ Đủ dấu tiếng Việt'),
+      f.embed_ok ? null : el('span', { class: 'pill err', title: 'Nhà làm font cấm nhúng font này vào sản phẩm' }, '⚠ Cấm nhúng'),
+      f.ofl ? el('span', { class: 'pill ok', title: f.license }, 'Giấy phép OFL') : f.license ? el('span', { class: 'pill warn', title: f.license }, 'Xem giấy phép (rê chuột)')
+        : el('span', { class: 'pill warn' }, 'Font không ghi giấy phép'));
+    const del = f.builtin ? null : el('button', { class: 'btn small', style: 'color:var(--err)', onclick: async () => {
+      if (!confirm(`Xoá font "${f.label}"?`)) return;
+      try { await post(`/api/fonts/${encodeURIComponent(f.id)}/delete`, {}); toast('Đã xoá font'); renderFonts(); } catch (e) { toast(e.message, true); } } }, 'Xoá');
+    box.append(el('div', { class: 'fcard' },
+      el('div', { style: 'min-width:0' }, el('div', { class: 'fsample', style: `font-family:"${fam}",serif` }, 'Gia Minh & Ái Ngọc'),
+        el('div', { class: 'fsmall', style: `font-family:"${fam}",serif` }, 'Trân trọng kính mời · Thứ Bảy 15.12.2026 · ẮẰẲẴẶ Đ Ữ Ự Ỹ ơ ư'),
+        el('div', { class: 'muted', style: 'margin-top:6px' }, `${f.label} · mã: ${f.id}`)),
+      el('div', { class: 'fmeta' }, el('div', { class: 'row', style: 'gap:8px;flex-wrap:nowrap' }, kind, el('span', { class: 'spacer' }), del), desc, badges))); } }
+dropZone($('#fontDrop'), async files => {
+  for (const file of files) {
+    try { const j = await api('/api/fonts/upload', { method: 'POST', headers: { 'X-Filename': encodeURIComponent(file.name) }, body: file });
+      toast(`Đã thêm font "${j.font.label}"` + (j.font.vi_missing ? ' – nhưng thiếu dấu tiếng Việt' : ''), !!j.font.vi_missing);
+    } catch (e) { toast(`${file.name}: ${e.message}`, true); } }
+  renderFonts(); }, true, '.ttf,.otf,.woff,.woff2');
+
+// ---------- ĐĂNG LÊN ICARD ① mẫu ② trang & ô chữ (+ xem trước giả lập Icard) ③ thông tin + đăng nhập ④ đăng
+const ORN = [['merge', 'Gộp vào nền', 'Gọn, khách khó làm lệch – hoa văn nằm sẵn trong ảnh nền của trang'],
+  ['layers', 'Lớp rời', 'Mỗi món hoa văn là một ảnh riêng – khách kéo, phóng to, xoá được trong editor Icard']];
+const TMODE = [['edit', 'Sửa được'], ['guest', 'Tên khách'], ['lock', 'Khoá'], ['drop', 'Bỏ']];
+const INV_TYPES = ['Thiệp cưới', 'Thiệp sinh nhật', 'Thiệp sự kiện chung', 'Thiệp cảm ơn', 'Thiệp chúc mừng'];
+let IC = { kit: null, KL: [], pages: [], opts: { ornaments: 'merge', texts: {} }, size: '', meta: {}, assets: false,
+  fields: [], sess: null, tax: null, info: null };
+async function icStep(n) {
+  stepper($('#icSteps'), ['Chọn mẫu', 'Trang & ô chữ', 'Thông tin', 'Đăng'], n);
+  document.querySelectorAll('#v-icard .step').forEach(s => s.classList.toggle('on', s.id === 'i' + n));
+  store.set('step', n); CUR = { view: 'icard', step: n }; window.scrollTo(0, 0);
+  try {
+    if (n === 1) { await refresh(); const box = $('#iKits'); box.innerHTML = ''; const ready = S.kits.filter(k => k.done);
+      if (!ready.length) box.append(el('p', { class: 'muted' }, 'Chưa có mẫu nào vẽ xong hoa văn – hãy làm xong mẫu trước.'));
+      for (const k of ready) box.append(kitCard(k, { onpick: async () => { await loadKit(k.name); IC.kit = null; icStep(2); } }));
+      return; }
+    if (!S) await refresh(); if (!KIT) return icStep(1); if (!D || D.name !== KIT) await loadKit(KIT);
+    if (IC.kit !== KIT) await icLoadKit();
+    if (n === 2) return icRenderPages();
+    if (n === 3) return icRenderMeta();
+  } catch (e) { toast('Không tải được: ' + e.message, true); } }
+async function icLoadKit() {
+  IC.kit = KIT; IC.info = await api(`/api/icard/kit/${encodeURIComponent(KIT)}`);
+  IC.KL = (await api(`/api/kit/${encodeURIComponent(KIT)}/layouts`)).layouts;
+  if (D.design) IC.KL = IC.KL.filter(L => L.local);
+  const last = IC.info.last || {};
+  IC.pages = (last.layouts || []).filter(n => IC.KL.some(L => L.name === n));
+  if (IC.pages.length < 2) IC.pages = icStandardPages();     // 1 trang = mặc định của bản cũ → dùng bộ chuẩn
+  IC.opts = { ornaments: 'merge', texts: {}, ...(last.opts || {}) }; IC.size = last.size || '';
+  if (IC.opts.logical_w === 600) delete IC.opts.logical_w;   // khung 600 = mặc định của bản cũ → theo chuẩn Icard 454
+  IC.meta = { title: D.title, ...(last.meta || {}) }; IC.assets = !!last.design_assets; }
+function icStandardPages() {          // bộ thiệp online chuẩn Icard: Bìa · Gia đình · Thiệp mời · Cảm ơn
+  if (!D.design) return IC.info.standard_pages.filter(n => IC.KL.some(L => L.name === n));
+  const byRole = IC.info.standard_roles.map(r => IC.KL.find(L => L.role === r)).filter(Boolean).map(L => L.name);
+  if (byRole.length) return byRole;                       // mẫu thiết kế: phương án đầu của trang Bìa, Gia đình, Thiệp mời, Cảm ơn
+  const out = [], seen = new Set(), first = IC.KL[0];      // mẫu thiết kế cũ (chưa có vai trò): mỗi thiệp cùng khổ
+  for (const L of IC.KL) { const c = L.card || L.name; if (seen.has(c) || (L.size_label || '') !== (first?.size_label || '')) continue;
+    seen.add(c); out.push(L.name); }
+  return out; }
+function icOpts() { return { ...IC.opts, logical_w: IC.opts.logical_w || 454 }; }
+function icDirty() { $('#iPrev').innerHTML = ''; }
+function icRenderPages() {
+  $('#i2Kit').textContent = `Mẫu: ${D.title}` + (IC.info.template_id ? ` · đã đăng lên Icard lúc ${IC.info.pushed_at} – đăng lại sẽ cập nhật mẫu đó` : '');
+  const grid = $('#iLayGrid'); grid.innerHTML = ''; let last = null;
+  const mark = () => { grid.querySelectorAll('.kc.lay').forEach(c => { const i = IC.pages.indexOf(c.dataset.name);
+    c.classList.toggle('sel', i >= 0); if (i >= 0) c.dataset.n = i + 1; else delete c.dataset.n; });
+    const n = IC.pages.length; $('#iPageCount').textContent = n ? `${n} trang` + (n < 4 ? ' – thiệp online nên có ít nhất 4 trang' : '') : 'Chưa chọn trang nào';
+    $('#iPageCount').style.color = n && n < 4 ? 'var(--warn)' : ''; };
+  for (const L of IC.KL) {
+    if (L.local && L.card_name !== last) { last = L.card_name; grid.append(el('h3', { class: 'lay-h' }, `${L.card_name} · ${L.size_label}`)); }
+    const pv = el('div', { class: 'card-pv', style: `background:${D.bg};color:#ffffffb0;padding:10px` }, 'Đang dựng xem trước…');
+    const card = el('div', { class: 'kc pick lay', 'data-name': L.name }, pv, el('b', {}, L.local ? L.mo_ta || L.title : L.title));
+    card.onclick = () => { const i = IC.pages.indexOf(L.name); i >= 0 ? IC.pages.splice(i, 1) : IC.pages.push(L.name); mark(); icDirty(); icFields(); };
+    grid.append(card); queuePreview(pv, L, L.local ? 'own' : L.shape_default); }
+  mark();
+  const ob = $('#iOrn'); ob.innerHTML = '';
+  for (const [id, t, d] of ORN) ob.append(el('button', { class: IC.opts.ornaments === id ? 'on' : '',
+    onclick: () => { IC.opts.ornaments = id; icDirty(); icRenderPages(); } }, el('b', {}, t), el('small', {}, d)));
+  const zs = $('#iSize'); zs.innerHTML = ''; zs.append(el('option', { value: '' }, 'Theo khổ của trang 1'));
+  for (const z of S.sizes) zs.append(el('option', { value: z.id }, z.label));
+  zs.value = IC.size; zs.onchange = () => { IC.size = zs.value; icDirty(); };
+  $('#iSizeNote').textContent = 'Icard lật trang theo khổ trang 1 → mọi trang dựng cùng một khổ';
+  icFields(); }
+async function icFields() {
+  const box = $('#iTexts');
+  if (!IC.pages.length) { box.innerHTML = ''; box.append(el('span', { class: 'muted' }, 'Chọn trang trước.')); return; }
+  try { IC.fields = (await post('/api/icard/fields', { kit: KIT, layouts: IC.pages })).fields; } catch (e) { return toast(e.message, true); }
+  box.innerHTML = '';
+  for (const f of IC.fields) {
+    const cur = IC.opts.texts[f.id] || {}, mode = cur.mode || f.mode || 'edit';
+    const color = el('input', { type: 'color', value: cur.color || f.color, title: 'Màu chữ trên Icard' }); color.disabled = !['edit', 'guest'].includes(mode);
+    color.onchange = () => { IC.opts.texts[f.id] = { ...(IC.opts.texts[f.id] || {}), color: color.value }; icDirty(); };
+    const seg = el('span', { class: 'seg' });
+    for (const [v, t] of TMODE) seg.append(el('button', { class: mode === v ? 'on' : '',
+      onclick: () => { IC.opts.texts[f.id] = { ...(IC.opts.texts[f.id] || {}), mode: v }; icDirty(); icFields(); } }, t));
+    box.append(el('div', { class: 'itx' }, el('div', { class: 'lbl' }, el('b', {}, f.label), el('small', {}, String(f.text).replace(/\n/g, ' ⏎ '))), seg, color)); } }
+$('#iAllEdit').onclick = () => { for (const f of IC.fields) IC.opts.texts[f.id] = { ...(IC.opts.texts[f.id] || {}), mode: f.mode }; icDirty(); icFields(); };
+$('#iStdPages').onclick = () => { IC.pages = icStandardPages(); icDirty(); icRenderPages(); };
+$('#iPrevBtn').onclick = async () => {
+  if (!IC.pages.length) return toast('Chọn ít nhất một trang', true);
+  const b = $('#iPrevBtn'), box = $('#iPrev'); b.disabled = true; b.innerHTML = '<span class="spin" style="border-color:#8c6a2e55;border-top-color:#8c6a2e"></span> Đang dựng… (vài giây mỗi trang)';
+  try { const j = await post('/api/icard/preview', { kit: KIT, layouts: IC.pages, opts: icOpts(), size: IC.size });
+    box.innerHTML = ''; const row = el('div', { class: 'ipv' });
+    j.pages.forEach((u, i) => row.append(el('figure', {}, el('img', { src: u, alt: '', style: 'max-width:300px' }), el('figcaption', {}, `Trang ${i + 1}`))));
+    row.append(el('figure', {}, el('img', { src: j.thumbnail, alt: '', style: 'max-width:360px' }), el('figcaption', {}, 'Ảnh đại diện trong kho mẫu')));
+    box.append(row, el('p', { class: 'muted', style: 'margin:8px 0 0' }, `Khung ${j.size} px · ${j.items} thành phần · ${j.images} ảnh · font: ${j.fonts.join(', ') || '(không có ô chữ sửa được)'}`));
+    if (j.warnings.length) { const ul = el('ul', { class: 'warns' }); j.warnings.forEach(w => ul.append(el('li', {}, w))); box.append(ul); }
+  } catch (e) { toast(e.message, true); } finally { b.disabled = false; b.textContent = 'Dựng xem trước'; } };
+function icFewPagesOk() { return IC.pages.length >= 4 || confirm(`Mới chọn ${IC.pages.length} trang. Thiệp cưới trên Icard thường có ít nhất 4 trang (Bìa · Gia đình · Thiệp mời · Cảm ơn). Vẫn tiếp tục?`); }
+$('#iToMeta').onclick = () => { if (!IC.pages.length) return toast('Chọn ít nhất một trang', true); if (icFewPagesOk()) icStep(3); };
+async function icRenderMeta() {
+  $('#i3Kit').textContent = `Mẫu: ${D.title} · ${IC.pages.length} trang · hoa văn ${IC.opts.ornaments === 'merge' ? 'gộp vào nền' : 'lớp rời'}`;
+  try { IC.sess = await api('/api/icard/session'); } catch (e) { return toast(e.message, true); }
+  const lg = $('#iLogin'); lg.innerHTML = '';
+  if (!IC.sess.logged_in) {
+    const srv = el('input', { type: 'text', value: store.get('icServer', IC.sess.default_server) });
+    const resetSrv = el('button', { class: 'btn small', onclick: () => { srv.value = IC.sess.default_server; } }, 'Mặc định');
+    const usr = el('input', { type: 'text', autocomplete: 'username', placeholder: 'tên đăng nhập hoặc email', value: store.get('icUser', '') });
+    const pwd = el('input', { type: 'password', autocomplete: 'current-password', placeholder: 'mật khẩu' });
+    const btn = el('button', { class: 'btn primary', onclick: async () => {
+      btn.disabled = true;
+      try { IC.sess = await post('/api/icard/login', { server: srv.value, login: usr.value, password: pwd.value });
+        store.set('icServer', IC.sess.server); store.set('icUser', usr.value); pwd.value = ''; toast('Đã đăng nhập Icard'); IC.tax = null; icRenderMeta();
+      } catch (e) { toast(e.message, true); } finally { btn.disabled = false; } } }, 'Đăng nhập');
+    pwd.onkeydown = e => { if (e.key === 'Enter') btn.click(); };
+    lg.append(el('h4', { class: 'sec' }, 'Đăng nhập Icard (tài khoản admin hoặc designer)'),
+      el('p', { class: 'muted', style: 'margin:0 0 10px' }, 'Dùng tài khoản đăng nhập trang admin Icard (admin.icards.com.vn).'),
+      el('div', { class: 'fields' }, el('div', {}, el('label', { class: 'f' }, 'Tên đăng nhập hoặc email'), usr),
+        el('div', {}, el('label', { class: 'f' }, 'Mật khẩu'), pwd)),
+      el('details', { style: 'margin-top:8px' }, el('summary', { class: 'muted', style: 'cursor:pointer' }, 'Nâng cao: địa chỉ API (thường không cần đổi)'),
+        el('div', { class: 'row', style: 'margin-top:6px;flex-wrap:nowrap' }, srv, resetSrv),
+        el('p', { class: 'muted', style: 'margin:4px 0 0' }, 'Dán địa chỉ trang web Icard (icards.com.vn, admin.icards.com.vn…) cũng được – tool tự đổi sang địa chỉ API.')),
+      el('div', { class: 'row', style: 'margin-top:10px' }, el('span', { class: 'muted' }, 'Mật khẩu chỉ gửi thẳng tới Icard, không lưu trên máy – tắt tool là phải đăng nhập lại.'), el('span', { class: 'spacer' }), btn));
+  } else {
+    lg.append(el('div', { class: 'row' }, el('span', { class: 'pill ok' }, '✓ Đã đăng nhập Icard'),
+      el('b', {}, IC.sess.user.name || ''), el('span', { class: 'muted' }, `quyền ${IC.sess.user.role || '?'} · ${IC.sess.server}`), el('span', { class: 'spacer' }),
+      el('button', { class: 'btn small', onclick: async () => { IC.sess = await post('/api/icard/logout', {}); IC.tax = null; icRenderMeta(); } }, 'Đăng xuất')));
+    if (!IC.tax) try { IC.tax = (await api('/api/icard/taxonomy')).taxonomy; } catch (e) { toast(e.message, true); if (/đăng nhập/.test(e.message)) return icRenderMeta(); } }
+  const M = IC.meta;
+  $('#iTitle').value = M.title || D.title; $('#iDesc').value = M.description || '';
+  $('#iActive').checked = !!M.is_active; $('#iAssets').checked = IC.assets;
+  $('#iLogicalW').value = IC.opts.logical_w || 454; $('#iBgColor').value = IC.opts.background_color || '#ffffff';
+  const inv = $('#iInvType'); inv.innerHTML = ''; INV_TYPES.forEach(t => inv.append(el('option', { value: t }, t))); inv.value = IC.opts.invitation_type || 'Thiệp cưới';
+  const fill = (sel, items, want) => { sel.innerHTML = ''; const ts = items.map(x => x.title);
+    if (want && !ts.includes(want)) ts.unshift(want);                     // giữ giá trị cũ dù cây phân loại đã đổi
+    if (!ts.length) sel.append(el('option', { value: '' }, IC.sess.logged_in ? '(trống)' : '(đăng nhập để tải danh mục)'));
+    ts.forEach(t => sel.append(el('option', { value: t }, t))); sel.value = want && ts.includes(want) ? want : (ts[0] || ''); };
+  const kids = (arr, t) => ((arr || []).find(x => x.title === t) || {}).children || [];
+  const tax = IC.tax || [];
+  const cascade = () => { fill($('#iGrp'), kids(tax, $('#iCat').value), M.group); fill($('#iType'), kids(kids(tax, $('#iCat').value), $('#iGrp').value), M.type); };
+  fill($('#iCat'), tax, M.category); cascade();
+  $('#iCat').onchange = () => { M.category = $('#iCat').value; M.group = M.type = ''; cascade(); };
+  $('#iGrp').onchange = () => { M.group = $('#iGrp').value; M.type = ''; fill($('#iType'), kids(kids(tax, $('#iCat').value), $('#iGrp').value), ''); }; }
+function icCollect() {
+  IC.meta = { title: $('#iTitle').value.trim(), category: $('#iCat').value, group: $('#iGrp').value, type: $('#iType').value,
+    description: $('#iDesc').value, is_active: $('#iActive').checked };
+  IC.assets = $('#iAssets').checked;
+  IC.opts = { ...IC.opts, invitation_type: $('#iInvType').value, logical_w: parseInt($('#iLogicalW').value, 10) || 454,
+    background_color: $('#iBgColor').value };
+  if (IC.opts.logical_w === 454) delete IC.opts.logical_w; }
+$('#iPush').onclick = async () => {
+  icCollect();
+  if (!IC.sess?.logged_in) return toast('Đăng nhập Icard trước', true);
+  if (!IC.meta.title || !IC.meta.category || !IC.meta.group || !IC.meta.type) return toast('Điền tiêu đề và chọn đủ danh mục, nhóm, loại', true);
+  if (!icFewPagesOk()) return;
+  if (IC.meta.is_active && !confirm('Mẫu sẽ HIỂN THỊ NGAY cho khách hàng Icard. Tiếp tục?')) return;
+  icStep(4); $('#i4Title').textContent = 'Đang đăng lên Icard…'; $('#iResult').innerHTML = ''; $('#iLog').textContent = '';
+  const poll = setInterval(() => api('/api/icard/progress').then(j => { $('#iLog').textContent = j.lines.join('\n'); }).catch(() => {}), 700);
+  try { const r = await post('/api/icard/push', { kit: KIT, layouts: IC.pages, opts: icOpts(), size: IC.size, meta: IC.meta, design_assets: IC.assets });
+    $('#i4Title').textContent = r.action === 'create' ? 'Đã tạo mẫu mới trên Icard' : 'Đã cập nhật mẫu trên Icard';
+    const box = $('#iResult');
+    box.append(el('div', { class: 'card okbox' }, el('b', {}, `"${IC.meta.title}" – ${r.pages} trang · ${r.active ? 'đang hiển thị cho khách' : 'đang ẩn (nháp) – bấm "✓ Duyệt ngay" trong Quản lý Mẫu thiệp để hiển thị'}`),
+      el('p', { class: 'muted', style: 'margin:6px 0 0' }, `Up ${r.uploaded} ảnh (bỏ qua ${r.skipped} ảnh đã có) · font mới: ${r.fonts_created.join(', ') || 'không'}`
+        + (r.design_assets.length ? ` · hoa văn vào thư viện: ${r.design_assets.join(', ')}` : '') + ` · mã mẫu: ${r.template_id}`),
+      el('div', { class: 'row', style: 'margin-top:10px' },
+        r.admin_url ? el('a', { class: 'btn small primary', href: r.admin_url, target: '_blank', rel: 'noopener' }, 'Mở trong editor admin Icard') : null,
+        r.public_url ? el('a', { class: 'btn small', href: r.public_url, target: '_blank', rel: 'noopener' }, 'Xem trang mẫu') : null)));
+    if (r.warnings.length) { const ul = el('ul', { class: 'warns' }); r.warnings.forEach(w => ul.append(el('li', {}, w))); box.append(ul); }
+    IC.kit = null;                                  // lần sau nạp lại trạng thái đăng (mã mẫu mới)
+  } catch (e) { $('#i4Title').textContent = 'Chưa đăng được'; $('#iResult').append(el('div', { class: 'card warnbox' }, e.message));
+    if (/đăng nhập/.test(e.message)) IC.sess = null;
+  } finally { clearInterval(poll); api('/api/icard/progress').then(j => { $('#iLog').textContent = j.lines.join('\n'); }).catch(() => {}); } };
+
+// ---------- khởi động: mở lại đúng chỗ đang làm
+(async () => {
+  try { await refresh(); const view = store.get('view', 'home'), step = +store.get('step', 1), kit = store.get('kit', '');
+    if (kit && S.kits.some(k => k.name === kit)) await loadKit(kit); else KIT = null;
+    if (view !== 'home' && step > 1 && !KIT) return go('home'); go(view, step);
+  } catch (e) { toast('Không kết nối được tool: ' + e.message, true); } })();
+</script>
+</body>
+</html>

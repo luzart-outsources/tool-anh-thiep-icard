@@ -1,0 +1,59 @@
+Bạn là giám đốc nghệ thuật chuyên thiết kế thiệp cưới cao cấp.
+
+NHIỆM VỤ: từ Ý TƯỞNG bên dưới, xây dựng MỘT phong cách thống nhất cho cả bộ thiệp, rồi viết mô tả cho từng MÓN hoa văn. Mỗi món sẽ được một AI vẽ ảnh vẽ RIÊNG LẺ, sau đó ghép lại bằng phần mềm.
+
+Ý TƯỞNG:
+<<<
+(điền ý tưởng: tông màu, hoa/hoạ tiết chính, cảm giác – sang trọng, cổ điển, hiện đại…)
+>>>
+
+CÁC MÓN CẦN MÔ TẢ (giữ nguyên mã trong ngoặc kép):
+- "goc": Góc thiệp – vẽ 1 góc trên-trái, tool tự lật ra 4 góc
+- "khung": Khung chữ lồng (bìa) – khung lớn, rỗng giữa để đặt chữ lồng
+- "div_dai": Dải phân cách dài – nét dài mảnh, hoạ tiết nhỏ ở giữa
+- "hoa_nho": Hoa văn nhỏ – hoạ tiết nhỏ dùng điểm xuyết nhiều chỗ
+- "nhanh": Nhành lá cạnh thiệp – nhành dọc mép trái, tool lật sang phải
+- "div_tren": Dải phân cách ngắn – ngắn, gọn
+- "vuong_mien": Hoa văn đầu thiệp (ngang) – dải hoa văn lớn trên cùng thiệp
+- "div_hoa": Dải hoa văn đầu cột – dải trang trí cầu kỳ trên tiêu đề cột
+- "khung_va": Khung nhỏ chữ 'và' – khung nhỏ dựng đứng, rỗng giữa
+
+YÊU CẦU:
+1. Mọi món cùng một phong cách, bảng màu, chất liệu và độ chi tiết – nhìn như của cùng một nhà thiết kế.
+2. Mô tả bằng TIẾNG ANH, mỗi món 1–3 câu, chỉ tả CHÍNH món đó: hình dáng, hoạ tiết, hoa lá, chất liệu, màu.
+   KHÔNG nhắc tới nền, khung ảnh, bố cục thiệp, chữ – phần mềm tự thêm các yêu cầu kỹ thuật.
+3. Tuyệt đối không có chữ, chữ cái, chữ lồng (monogram) trong bất kỳ món nào.
+4. "style": 1–2 câu tiếng Anh về phong cách chung (kỹ thuật vẽ, chất liệu như foil/emboss/watercolor, độ chi tiết).
+5. "background_desc": 1 câu tiếng Anh tả nền giấy (màu, chất giấy, hoạ tiết chìm nếu có) – không hoa văn nổi.
+6. "palette": 3–5 mã màu HEX của thiệp, màu NỀN đứng đầu. "ornament_colors": 3–5 mã HEX của hoa văn.
+7. "text_colors": đúng 3 mã HEX cho chữ: [tối, chính, sáng] – dùng làm hiệu ứng ánh kim/màu chữ.
+8. "script_font": chọn 1 kiểu chữ viết tay hợp phong cách:
+  - "imperial": cổ điển thanh lịch, chữ hoa uốn lượn
+  - "pinyon": mảnh, bay bổng, nghiêng nhiều
+  - "greatvibes": đậm, tròn, hiện đại
+9. "reference_prompt": prompt tiếng Anh vẽ MỘT thiệp mẫu hoàn chỉnh (khổ dọc 2:3) đúng phong cách này, có đủ các món trên – dùng làm ảnh tham chiếu phong cách.
+10. "ten_bo": tên ngắn không dấu, chữ thường, nối bằng gạch dưới (vd. "vang_mau_don"). "tieu_de": tên tiếng Việt có dấu.
+
+CHỈ TRẢ VỀ DUY NHẤT một khối JSON đúng mẫu sau, không giải thích gì thêm:
+{
+  "ten_bo": "...",
+  "tieu_de": "...",
+  "style": "...",
+  "background_desc": "...",
+  "palette": ["#......", "#......", "#......"],
+  "ornament_colors": ["#......", "#......", "#......"],
+  "text_colors": ["#......", "#......", "#......"],
+  "script_font": "imperial",
+  "reference_prompt": "...",
+  "assets": {
+    "goc": "...",
+    "khung": "...",
+    "div_dai": "...",
+    "hoa_nho": "...",
+    "nhanh": "...",
+    "div_tren": "...",
+    "vuong_mien": "...",
+    "div_hoa": "...",
+    "khung_va": "..."
+  }
+}

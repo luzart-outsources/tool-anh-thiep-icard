@@ -1,0 +1,146 @@
+{
+  "title": "Vòm hoa",
+  "mo_ta": "Thiệp hình vòm, hoa lá chạy theo đường vòm, tên ở giữa",
+  "canvas": {
+    "w": 1748,
+    "h": 2480
+  },
+  "shapes": [
+    "vom",
+    "chu_nhat",
+    "bo_goc",
+    "goc_lom"
+  ],
+  "shape_default": "vom",
+  "key_items": [
+    "vom_hoa"
+  ],
+  "ornaments": [
+    {
+      "id": "vien",
+      "type": "border",
+      "fill": "gold_line",
+      "lines": [
+        {
+          "inset": 34,
+          "width": 5
+        },
+        {
+          "inset": 58,
+          "width": 3
+        }
+      ]
+    },
+    {
+      "id": "vom_hoa",
+      "asset": "vom_hoa",
+      "x": 874,
+      "y": 560,
+      "w": 1500,
+      "h": 900,
+      "anchor": "c"
+    },
+    {
+      "id": "goc_duoi",
+      "asset": "goc",
+      "x": 63,
+      "y": 2410,
+      "w": 313.4,
+      "h": 500.8,
+      "anchor": "bl",
+      "flip": "v",
+      "mirror": "x"
+    },
+    {
+      "id": "div_tren",
+      "asset": "div_tren",
+      "x": 874,
+      "y": 1175,
+      "w": 440,
+      "h": 52,
+      "anchor": "c"
+    },
+    {
+      "id": "div_dai",
+      "asset": "div_dai",
+      "x": 874,
+      "y": 1925,
+      "w": 620,
+      "h": 70,
+      "anchor": "c"
+    },
+    {
+      "id": "hoa_cuoi",
+      "asset": "hoa_cuoi",
+      "x": 874,
+      "y": 2300,
+      "w": 280,
+      "h": 110,
+      "anchor": "c"
+    }
+  ],
+  "texts": [
+    {
+      "id": "tieu_de",
+      "label": "Tiêu đề bìa",
+      "style": "caps",
+      "text": "THIỆP THÀNH HÔN",
+      "cx": 874,
+      "cy": 1090,
+      "w": 1000,
+      "size": 80
+    },
+    {
+      "id": "ten_1",
+      "label": "Tên chú rể",
+      "style": "script",
+      "text": "Gia Minh",
+      "cx": 874,
+      "cy": 1390,
+      "w": 1150,
+      "size": 250,
+      "group": "ten"
+    },
+    {
+      "id": "va",
+      "label": "Chữ nối ('và')",
+      "style": "script",
+      "text": "và",
+      "cx": 874,
+      "cy": 1565,
+      "w": 220,
+      "size": 110
+    },
+    {
+      "id": "ten_2",
+      "label": "Tên cô dâu",
+      "style": "script",
+      "text": "Ái Ngọc",
+      "cx": 874,
+      "cy": 1740,
+      "w": 1150,
+      "size": 250,
+      "group": "ten"
+    },
+    {
+      "id": "loi_moi",
+      "label": "Lời báo tin",
+      "style": "caps_wide",
+      "text": "TRÂN TRỌNG BÁO TIN LỄ THÀNH HÔN",
+      "cx": 874,
+      "cy": 2040,
+      "w": 1050,
+      "size": 38
+    },
+    {
+      "id": "ngay",
+      "label": "Ngày cưới",
+      "style": "caps_wide",
+      "text": "15 . 12 . 2026",
+      "cx": 874,
+      "cy": 2170,
+      "w": 700,
+      "size": 64
+    }
+  ]
+}

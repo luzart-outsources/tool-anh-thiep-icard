@@ -1,0 +1,161 @@
+{
+  "title": "Cảm ơn",
+  "mo_ta": "Trang cuối bộ thiệp online: lời cảm ơn khách, tên hai bạn, With love",
+  "canvas": {
+    "w": 1748,
+    "h": 2480
+  },
+  "shapes": [
+    "chu_nhat",
+    "bo_goc",
+    "goc_lom",
+    "cat_goc",
+    "rang_cua"
+  ],
+  "shape_default": "chu_nhat",
+  "key_items": [
+    "goc"
+  ],
+  "ornaments": [
+    {
+      "id": "vien",
+      "type": "border",
+      "fill": "gold_line",
+      "lines": [
+        {
+          "inset": 32.3,
+          "width": 5
+        },
+        {
+          "inset": 55.6,
+          "width": 4
+        },
+        {
+          "inset": 82.1,
+          "width": 3
+        }
+      ]
+    },
+    {
+      "id": "goc",
+      "asset": "goc",
+      "x": 63,
+      "y": 70,
+      "w": 313.4,
+      "h": 500.8,
+      "anchor": "tl",
+      "mirror": "xy"
+    },
+    {
+      "id": "vuong_mien",
+      "asset": "vuong_mien",
+      "x": 874,
+      "y": 300,
+      "w": 760,
+      "h": 320,
+      "anchor": "c"
+    },
+    {
+      "id": "div_tieude",
+      "asset": "div_tieude",
+      "x": 874,
+      "y": 960,
+      "w": 760,
+      "h": 64,
+      "anchor": "c"
+    },
+    {
+      "id": "div_tren",
+      "asset": "div_tren",
+      "x": 874,
+      "y": 1440,
+      "w": 400,
+      "h": 46,
+      "anchor": "c"
+    },
+    {
+      "id": "hoa_giua",
+      "asset": "hoa_giua",
+      "x": 874,
+      "y": 1660,
+      "w": 80,
+      "h": 110,
+      "anchor": "c"
+    },
+    {
+      "id": "div_dai",
+      "asset": "div_dai",
+      "x": 874,
+      "y": 1890,
+      "w": 560,
+      "h": 64,
+      "anchor": "c"
+    },
+    {
+      "id": "hoa_cuoi",
+      "asset": "hoa_cuoi",
+      "x": 874,
+      "y": 2290,
+      "w": 280,
+      "h": 110,
+      "anchor": "c"
+    }
+  ],
+  "texts": [
+    {
+      "id": "cam_on",
+      "label": "Tiêu đề cảm ơn",
+      "style": "caps",
+      "text": "THANK YOU",
+      "cx": 874,
+      "cy": 790,
+      "w": 1300,
+      "size": 170
+    },
+    {
+      "id": "loi_cam_on",
+      "label": "Lời cảm ơn",
+      "style": "body",
+      "text": "Chân thành cảm ơn Quý khách\nđã dành thời gian quý báu\nđến chung vui cùng gia đình chúng tôi",
+      "cx": 874,
+      "cy": 1200,
+      "w": 1250,
+      "size": 62,
+      "italic": true
+    },
+    {
+      "id": "ten_1",
+      "label": "Tên chú rể",
+      "style": "script",
+      "text": "Gia Minh",
+      "cx": 494,
+      "cy": 1660,
+      "w": 560,
+      "size": 160,
+      "align": "right",
+      "group": "ten"
+    },
+    {
+      "id": "ten_2",
+      "label": "Tên cô dâu",
+      "style": "script",
+      "text": "Ái Ngọc",
+      "cx": 1254,
+      "cy": 1660,
+      "w": 560,
+      "size": 160,
+      "align": "left",
+      "group": "ten"
+    },
+    {
+      "id": "with_love",
+      "label": "Lời kết",
+      "style": "caps_wide",
+      "text": "WITH LOVE",
+      "cx": 874,
+      "cy": 2030,
+      "w": 700,
+      "size": 44
+    }
+  ]
+}

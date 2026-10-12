@@ -1,0 +1,127 @@
+Tuyệt vời! Dưới đây là bản thiết kế cho bộ thiệp cúc trắng phong cách Hàn Quốc tối giản:
+
+```json
+{
+  "title": "Cúc trắng Hàn Quốc",
+  "style": "delicate watercolor white daisies with soft sage-green leaves and tiny yellow centers, airy, minimal Korean wedding style, fine thin ink outlines",
+  "background": {"color": "#F8F4EC", "draw": "soft ivory cotton paper texture with very subtle fibers"},
+  "colors": {"text": "#4E4A3F", "accent": "#9DAE8C", "metallic": false},
+  "fonts": {
+    "ten": {"font": "Imperial Script", "weight": 400, "uppercase": false, "letter_spacing": 0, "color": "text"},
+    "Chu": {"font": "cormorant", "weight": 500, "uppercase": true, "letter_spacing": 0.12, "color": "text"},
+    "nho": {"font": "cormorant", "weight": 500, "uppercase": false, "letter_spacing": 0.02, "color": "accent"}
+  },
+  "items": [
+    {"id": "cum_cuc", "name": "Cụm cúc góc", "shape": "big", "hollow": false,
+     "draw": "a loose cluster of white daisies and sage leaves for the TOP-LEFT corner, spreading right and down, asymmetric"},
+    {"id": "vong_cuc", "name": "Vòng cúc", "shape": "big", "hollow": true,
+     "draw": "a perfectly round wreath of small white daisies and sage leaves, thin and airy, empty center"},
+    {"id": "day_cuc", "name": "Dây cúc ngang", "shape": "wide", "hollow": false,
+     "draw": "a long horizontal garland of daisies and leaves, symmetric, slightly drooping in the middle"},
+    {"id": "nhanh_la", "name": "Nhành lá", "shape": "small", "hollow": false,
+     "draw": "one slender sage sprig lying horizontally, pointing right"},
+    {"id": "bong_cuc", "name": "Bông cúc nhỏ", "shape": "small", "hollow": false,
+     "draw": "a single small white daisy seen from the front"}
+  ],
+  "cards": [
+    {"id": "thiep_moi", "name": "Thiệp mời", "size": "15x21cm", "shape": "bo_goc",
+     "variants": [
+       {"name": "Hoa góc chéo",
+        "border": [{"inset": 28, "width": 2, "color": "accent"}],
+        "items": [
+          {"item": "cum_cuc", "x": 190, "y": 220, "w": 380, "h": 380, "rotate": 0, "flip": "", "mirror": "", "opacity": 1},
+          {"item": "cum_cuc", "x": 810, "y": 1180, "w": 380, "h": 380, "rotate": 0, "flip": "hv", "mirror": "", "opacity": 1},
+          {"item": "nhanh_la", "x": 500, "y": 870, "w": 200, "h": 60}
+        ],
+        "texts": [
+          {"id": "loi_moi", "label": "Lời mời", "style": "chu", "text": "Trân trọng kính mời", "x": 500, "y": 430, "w": 700, "size": 30, "align": "center"},
+          {"id": "ten_chu_re", "label": "Tên chú rể", "style": "ten", "text": "Gia Minh", "x": 500, "y": 545, "w": 720, "size": 110},
+          {"id": "va", "label": "Chữ 'và'", "style": "ten", "text": "và", "x": 500, "y": 655, "w": 200, "size": 56},
+          {"id": "ten_co_dau", "label": "Tên cô dâu", "style": "ten", "text": "Ái Ngọc", "x": 500, "y": 765, "w": 720, "size": 110},
+          {"id": "ngay_cuoi", "label": "Ngày cưới", "style": "chu", "text": "15 . 12 . 2026", "x": 500, "y": 960, "w": 600, "size": 36},
+          {"id": "dia_diem", "label": "Địa điểm", "style": "nho", "text": "Trung tâm Hội nghị Golden Palace", "x": 500, "y": 1030, "w": 700, "size": 28}
+        ],
+        "photos": []},
+       {"name": "Vòng hoa giữa",
+        "border": [],
+        "items": [
+          {"item": "vong_cuc", "x": 500, "y": 650, "w": 720, "h": 720},
+          {"item": "bong_cuc", "x": 500, "y": 1290, "w": 90, "h": 90}
+        ],
+        "texts": [
+          {"id": "loi_moi", "label": "Lời mời", "style": "chu", "text": "Trân trọng kính mời", "x": 500, "y": 200, "w": 700, "size": 30},
+          {"id": "ten_chu_re", "label": "Tên chú rể", "style": "ten", "text": "Gia Minh", "x": 500, "y": 565, "w": 470, "size": 88},
+          {"id": "va", "label": "Chữ 'và'", "style": "ten", "text": "và", "x": 500, "y": 652, "w": 160, "size": 44},
+          {"id": "ten_co_dau", "label": "Tên cô dâu", "style": "ten", "text": "Ái Ngọc", "x": 500, "y": 740, "w": 470, "size": 88},
+          {"id": "ngay_cuoi", "label": "Ngày cưới", "style": "chu", "text": "15 . 12 . 2026", "x": 500, "y": 1110, "w": 600, "size": 36},
+          {"id": "dia_diem", "label": "Địa điểm", "style": "nho", "text": "Trung tâm Hội nghị Golden Palace", "x": 500, "y": 1180, "w": 700, "size": 28}
+        ],
+        "photos": []},
+       {"name": "Dây hoa trên dưới",
+        "border": [{"inset": 22, "width": 1.5, "color": "accent"}, {"inset": 34, "width": 1, "color": "accent"}],
+        "items": [
+          {"item": "day_cuc", "x": 500, "y": 160, "w": 760, "h": 180},
+          {"item": "day_cuc", "x": 500, "y": 1240, "w": 760, "h": 180, "flip": "v"},
+          {"item": "bong_cuc", "x": 120, "y": 700, "w": 80, "h": 80, "mirror": "x", "rotate": 15}
+        ],
+        "texts": [
+          {"id": "ten_chu_re", "label": "Tên chú rể", "style": "ten", "text": "Gia Minh", "x": 500, "y": 520, "w": 640, "size": 105},
+          {"id": "va", "label": "Chữ 'và'", "style": "ten", "text": "và", "x": 500, "y": 630, "w": 200, "size": 52},
+          {"id": "ten_co_dau", "label": "Tên cô dâu", "style": "ten", "text": "Ái Ngọc", "x": 500, "y": 740, "w": 640, "size": 105},
+          {"id": "ngay_cuoi", "label": "Ngày cưới", "style": "chu", "text": "15 . 12 . 2026", "x": 500, "y": 900, "w": 600, "size": 36},
+          {"id": "dia_diem", "label": "Địa điểm", "style": "nho", "text": "Trung tâm Hội nghị Golden Palace", "x": 500, "y": 1240, "w": 700, "size": 28}
+        ],
+        "photos": []}
+     ]},
+    {"id": "thiep_tim", "name": "Thiệp trái tim", "size": "15 x 15 cm", "shape": {"path": "M500 940 C 220 760 40 560 60 330 C 80 140 260 60 390 90 C 450 105 490 150 500 200 C 510 150 550 105 610 90 C 740 60 920 140 940 330 C 960 560 780 760 500 940 Z", "label": "Trái tim"},
+     "variants": [
+       {"name": "Tên giữa tim",
+        "border": [{"inset": 24, "width": 2, "color": "accent"}],
+        "items": [{"item": "bong_cuc", "x": 500, "y": 300, "w": 90, "h": 90}],
+        "texts": [
+          {"id": "ten_chu_re", "label": "Tên chú rể", "style": "ten", "text": "Gia Minh", "x": 500, "y": 430, "w": 560, "size": 90},
+          {"id": "va", "label": "Chữ 'và'", "style": "ten", "text": "và", "x": 500, "y": 520, "w": 160, "size": 44},
+          {"id": "ten_co_dau", "label": "Tên cô dâu", "style": "ten", "text": "Ái Ngọc", "x": 500, "y": 610, "w": 560, "size": 90},
+          {"id": "ngay_cuoi", "label": "Ngày cưới", "style": "chu", "text": "15 . 12 . 2026", "x": 500, "y": 720, "w": 420, "size": 30}
+        ],
+        "photos": []},
+       {"name": "Nhành lá hai bên",
+        "border": [],
+        "items": [
+          {"item": "nhanh_la", "x": 300, "y": 330, "w": 160, "h": 60, "rotate": -20, "mirror": "x"},
+          {"item": "la_xanh", "x": 500, "y": 800, "w": 100, "h": 100}
+        ],
+        "texts": [
+          {"id": "ten_chu_re", "label": "Tên chú rể", "style": "ten", "text": "Gia Minh", "x": 500, "y": 460, "w": 560, "size": 92},
+          {"id": "ten_co_dau", "label": "Tên cô dâu", "style": "ten", "text": "Ái Ngọc", "x": 500, "y": 590, "w": 560, "size": 92},
+          {"id": "ngay_cuoi", "label": "Ngày cưới", "style": "chu", "text": "15 . 12 . 2026", "x": 500, "y": 700, "w": 420, "size": 30},
+        ],
+        "photos": []}
+     ]},
+    {"id": "banner_web", "name": "Banner web", "size": "1920x1080px", "shape": "chu_nhat",
+     "variants": [
+       {"name": "Ảnh oval bên trái",
+        "border": [],
+        "items": [{"item": "day_cuc", "x": 720, "y": 495, "w": 420, "h": 90}],
+        "texts": [
+          {"id": "ten_chu_re", "label": "Tên chú rể", "style": "ten", "text": "Gia Minh", "x": 720, "y": 190, "w": 440, "size": 80},
+          {"id": "va", "label": "Chữ 'và'", "style": "ten", "text": "và", "x": 720, "y": 262, "w": 120, "size": 36},
+          {"id": "ten_co_dau", "label": "Tên cô dâu", "style": "ten", "text": "Ái Ngọc", "x": 720, "y": 335, "w": 440, "size": 80},
+          {"id": "ngay_cuoi", "label": "Ngày cưới", "style": "chu", "text": "15 . 12 . 2026", "x": 720, "y": 425, "w": 400, "size": 26}
+        ],
+        "photos": [{"id": "anh_cuoi", "label": "Ảnh cưới", "x": 280, "y": 281, "w": 380, "h": 440, "shape": "oval"}]},
+       {"name": "Ảnh vòm bên phải",
+        "border": [{"inset": 16, "width": 1.5, "color": "accent"}],
+        "items": [{"item": "cum_cuc", "x": 110, "y": 110, "w": 220, "h": 220}],  // hoa góc
+        "texts": [
+          {"id": "ten_chu_re", "label": "Tên chú rể", "style": "ten", "text": "Gia Minh", "x": 330, "y": 230, "w": 440, "size": 78},
+          {"id": "ten_co_dau", "label": "Tên cô dâu", "style": "ten", "text": "Ái Ngọc", "x": 330, "y": 330, "w": 440, "size": 78},
+          {"id": "ngay_cuoi", "label": "Ngày cưới", "style": "chu", "text": "15 . 12 . 2026", "x": 330, "y": 420, "w": 400, "size": 26}
+        ],
+        "photos": [{"id": "anh_cuoi", "label": "Ảnh cưới", "x": 760, "y": 281, "w": 360, "h": 450, "shape": "vom"}]}
+     ]}
+  ]
+}
+```
+
+Bạn có muốn mình chỉnh thêm gì không?

@@ -1,0 +1,22 @@
+# Xuống dòng cố định cho script khởi động – bất kể máy khách cấu hình git thế nào (core.autocrlf…):
+# script Unix phải LF (bash trên macOS lỗi với CRLF), script Windows phải CRLF.
+* text=auto
+*.sh       text eol=lf
+*.command  text eol=lf
+*.bat      text eol=crlf
+*.ps1      text eol=crlf
+*.py       text eol=lf
+*.html     text eol=lf
+*.json     text eol=lf
+*.md       text eol=lf
+*.txt      text eol=lf
+
+*.ttf   binary
+*.otf   binary
+*.woff  binary
+*.woff2 binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.zip   binary

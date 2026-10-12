@@ -1,0 +1,46 @@
+# Repo giao khách: chỉ mã nguồn, font + bố cục có sẵn, script khởi động.
+# KHÔNG đưa lên: mẫu thiết kế, ảnh, thiệp đã xuất, font tự thêm, bố cục tự làm của máy này
+# (cùng quy tắc với gói zip – tools/build_release.py).
+
+# Dữ liệu của máy này
+/kits/
+/output/
+/dist/
+/mau/
+/tools/realesrgan-ncnn-vulkan/
+/tools/realesrgan-ncnn-vulkan*
+
+# Font: chỉ font có sẵn (giấy phép OFL, được phân phối kèm)
+/fonts/*
+!/fonts/CormorantGaramond-Variable.ttf
+!/fonts/GreatVibes-Regular.ttf
+!/fonts/ImperialScript-Regular.ttf
+!/fonts/PinyonScript-Regular.ttf
+!/fonts/OFL-*.txt
+
+# Bố cục: chỉ thư viện có sẵn (studio.LAYOUT_ORDER) – bố cục tự làm ở lại máy này
+/layouts/*
+!/layouts/bia.json
+!/layouts/vom_hoa.json
+!/layouts/toi_gian.json
+!/layouts/goc_cheo.json
+!/layouts/hai_ben.json
+!/layouts/vong_hoa.json
+!/layouts/thiep_moi.json
+!/layouts/gia_dinh.json
+!/layouts/cam_on.json
+
+# Lối tắt chạy trên máy phát triển (dùng Python của máy, dữ liệu ngay trong thư mục này)
+/MoTool.bat
+
+# Ghi chú thiết kế nội bộ
+/docs/superpowers/
+
+# Linh tinh
+__pycache__/
+*.pyc
+.pytest_cache/
+.claude/
+.DS_Store
+Thumbs.db
+*.tmp

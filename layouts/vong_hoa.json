@@ -1,0 +1,130 @@
+{
+  "title": "Vòng hoa quanh tên",
+  "mo_ta": "Tên cô dâu chú rể nằm trong vòng hoa tròn",
+  "canvas": {
+    "w": 1748,
+    "h": 2480
+  },
+  "shapes": [
+    "chu_nhat",
+    "bo_goc",
+    "goc_lom",
+    "cat_goc",
+    "rang_cua",
+    "vom",
+    "oval"
+  ],
+  "shape_default": "oval",
+  "key_items": [
+    "vong_hoa"
+  ],
+  "ornaments": [
+    {
+      "id": "vien",
+      "type": "border",
+      "fill": "gold_line",
+      "lines": [
+        {
+          "inset": 40,
+          "width": 4
+        },
+        {
+          "inset": 60,
+          "width": 2
+        }
+      ]
+    },
+    {
+      "id": "vong_hoa",
+      "asset": "vong_hoa",
+      "x": 874,
+      "y": 1250,
+      "w": 1380,
+      "h": 1380,
+      "anchor": "c"
+    },
+    {
+      "id": "div_tren",
+      "asset": "div_tren",
+      "x": 874,
+      "y": 455,
+      "w": 420,
+      "h": 50,
+      "anchor": "c"
+    },
+    {
+      "id": "div_duoi",
+      "asset": "div_tren",
+      "x": 874,
+      "y": 2010,
+      "w": 420,
+      "h": 50,
+      "anchor": "c",
+      "flip": "v"
+    }
+  ],
+  "texts": [
+    {
+      "id": "tieu_de",
+      "label": "Tiêu đề bìa",
+      "style": "caps",
+      "text": "THIỆP THÀNH HÔN",
+      "cx": 874,
+      "cy": 365,
+      "w": 900,
+      "size": 70
+    },
+    {
+      "id": "ten_1",
+      "label": "Tên chú rể",
+      "style": "script",
+      "text": "Gia Minh",
+      "cx": 874,
+      "cy": 1130,
+      "w": 760,
+      "size": 200,
+      "group": "ten"
+    },
+    {
+      "id": "va",
+      "label": "Chữ nối ('và')",
+      "style": "script",
+      "text": "và",
+      "cx": 874,
+      "cy": 1265,
+      "w": 200,
+      "size": 96
+    },
+    {
+      "id": "ten_2",
+      "label": "Tên cô dâu",
+      "style": "script",
+      "text": "Ái Ngọc",
+      "cx": 874,
+      "cy": 1400,
+      "w": 760,
+      "size": 200,
+      "group": "ten"
+    },
+    {
+      "id": "loi_moi",
+      "label": "Lời báo tin",
+      "style": "caps_wide",
+      "text": "TRÂN TRỌNG BÁO TIN LỄ THÀNH HÔN",
+      "cx": 874,
+      "cy": 2110,
+      "w": 1000,
+      "size": 36
+    },
+    {
+      "id": "ngay",
+      "label": "Ngày cưới",
+      "style": "caps_wide",
+      "text": "15 . 12 . 2026",
+      "cx": 874,
+      "cy": 2230,
+      "w": 650,
+      "size": 58
+    }
+  ]
+}

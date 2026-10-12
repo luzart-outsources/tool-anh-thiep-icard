@@ -1,0 +1,16 @@
+{
+  "_ghi_chu": "Nội dung chữ của một khách hàng. Khoá = id ô chữ trong layout. Thiếu khoá nào thì giữ chữ mẫu. Dòng mới: \\n",
+  "texts": {
+    "chu_long": "P|A",
+    "ten_1": "Phúc An",
+    "ten_2": "Ngọc Mai",
+    "ngay": "26 . 12 . 2026",
+
+    "ong_trai": "Ông: Trần Quốc Tuấn",
+    "ba_trai": "Bà: Lý Thị Thu Hằng",
+    "ong_gai": "Ông: Nguyễn Hữu Thắng",
+    "ba_gai": "Bà: Đặng Thị Ngọc Diệp",
+    "dc_trai": "25 Trần Hưng Đạo,\nQuận 1, TP. Hồ Chí Minh",
+    "dc_gai": "108 Nguyễn Văn Cừ,\nNinh Kiều, Cần Thơ"
+  }
+}

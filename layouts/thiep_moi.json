@@ -1,0 +1,239 @@
+{
+  "title": "Thiệp mời",
+  "mo_ta": "Mời khách: tên khách, giờ, ngày, địa điểm (theo thiệp mẫu 3)",
+  "canvas": {
+    "w": 1748,
+    "h": 2480
+  },
+  "shapes": [
+    "chu_nhat",
+    "bo_goc",
+    "goc_lom",
+    "cat_goc",
+    "rang_cua"
+  ],
+  "shape_default": "chu_nhat",
+  "key_items": [
+    "vuong_mien"
+  ],
+  "ornaments": [
+    {
+      "id": "vien",
+      "type": "border",
+      "fill": "gold_line",
+      "lines": [
+        {
+          "inset": 32.3,
+          "width": 5
+        },
+        {
+          "inset": 55.6,
+          "width": 4
+        },
+        {
+          "inset": 82.1,
+          "width": 3
+        }
+      ]
+    },
+    {
+      "id": "goc",
+      "asset": "goc",
+      "x": 63,
+      "y": 70,
+      "w": 313.4,
+      "h": 500.8,
+      "anchor": "tl",
+      "mirror": "xy"
+    },
+    {
+      "id": "vuong_mien",
+      "asset": "vuong_mien",
+      "x": 874,
+      "y": 265,
+      "w": 800,
+      "h": 330,
+      "anchor": "c"
+    },
+    {
+      "id": "div_1",
+      "asset": "div_tren",
+      "x": 874,
+      "y": 590,
+      "w": 400,
+      "h": 46,
+      "anchor": "c"
+    },
+    {
+      "id": "div_2",
+      "asset": "div_tren",
+      "x": 874,
+      "y": 735,
+      "w": 400,
+      "h": 46,
+      "anchor": "c"
+    },
+    {
+      "id": "la_va",
+      "asset": "la_va",
+      "x": 735,
+      "y": 1219,
+      "w": 90,
+      "h": 43,
+      "anchor": "c",
+      "mirror": "x"
+    },
+    {
+      "id": "div_3",
+      "asset": "div_dai",
+      "x": 874,
+      "y": 1555,
+      "w": 560,
+      "h": 64,
+      "anchor": "c"
+    },
+    {
+      "id": "div_4",
+      "asset": "div_tren",
+      "x": 874,
+      "y": 1795,
+      "w": 400,
+      "h": 46,
+      "anchor": "c"
+    },
+    {
+      "id": "div_5",
+      "asset": "div_tren",
+      "x": 874,
+      "y": 2045,
+      "w": 400,
+      "h": 46,
+      "anchor": "c"
+    },
+    {
+      "id": "hoa_cuoi",
+      "asset": "hoa_cuoi",
+      "x": 874,
+      "y": 2320,
+      "w": 260,
+      "h": 100,
+      "anchor": "c"
+    }
+  ],
+  "texts": [
+    {
+      "id": "kinh_moi",
+      "label": "Lời mời",
+      "style": "caps_wide",
+      "text": "TRÂN TRỌNG KÍNH MỜI",
+      "cx": 874,
+      "cy": 514,
+      "w": 1000,
+      "size": 46
+    },
+    {
+      "id": "khach",
+      "label": "Tên khách mời",
+      "style": "body",
+      "text": "Ông/Bà: ......................................",
+      "cx": 874,
+      "cy": 660,
+      "w": 1150,
+      "size": 64
+    },
+    {
+      "id": "toi_du",
+      "label": "Câu dẫn",
+      "style": "body",
+      "text": "Tới dự lễ thành hôn của",
+      "cx": 874,
+      "cy": 812,
+      "w": 1000,
+      "size": 62,
+      "italic": true
+    },
+    {
+      "id": "ten_1",
+      "label": "Tên chú rể",
+      "style": "script",
+      "text": "Gia Minh",
+      "cx": 874,
+      "cy": 1030,
+      "w": 1100,
+      "size": 240,
+      "group": "ten"
+    },
+    {
+      "id": "va",
+      "label": "Chữ nối ('và')",
+      "style": "script",
+      "text": "và",
+      "cx": 874,
+      "cy": 1215,
+      "w": 220,
+      "size": 110
+    },
+    {
+      "id": "ten_2",
+      "label": "Tên cô dâu",
+      "style": "script",
+      "text": "Ái Ngọc",
+      "cx": 874,
+      "cy": 1400,
+      "w": 1100,
+      "size": 240,
+      "group": "ten"
+    },
+    {
+      "id": "gio",
+      "label": "Giờ",
+      "style": "body",
+      "text": "Vào lúc: 11 giờ 00",
+      "cx": 874,
+      "cy": 1640,
+      "w": 1000,
+      "size": 64
+    },
+    {
+      "id": "ngay_day_du",
+      "label": "Ngày (đầy đủ)",
+      "style": "body",
+      "text": "Thứ Bảy, ngày 26 tháng 12 năm 2026",
+      "cx": 874,
+      "cy": 1724,
+      "w": 1150,
+      "size": 60
+    },
+    {
+      "id": "dia_diem",
+      "label": "Địa điểm",
+      "style": "body",
+      "text": "Tại: Trung tâm Hội nghị Golden Palace",
+      "cx": 874,
+      "cy": 1880,
+      "w": 1200,
+      "size": 62
+    },
+    {
+      "id": "dia_chi",
+      "label": "Địa chỉ",
+      "style": "body",
+      "text": "125 Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh",
+      "cx": 874,
+      "cy": 1958,
+      "w": 1200,
+      "size": 56
+    },
+    {
+      "id": "loi_cuoi",
+      "label": "Lời cuối",
+      "style": "body",
+      "text": "Sự hiện diện của Quý khách là\nniềm vinh hạnh cho gia đình chúng tôi",
+      "cx": 874,
+      "cy": 2160,
+      "w": 1150,
+      "size": 54,
+      "italic": true
+    }
+  ]
+}
